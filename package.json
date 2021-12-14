@@ -1,0 +1,29 @@
+{
+  "name": "uef_event",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "node app.js",
+    "client": "npm run start --prefix quan_ly_su_kien",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiaNguyen10/UEF_Event.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiaNguyen10/UEF_Event/issues"
+  },
+  "homepage": "https://github.com/MiaNguyen10/UEF_Event#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "concurrently": "^6.4.0",
+    "express": "^4.17.1",
+    "react-icons": "^4.3.1",
+    "save": "^2.4.0"
+  }
+}
