@@ -1,11 +1,9 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import "./Home.css";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import FileUpload from "../../components/FileUpload/FileUpload";
 
 class Home extends Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +17,6 @@ class Home extends Component {
       .then((res) => {
         const event = res.data;
         this.setState({ event: event.event });
-
       })
       .catch((error) => console.log(error));
   }
@@ -28,31 +25,35 @@ class Home extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
+
     this.setState({
       [name]: value,
     });
   };
 
+
   handleInsertSubmit = (event) => {
     event.preventDefault();
+
+    let formData = new FormData();
+    formData.append()
 
     const newEvent = {
       id: "",
       name: this.state.name,
       description: this.state.description,
+      image: this.state.image,
     };
 
     axios
       .post("/api/insert", newEvent)
       .then((res) => {
-        let event = this.state.event;
+        let event = this.state.event; //goi lai data event
         event = [newEvent, ...event];
         this.setState({ event: event });
       })
       .catch((error) => console.log(error));
   };
-
-  
 
   render() {
     return (
@@ -84,23 +85,36 @@ class Home extends Component {
                     />
                   </div>
                   <div class="form-group">
-                      <FileUpload />
+                    <label for="eventImage">Chọn hình ảnh</label>
+                    <input
+                      name="image"
+                      type="file"
+                      accept="image/*"
+                      class="form-control-file"
+                      id="eventImage"
+                      onChange={(e)=>setImage(e.target.files)}
+                    />
                   </div>
+                </div>
+                <div class="card-footer text-right">
+                  <button>Đăng sự kiện</button>
                 </div>
               </form>
             </div>
-            
           </div>
         </Popup>
 
         {/* Display event data */}
-        <div className="event_des"> 
+        <div className="event_des">
           <ul>
             {this.state.event.map((item) => (
               <li key={item.id_event}>
-                <h2><b>{item.name}</b></h2> <br />
+                <h2>
+                  <b>{item.name}</b>
+                </h2>
+                <br />
                 <div className="description">{item.description}</div> <br />
-                <img src={item.image} alt="image_event" class="img-fluid"/>
+                <img src={item.image} alt="image_event" class="img-fluid" />
               </li>
             ))}
           </ul>

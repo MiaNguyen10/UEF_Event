@@ -8,20 +8,10 @@ const bodyParser = require("body-parser");
 
 //use express static folder
 //CORS
-app.use(
-  cors({
-    origin: true,
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
-app.use(express.static(path.join(__dirname, '/')));
+app.use(cors());
+app.use(express.static("./public"));
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //DB Connection
 const connection = mysql.createConnection({
@@ -43,6 +33,41 @@ app.get("/api/event", (req, res) => {
   });
 });
 
+// app.post("/api/insert", function (req, res) {
+//   message = "";
+//   if (!req.files) return res.status(400).send("No files were uploaded.");
+
+//   var file = req.files.uploaded_image;
+//   var img_name = file.name;
+
+//   if (
+//     file.mimetype == "image/jpeg" ||
+//     file.mimetype == "image/png" ||
+//     file.mimetype == "image/gif"
+//   ) {
+//     file.mv("public/images/upload_images/" + file.name, function (err) {
+//       if (err) return res.status(500).send(err);
+//       var sql =
+//         "INSERT " +
+//         "INTO event(name,description,image) " +
+//         "VALUES('" +
+//         req.body.name +
+//         "','" +
+//         req.body.description +
+//         "','" +
+//         img_name +
+//         "')";
+
+//       connection.query(sql, function (err, results) {
+//         if (err) throw err;
+//         res.json({ news: results });
+//       });
+//     });
+//   } else {
+//     message ="This format is not allowed , please upload file with '.png','.gif','.jpg'";
+//   }
+// });
+
 app.post("/api/insert", function (req, res) {
   var sql =
     "INSERT " +
@@ -60,48 +85,7 @@ app.post("/api/insert", function (req, res) {
   });
 });
 
-//! Use of Multer
-const storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    callBack(null, "./"); // './public/images/' directory name where save the file
-  },
-  filename: (req, file, callBack) => {
-    const ext = file.mimetype.split("/")[1];
-    callBack(null, `uploads/${file.originalname} - ${Date.now()}.${ext}`);
-  },
-});
 
-const upload = multer({
-  storage: storage,
-});
-
-//@type   POST
-//route for post data
-app.post("/api/image", upload.single("image"), (req, res, err) => {
-  if (!req.file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
-    res.send({ msg: "Only image files (jpg, jpeg, png) are allowed!" });
-  } else {
-    const image = req.file.filename;
-    const id=1;
-
-    const sqlInsert = "UPDATE event SET `image` = ? WHERE id = ?;"
-    connection.query(sqlInsert, [image, id] , (err, result) => {
-      if(err) {
-        console.log(err)
-        res.send({
-          msg:err
-        })
-      }
-
-      if(result){
-        res.send({
-          data: result,
-          msg: 'Your image has been updates!'
-        });
-      }
-    });
-  }
-});
 
 //create connection
 app.listen(4000, () => console.log("App listening on port 4000"));
