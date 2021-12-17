@@ -31,12 +31,18 @@ class Home extends Component {
     });
   };
 
+  setImage = async (event) => {
+
+    const formData = new FormData();
+    console.log(event.target.files)
+    formData.append("file", event.target.files[0])
+    axios.post("/uploadfile", formData).then(res => {
+      this.setState({image: `${res.data}`})
+    })
+  }
 
   handleInsertSubmit = (event) => {
     event.preventDefault();
-
-    let formData = new FormData();
-    formData.append()
 
     const newEvent = {
       id: "",
@@ -84,7 +90,7 @@ class Home extends Component {
                       onChange={this.handleInputChange}
                     />
                   </div>
-                  <div class="form-group">
+                  {/* <div class="form-group">
                     <label for="eventImage">Chọn hình ảnh</label>
                     <input
                       name="image"
@@ -93,6 +99,17 @@ class Home extends Component {
                       class="form-control-file"
                       id="eventImage"
                       onChange={(e)=>setImage(e.target.files)}
+                    />
+                  </div> */}
+                  <div class="form-group">
+                    <label for="eventImage">Chọn hình ảnh</label>
+                    <input
+                      name="image"
+                      type="file"
+                      accept="image/*"
+                      class="form-control-file"
+                      id="eventImage"
+                      onChange={this.setImage}
                     />
                   </div>
                 </div>

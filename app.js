@@ -3,27 +3,43 @@ const mysql = require("mysql");
 const app = express();
 const multer = require("multer");
 const path = require("path");
-const cors = require("cors");
+// const cors = require("cors"); // dont need cors
 const bodyParser = require("body-parser");
 
-//use express static folder
 //CORS
-app.use(cors());
-app.use(express.static("./public"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(cors()); // dont need cors
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+
+// config file storage
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/images/upload_images') // localtion store file
+  },
+  filename: function (req, file, cb) {
+    cb(null, "upload" + '-' + Date.now() + "_" + file.originalname) // config filename
+  }
+})
+var upload = multer({ storage: storage })
 
 //DB Connection
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
+  host: "localhost", // change this
+  user: "guest", // change this
+  password: "password",
   database: "quan_ly_su_kien",
 });
 
 connection.connect(function (err) {
-  err ? console.log(err) : console.log(connection);
+  err ? console.log(err) : console.log();
 });
+
+
+// API part
+app.get("/", (req, res) => {
+  res.send("API server")
+})
+app.use("/static", express.static("public/images/upload_images")); // host static file
 
 app.get("/api/event", (req, res) => {
   var sql = "SELECT * FROM event ORDER BY id_event DESC";
@@ -33,52 +49,32 @@ app.get("/api/event", (req, res) => {
   });
 });
 
-// app.post("/api/insert", function (req, res) {
-//   message = "";
-//   if (!req.files) return res.status(400).send("No files were uploaded.");
 
-//   var file = req.files.uploaded_image;
-//   var img_name = file.name;
+// API for files
+app.post('/uploadfile', upload.single('file'), (req, res, next) => {
+  console.log(req.file)
+  const file = req.file
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
 
-//   if (
-//     file.mimetype == "image/jpeg" ||
-//     file.mimetype == "image/png" ||
-//     file.mimetype == "image/gif"
-//   ) {
-//     file.mv("public/images/upload_images/" + file.name, function (err) {
-//       if (err) return res.status(500).send(err);
-//       var sql =
-//         "INSERT " +
-//         "INTO event(name,description,image) " +
-//         "VALUES('" +
-//         req.body.name +
-//         "','" +
-//         req.body.description +
-//         "','" +
-//         img_name +
-//         "')";
+  let fileUrl = `http://localhost:4000/static/${req.file.filename}`
+  res.send(fileUrl)
+})
 
-//       connection.query(sql, function (err, results) {
-//         if (err) throw err;
-//         res.json({ news: results });
-//       });
-//     });
-//   } else {
-//     message ="This format is not allowed , please upload file with '.png','.gif','.jpg'";
-//   }
-// });
-
-app.post("/api/insert", function (req, res) {
+app.post("/api/insert", function (req, res) {  
   var sql =
     "INSERT " +
-    "INTO event(name,description,image) " +
+    "INTO event(name,description,image, eventended) " +
     "VALUES('" +
     req.body.name +
     "','" +
     req.body.description +
     "','" +
     req.body.image +
-    "')";
+    "', 0)";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ news: results });
