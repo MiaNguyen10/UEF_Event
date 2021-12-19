@@ -16,5 +16,5 @@ npm install –save concurrently
 npm install –save axios
 - Để kết nối với thư viện mysql như trên, chúng ta cần cài đặt MySQL bên trong project, bằng lệnh sau:
 npm install mysql
-- Sử dụng model: npm install react-modal
+- Sử dụng modal: npm install react-modal
 
