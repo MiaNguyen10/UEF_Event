@@ -3,6 +3,8 @@ import "./Home.css";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import Modal from "react-modal";
+import { OrganizationalUnit } from "./OrganizationalUnit";
+import { TypeOfEvent } from "./TypeOfEvent";
 
 class Home extends Component {
   constructor(props) {
@@ -10,11 +12,18 @@ class Home extends Component {
     this.state = {
       modalIsOpen: false,
       event: [],
+      //thêm các thuộc tính liên quan, để nhận các giá trị setState từ form
       id_event: "",
       name: "",
       description: "",
       image: "",
+      organizationalUnit: "",
+      typeOfEvent: ""
     };
+    // this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleInsertSubmit = this.handleInsertSubmit.bind(this);
+    // this.handleEditSubmit = this.handleEditSubmit.bind(this);
+    // this.handleEndEvent = this.handleEndEvent.bind(this);
   }
   //get data
   componentDidMount() {
@@ -34,13 +43,13 @@ class Home extends Component {
     const name = target.name;
 
     this.setState({
-      [name]: value,
+      [name]: value
     });
   };
 
   setImage = async (event) => {
     const formData = new FormData();
-    console.log(event.target.files);
+    //console.log(event.target.files);
     formData.append("file", event.target.files[0]);
     axios.post("/uploadfile", formData).then((res) => {
       this.setState({ image: `${res.data}` });
@@ -50,11 +59,14 @@ class Home extends Component {
   handleInsertSubmit = (event) => {
     event.preventDefault();
 
+    //khai báo một item mới, với các giá trị là các giá trị được nhập từ form
     const newEvent = {
       id_event: "",
       name: this.state.name,
       description: this.state.description,
       image: this.state.image,
+      organizationalUnit: this.state.organizationalUnit,
+      typeOfEvent: this.state.typeOfEvent
     };
 
     axios
@@ -72,6 +84,7 @@ class Home extends Component {
     Modal.setAppElement("body");
   }
 
+  //khi click vào button Edit của item nào thì nội dung của item đó sẽ hiển thị trong modal tương ứng.
   openModal = (item) => {
     this.setState({
       modalIsOpen: true,
@@ -79,6 +92,8 @@ class Home extends Component {
       name: item.name,
       description: item.description,
       image: item.image,
+      organizationalUnit: item.organizationalUnit,
+      typeOfEvent: item.typeOfEvent
     });
   };
 
@@ -97,6 +112,8 @@ class Home extends Component {
       name: this.state.name,
       description: this.state.description,
       image: this.state.image,
+      organizationalUnit: this.state.organizationalUnit,
+      typeOfEvent: this.state.typeOfEvent
     };
     axios
       .post("/api/edit", newUpdate)
@@ -110,6 +127,8 @@ class Home extends Component {
                   name: this.state.name,
                   description: this.state.description,
                   image: this.state.image,
+                  organizationalUnit: this.state.organizationalUnit,
+                  typeOfEvent: this.state.typeOfEvent 
                 }
               : elm
           ),
@@ -134,6 +153,27 @@ class Home extends Component {
       .catch((error) => console.log(error));
   };
 
+  //End event
+  handleEndEvent = (event) => {
+    event.preventDefault();
+
+    axios.post('/eventended')
+    .then(res => {
+      let key = this.state.id_event;
+        this.setState((prevState) => ({
+          event: prevState.event.map((elm) =>
+            elm.id_event === key
+              ? {
+                  ...elm,
+                  eventEnded: 1
+                }
+              : elm
+          ),
+        }));
+      })
+      .catch((error) => console.log(error));
+  };
+
   render() {
     return (
       <div className="homepage">
@@ -145,39 +185,58 @@ class Home extends Component {
             </div>
             <div className="card-body">
               <form onSubmit={this.handleInsertSubmit}>
-                <div>
-                  <div className="form-group">
-                    <label for="eventName">Tên sự kiện</label>
-                    <input
-                      name="name"
-                      type="text"
-                      className="form-control"
-                      id="eventName"
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label for="eventDescription">Mô tả</label>
-                    <textarea
-                      name="description"
-                      className="form-control"
-                      id="eventDescription"
-                      rows="4"
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label for="eventImage">Chọn hình ảnh</label>
-                    <input
-                      name="image"
-                      type="file"
-                      accept="image/*"
-                      className="form-control-file"
-                      id="eventImage"
-                      multiple
-                      onChange={this.setImage}
-                    />
-                  </div>
+                <div className="form-group">
+                  <label for="eventName">Tên sự kiện</label>
+                  <input
+                    name="name"
+                    type="text"
+                    className="form-control"
+                    id="eventName"
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventDescription">Mô tả</label>
+                  <textarea
+                    name="description"
+                    className="form-control"
+                    id="eventDescription"
+                    rows="4"
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventImage">Chọn hình ảnh</label>
+                  <input
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                    className="form-control-file"
+                    id="eventImage"
+                    multiple
+                    onChange={this.setImage}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>
+                    Đơn vị tổ chức:
+                    <select name="insertunit" onChange={this.handleInputChange} id="insertunit">
+                      {OrganizationalUnit.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+
+                <div className="form-group">
+                  <label>
+                    Loại sự kiện:
+                    <select name="inserttype" onChange={this.handleInputChange} id="inserttype">
+                      {TypeOfEvent.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
                 </div>
                 <div className="card-footer text-right">
                   <button>Đăng sự kiện</button>
@@ -200,7 +259,10 @@ class Home extends Component {
                 <button onClick={() => this.handleDelete(item)}>
                   <i class="far fa-trash-alt"></i>
                 </button>
-            
+                {/* Click to end event */}
+                <button onClick={()=> this.handleEndEvent}>
+                  <i class="fas fa-hourglass-end"></i>
+                </button>
                 <h2>
                   <b>{item.name}</b>
                 </h2>
@@ -220,41 +282,66 @@ class Home extends Component {
             <div className="card-header text-center form-header">Sự kiện</div>
             <div className="card-body">
               <form onSubmit={this.handleEditSubmit}>
-                <div>
-                  <div className="form-group">
-                    <label for="eventName">Tên sự kiện</label>
-                    <input
-                      name="name"
-                      type="text"
-                      className="form-control"
-                      id="eventName"
-                      value={this.state.name}
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label for="eventDescription">Mô tả</label>
-                    <textarea
-                      name="description"
-                      className="form-control"
-                      id="eventDescription"
-                      rows="4"
-                      value={this.state.description}
-                      onChange={this.handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label for="eventImage">Chọn hình ảnh</label>
-                    <input
-                      name="image"
-                      type="file"
-                      accept="image/*"
-                      className="form-control-file"
-                      id="eventImage"
-                      onChange={this.setImage}
-                    />
-                  </div>
+                <div className="form-group">
+                  <label for="eventName">Tên sự kiện</label>
+                  <input
+                    name="name"
+                    type="text"
+                    className="form-control"
+                    id="eventName"
+                    value={this.state.name}
+                    onChange={this.handleInputChange}
+                  />
                 </div>
+                <div className="form-group">
+                  <label for="eventDescription">Mô tả</label>
+                  <textarea
+                    name="description"
+                    className="form-control"
+                    id="eventDescription"
+                    rows="4"
+                    value={this.state.description}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventImage">Chọn hình ảnh</label>
+                  <input
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                    className="form-control-file"
+                    id="eventImage"
+                    onChange={this.setImage}
+                  />
+                </div>
+                <label>
+                  Đơn vị tổ chức:
+                  <select
+                    name="unit"
+                    onChange={this.handleInputChange}
+                    value={this.state.organizationalUnit}
+                  >
+                    {OrganizationalUnit.map((option) => (
+                      <option value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
+                </label>
+                <br />
+
+                <label>
+                  Loại sự kiện:
+                  <select
+                    name="type"
+                    onChange={this.handleInputChange}
+                    value={this.state.typeOfEvent}
+                  >
+                    {TypeOfEvent.map((option) => (
+                      <option value={option.value}>{option.label}</option>
+                    ))}
+                  </select>
+                </label>
+                <br />
                 <div className="card-footer text-right">
                   <button>Cập nhật sự kiện</button>
                 </div>
