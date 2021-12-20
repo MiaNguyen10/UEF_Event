@@ -20,10 +20,6 @@ class Home extends Component {
       organizationalUnit: "",
       typeOfEvent: ""
     };
-    // this.handleInputChange = this.handleInputChange.bind(this);
-    // this.handleInsertSubmit = this.handleInsertSubmit.bind(this);
-    // this.handleEditSubmit = this.handleEditSubmit.bind(this);
-    // this.handleEndEvent = this.handleEndEvent.bind(this);
   }
   //get data
   componentDidMount() {
@@ -67,8 +63,9 @@ class Home extends Component {
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent
+  
     };
-
+    console.log(newEvent);
     axios
       .post("/api/insert", newEvent)
       .then((res) => {
@@ -220,7 +217,7 @@ class Home extends Component {
                 <div className="form-group">
                   <label>
                     Đơn vị tổ chức:
-                    <select name="insertunit" onChange={this.handleInputChange} id="insertunit">
+                    <select name="organizationalUnit" onChange={this.handleInputChange}>
                       {OrganizationalUnit.map((option) => (
                         <option value={option.value}>{option.label}</option>
                       ))}
@@ -231,7 +228,7 @@ class Home extends Component {
                 <div className="form-group">
                   <label>
                     Loại sự kiện:
-                    <select name="inserttype" onChange={this.handleInputChange} id="inserttype">
+                    <select name="typeOfEvent" onChange={this.handleInputChange}>
                       {TypeOfEvent.map((option) => (
                         <option value={option.value}>{option.label}</option>
                       ))}
@@ -318,7 +315,7 @@ class Home extends Component {
                 <label>
                   Đơn vị tổ chức:
                   <select
-                    name="unit"
+                    name="organizationalUnit"
                     onChange={this.handleInputChange}
                     value={this.state.organizationalUnit}
                   >
@@ -332,7 +329,7 @@ class Home extends Component {
                 <label>
                   Loại sự kiện:
                   <select
-                    name="type"
+                    name="typeOfEvent"
                     onChange={this.handleInputChange}
                     value={this.state.typeOfEvent}
                   >
