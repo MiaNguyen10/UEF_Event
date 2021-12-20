@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
 import './Sidebar.css';
+import logo from "../../asset/img/logo.png";
 
 class Sidebar extends Component {
   render() {
     return (
-      <div>
-        <ul className='side-menu'>
+      <div className='side-menu'>
+        <ul >
           {MenuItems.map((item, index) => {
             return (
               <li key={index} className={item.cName}>
                 <Link to={item.path}>
-                  {item.icon}
+                  <img src={item.icon}/>
                   <span>{item.title}</span>
                 </Link>
               </li>

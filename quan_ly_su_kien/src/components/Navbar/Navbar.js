@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import "./Navbar.css";
+import logo from "../../asset/img/logo.png";
 
 class Navbar extends Component {
   state = { clicked: false };
@@ -12,13 +13,12 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="NavbarItems">
-        <h1 className="navbar-logo">UEF Event</h1>
-        <div className="menu-icon" onClick={this.handleClick}>
-          <i
-            className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
-          ></i>
-        </div>
+
         <ul className={this.state.clicked ? "nav-menu active" : "nav-menu"}>
+
+          <li className="navbar-logo"><img  src={logo}/></li>
+          <li className="navbar-logo"><a>HỆ THỐNG QUẢN LÝ SỰ KIỆN</a></li>
+
           {MenuItems.map((item, index) => {
             return (
               <li key={index}>
@@ -28,6 +28,7 @@ class Navbar extends Component {
               </li>
             );
           })}
+          
         </ul>
       </nav>
     );

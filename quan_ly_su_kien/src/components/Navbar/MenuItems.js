@@ -1,17 +1,17 @@
 export const MenuItems = [
     {
-        title: 'Trang chủ',
-        path: '/',
+        title: 'HƯỚNG DẪN',
+        path: '/instruction',
         cName: 'nav-links'
     },
     {
-        title: 'Liên hệ',
+        title: 'LIÊN HỆ',
         path: '/contact',
         cName: 'nav-links'
     },
     {
-        title: 'Hướng dẫn',
-        path: '/instruction',
+        title: 'TRANG CHỦ',
+        path: '/',
         cName: 'nav-links'
     }
 

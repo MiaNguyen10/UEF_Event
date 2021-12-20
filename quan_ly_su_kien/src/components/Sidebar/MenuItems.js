@@ -4,13 +4,14 @@ import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as GiIcons from 'react-icons/gi';
 import * as GrIcons from 'react-icons/gr';
+import logo from "../../asset/img/logo.png";
 
 export const MenuItems = [
   {
     title: 'Tên đăng nhập',
     path: '/',
-    icon: <AiIcons.AiFillHome />,
-    cName: 'nav-text'
+    icon: logo,
+    cName: 'nav-username'
   },
   {
     title: 'Sự kiện đã qua',
