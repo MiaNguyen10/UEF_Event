@@ -24,9 +24,9 @@ var upload = multer({ storage: storage })
 
 //DB Connection
 const connection = mysql.createConnection({
-  host: "localhost", // change this
-  user: "guest", // change this
-  password: "password",
+  host: "localhost", 
+  user: "root", // change this
+  password: "", // change this
   database: "quan_ly_su_kien",
 });
 
@@ -77,11 +77,30 @@ app.post("/api/insert", function (req, res) {
     "', 0)";
   connection.query(sql, function (err, results) {
     if (err) throw err;
-    res.json({ news: results });
+    res.json({ event: results });
   });
 });
 
+app.post('/api/edit', (req, res) => {
+  var sql = "UPDATE event SET "
+          +   "name='"+req.body.name+"',"
+          +   "description='"+req.body.description+"',"
+          +   "image='"+req.body.image+"'"
+          + "WHERE id_event='"+req.body.id_event+"'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({event: results});
+  });
+});
 
+app.post('/api/delete', (req, res) => {
+  var sql = "DELETE FROM event "
+          + "WHERE id_event='"+req.body.id_event+"'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({event: results});
+  });
+});
 
 //create connection
 app.listen(4000, () => console.log("App listening on port 4000"));
