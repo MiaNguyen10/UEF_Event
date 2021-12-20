@@ -41,6 +41,7 @@ app.get("/", (req, res) => {
 })
 app.use("/static", express.static("public/images/upload_images")); // host static file
 
+
 app.get("/api/event", (req, res) => {
   var sql = "SELECT * FROM event ORDER BY id_event DESC";
   connection.query(sql, function (err, results) {
@@ -52,7 +53,7 @@ app.get("/api/event", (req, res) => {
 
 // API for files
 app.post('/uploadfile', upload.single('file'), (req, res, next) => {
-  console.log(req.file)
+  //console.log(req.file)
   const file = req.file
   if (!file) {
     const error = new Error('Please upload a file')
@@ -65,16 +66,19 @@ app.post('/uploadfile', upload.single('file'), (req, res, next) => {
 })
 
 app.post("/api/insert", function (req, res) {  
-  var sql =
-    "INSERT " +
-    "INTO event(name,description,image, eventended) " +
-    "VALUES('" +
-    req.body.name +
-    "','" +
-    req.body.description +
-    "','" +
-    req.body.image +
-    "', 0)";
+   var sql = "INSERT "
+          + "INTO event(name,description,image,organizational_unit,type_of_event,eventended) "
+          + "VALUES('"+
+          req.body.name +
+          "','" +
+          req.body.description +
+          "','" +
+          req.body.image +
+          "','" +
+          req.body.organizationalUnit +
+          "','" +
+          req.body.typeOfEvent +
+          "', 0)";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
@@ -85,7 +89,19 @@ app.post('/api/edit', (req, res) => {
   var sql = "UPDATE event SET "
           +   "name='"+req.body.name+"',"
           +   "description='"+req.body.description+"',"
-          +   "image='"+req.body.image+"'"
+          +   "image='"+req.body.image+"',"
+          +   "organizational_unit='"+req.body.organizationalUnit+"',"
+          +   "type_of_event='"+req.body.typeOfEvent+"'"
+          + "WHERE id_event='"+req.body.id_event+"'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({event: results});
+  });
+});
+
+app.post('/eventended', (req, res) => {
+  var sql = "UPDATE event SET "
+          +   "eventended='"+req.body.eventended+"'"
           + "WHERE id_event='"+req.body.id_event+"'";
   connection.query(sql, function(err, results) {
     if (err) throw err;
