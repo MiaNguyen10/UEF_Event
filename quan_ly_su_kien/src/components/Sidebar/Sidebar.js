@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import { Link } from "react-router-dom";
 import './Sidebar.css';
-import logo from "../../asset/img/logo.png";
 
 class Sidebar extends Component {
   render() {
