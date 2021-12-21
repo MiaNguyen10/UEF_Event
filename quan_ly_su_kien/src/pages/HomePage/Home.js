@@ -185,7 +185,8 @@ class Home extends Component {
     return (
       <div className="homepage">
         {/* Insert new event */}
-        <Popup modal trigger={<button>Tạo sự kiện</button>}>
+        <Popup modal trigger={<button className="btn-create-event fa fa-plus" title="Tạo sự kiện"></button>}>
+          {/* <span className="btn-create-event des-btn">Tạo sự kiện</span> */}
           <div className="card form-event">
             <div className="card-header text-center form-header">
               Sự kiện mới
@@ -254,10 +255,10 @@ class Home extends Component {
         </Popup>
 
         {/* Display event data */}
-        <div className="event_des">
+        <div className="event-des">
           <ul>
             {this.state.event.map((item) => (
-              <li key={item.id_event}>
+              <li className="event-des-item" key={item.id_event}>
                 {/* click to show edit form */}
                 <button onClick={() => this.openModal(item)}>
                   <i className="far fa-edit"></i>
@@ -274,8 +275,9 @@ class Home extends Component {
                   <b>{item.name}</b>
                 </h2>
                 <br />
-                <div className="description">{item.description}</div> <br />
-                <img src={item.image} alt="image_event" className="img-fluid" />
+                  <div className="description">{item.description}</div> 
+                <br />
+                <img src={item.image} alt="image_event" className="img-fluid" width={300} height={100}/>
               </li>
             ))}
           </ul>

@@ -1,7 +1,7 @@
 .side-menu{
   list-style-type: none;
-  margin-top: 20px;
-  width: 15%;
+  padding-top: 20px;
+  width: 20%;
   height: 100%;
   position: fixed;
   height: 100%;
@@ -9,6 +9,7 @@
   font-weight: 600;
   color: black;
   font-size: 18px;
+  background-color: #E5E5E5;
 }
 
 .nav-username{
@@ -26,16 +27,16 @@
   background-color: white !important;
 }
 
-.nav-text {
+/* .nav-text {
   display: flex;
-  justify-content: end;
-  align-self: flex-end;
   list-style: none;
   height: 55px; 
-}
+} */
+
 .nav-text img{
   height: 25px;
   width: auto;
+  /* margin: auto; */
 }
   
 .nav-text a {
@@ -44,31 +45,32 @@
   height: 100%;
   padding: 15px 5px;
   border-radius: 4px;
-}
-
-.nav-text span{
-  padding-top: 20x;
+  list-style: none;
 }
 
 .nav-text a:hover {
-    background-color: #bdc1ff; 
-    text-decoration: none;
+  background-color: #bdc1ff; 
+  text-decoration: none;
 }
 
+.nav-text a:link{
+  text-decoration: none;
+}
+
+.nav-text a:visited{
+  color: black;
+}
+ 
 span {
   margin-left: 16px;
 }
 
+.side-end{
+  float: inline-end;
+}
+
 @media screen and (max-width: 960px) {
-  span {
-    display:none;
-  }
-
-  .nav-text a{
-    font-size: 18px;
-  }
-
-  .nav-text a {
-    width: 50%;
-  }
+.side-menu{
+  display: none;
+}
 }

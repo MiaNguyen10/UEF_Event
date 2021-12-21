@@ -12,7 +12,7 @@ class Sidebar extends Component {
             return (
               <li key={index} className={item.cName}>
                 <Link to={item.path}>
-                  <img src={item.icon}/>
+                  <img src={item.icon} alt="icon"/>
                   <span>{item.title}</span>
                 </Link>
               </li>
