@@ -1,14 +1,14 @@
 export const TypeOfEvent = [
     {
         label: 'Talkshow',
-        value:'talkshow',
+        value:'Talkshow',
     },
     {
         label: 'Hội thảo',
-        value:'seminor',
+        value:'Hội thảo',
     },
     {
         label: 'Cuộc thi',
-        value:'competition',
+        value:'Cuộc thi',
     }
 ];

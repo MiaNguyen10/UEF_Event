@@ -18,7 +18,8 @@ class Home extends Component {
       description: "",
       image: "",
       organizationalUnit: "",
-      typeOfEvent: ""
+      typeOfEvent: "",
+      eventended:""
     };
   }
   //get data
@@ -104,6 +105,7 @@ class Home extends Component {
   handleEditSubmit = (event) => {
     event.preventDefault();
 
+    //khai báo giá trị để truyền theo phương thức post
     const newUpdate = {
       id_event: this.state.id_event,
       name: this.state.name,
@@ -112,6 +114,8 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent
     };
+    console.log(newUpdate);
+    
     axios
       .post("/api/edit", newUpdate)
       .then((res) => {
@@ -126,6 +130,31 @@ class Home extends Component {
                   image: this.state.image,
                   organizationalUnit: this.state.organizationalUnit,
                   typeOfEvent: this.state.typeOfEvent 
+                }
+              : elm
+          ),
+        }));
+      })
+      .catch((error) => console.log(error));
+  };
+
+  //End event
+  handleEndEvent = (item) => {
+    const eventId = {
+      id_event: item.id_event,
+      eventended: 1
+    };
+    console.log(eventId)
+
+    axios
+      .post("/eventended", eventId)
+      .then((res) => {
+        this.setState((prevState) => ({
+          event: prevState.event.map((elm) =>
+            elm.id_event === item.id_event
+              ? {
+                  ...elm,
+                  eventended:1
                 }
               : elm
           ),
@@ -150,26 +179,7 @@ class Home extends Component {
       .catch((error) => console.log(error));
   };
 
-  //End event
-  handleEndEvent = (event) => {
-    event.preventDefault();
-
-    axios.post('/eventended')
-    .then(res => {
-      let key = this.state.id_event;
-        this.setState((prevState) => ({
-          event: prevState.event.map((elm) =>
-            elm.id_event === key
-              ? {
-                  ...elm,
-                  eventEnded: 1
-                }
-              : elm
-          ),
-        }));
-      })
-      .catch((error) => console.log(error));
-  };
+  
 
   render() {
     return (
@@ -257,7 +267,7 @@ class Home extends Component {
                   <i class="far fa-trash-alt"></i>
                 </button>
                 {/* Click to end event */}
-                <button onClick={()=> this.handleEndEvent}>
+                <button onClick={() => this.handleEndEvent(item)}>
                   <i class="fas fa-hourglass-end"></i>
                 </button>
                 <h2>
