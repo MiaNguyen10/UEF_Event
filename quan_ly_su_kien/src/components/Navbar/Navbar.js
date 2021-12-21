@@ -16,8 +16,8 @@ class Navbar extends Component {
 
         <ul className={this.state.clicked ? "nav-menu active" : "nav-menu"}>
 
-          <li className="navbar-logo"><img  src={logo}/></li>
-          <li className="navbar-logo"><a>HỆ THỐNG QUẢN LÝ SỰ KIỆN</a></li>
+          <li className="navbar-logo"><img  src={logo} alt="" width={50} height={50}/></li>
+          <li className="navbar-logo"><a href="/">HỆ THỐNG QUẢN LÝ SỰ KIỆN</a></li>
 
           {MenuItems.map((item, index) => {
             return (

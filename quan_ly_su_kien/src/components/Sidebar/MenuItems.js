@@ -35,24 +35,24 @@ export const MenuItems = [
     title: 'Ngôn ngữ',
     path: '/language',
     icon: language,
-    cName: 'nav-text'
+    cName: 'nav-text side-end'
   },
   {
     title: 'Giao diện',
     path: '/theme',
     icon: theme,
-    cName: 'nav-text'
+    cName: 'nav-text side-end'
   },
   {
     title: 'Cài đặt',
     path: '/settings',
     icon: setting,
-    cName: 'nav-text'
+    cName: 'nav-text side-end'
   },
   {
     title: 'Log out',
     path: '/logout',
     icon: logout,
-    cName: 'nav-text'
+    cName: 'nav-text side-end'
   }
 ];
