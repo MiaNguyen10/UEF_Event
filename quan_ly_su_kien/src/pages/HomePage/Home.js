@@ -267,7 +267,7 @@ class Home extends Component {
                 <br />
                   <div className="description">{item.description}</div> 
                 <br />
-                <img src={item.image} alt="image_event" className="img-fluid" width={300} height={100}/>
+                <img src={item.image} alt="image_event" className="img-fluid" width={500}/>
               </li>
             ))}
           </ul>

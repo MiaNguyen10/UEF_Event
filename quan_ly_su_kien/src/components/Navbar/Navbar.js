@@ -14,6 +14,7 @@ class Navbar extends Component {
     return (
       <nav className="NavbarItems">
 
+
         <ul className={this.state.clicked ? "nav-menu active" : "nav-menu"}>
 
           <li className="navbar-logo"><img  src={logo} alt="" width={50} height={50}/></li>

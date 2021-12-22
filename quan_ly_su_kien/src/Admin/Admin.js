@@ -12,6 +12,7 @@ const Admin = () => {
   return (
     <div>
       <Router>
+        
         <Navbar />
 
         <Sidebar />
