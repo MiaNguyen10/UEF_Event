@@ -21,7 +21,7 @@ export const MenuItems = [
   },
   {
     title: 'Sự kiện đã qua',
-    path: '/recently',
+    path: '/eventended',
     icon: past_event,
     cName: 'nav-text'
   },

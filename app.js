@@ -41,15 +41,23 @@ app.get("/", (req, res) => {
 })
 app.use("/static", express.static("public/images/upload_images")); // host static file
 
-
+//Get on-going events
 app.get("/api/event", (req, res) => {
-  var sql = "SELECT * FROM event ORDER BY id_event DESC";
+  var sql = "SELECT * FROM event WHERE eventended = 0 ORDER BY id_event DESC";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
-  });
+  }); 
 });
 
+//Get ended events
+app.get("/api/eventended", (req, res) => {
+  var sql = "SELECT * FROM event WHERE eventended = 1 ORDER BY id_event DESC";
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ event: results });
+  }); 
+});
 
 // API for files
 app.post('/uploadfile', upload.single('file'), (req, res, next) => {
@@ -65,9 +73,10 @@ app.post('/uploadfile', upload.single('file'), (req, res, next) => {
   res.send(fileUrl)
 })
 
+//Insert event
 app.post("/api/insert", function (req, res) {  
    var sql = "INSERT "
-          + "INTO event(name,description,image,organizational_unit,type_of_event,eventended) "
+          + "INTO event(name,description,image,organizationalUnit,typeOfEvent,eventended) "
           + "VALUES('"+
           req.body.name +
           "','" +
@@ -85,13 +94,14 @@ app.post("/api/insert", function (req, res) {
   });
 });
 
+//Edit event
 app.post('/api/edit', (req, res) => {
   var sql = "UPDATE event SET "
           +   "name='"+req.body.name+"',"
           +   "description='"+req.body.description+"',"
           +   "image='"+req.body.image+"',"
-          +   "organizational_unit='"+req.body.organizationalUnit+"',"
-          +   "type_of_event='"+req.body.typeOfEvent+"'"
+          +   "organizationalUnit='"+req.body.organizationalUnit+"',"
+          +   "typeOfEvent='"+req.body.typeOfEvent+"'"
           + "WHERE id_event='"+req.body.id_event+"'";
   connection.query(sql, function(err, results) {
     if (err) throw err;
@@ -99,6 +109,7 @@ app.post('/api/edit', (req, res) => {
   });
 });
 
+//End event
 app.post('/eventended', (req, res) => {
   var sql = "UPDATE event SET "
           +   "eventended='"+req.body.eventended+"'"
@@ -108,7 +119,18 @@ app.post('/eventended', (req, res) => {
     res.json({event: results});
   });
 });
+//Restore event
+app.post('/restoreevent', (req, res) => {
+  var sql = "UPDATE event SET "
+          +   "eventended='"+req.body.eventended+"'"
+          + "WHERE id_event='"+req.body.id_event+"'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({event: results});
+  });
+});
 
+//Delete event
 app.post('/api/delete', (req, res) => {
   var sql = "DELETE FROM event "
           + "WHERE id_event='"+req.body.id_event+"'";
