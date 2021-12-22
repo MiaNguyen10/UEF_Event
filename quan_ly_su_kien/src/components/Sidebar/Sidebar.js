@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
-import { Link } from "react-router-dom";
 import './Sidebar.css';
 
 class Sidebar extends Component {
@@ -11,10 +10,10 @@ class Sidebar extends Component {
           {MenuItems.map((item, index) => {
             return (
               <li key={index} className={item.cName}>
-                <Link to={item.path}>
+                <a href={item.path}>
                   <img src={item.icon} alt="icon"/>
                   <span>{item.title}</span>
-                </Link>
+                </a>
               </li>
             );
           })}

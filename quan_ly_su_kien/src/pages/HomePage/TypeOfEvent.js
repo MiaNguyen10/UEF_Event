@@ -1,5 +1,10 @@
 export const TypeOfEvent = [
     {
+        label: '===Chọn loại sự kiện===',
+        value: '===Chọn loại sự kiện===',
+
+    },
+    {
         label: 'Talkshow',
         value:'Talkshow',
     },

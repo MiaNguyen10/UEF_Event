@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../pages/HomePage/Home";
 import Contact from "../pages/Contact/contact";
 import Instruction from "../pages/Instruction/instruction";
+import EventEnded from "../pages/EventEnded/EventEnded";
 
 const Admin = () => {
 
@@ -20,6 +21,7 @@ const Admin = () => {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/instruction" element={<Instruction />} />
+          <Route exact path="/eventended" element={<EventEnded />} />
         </Routes>
       </Router>
 

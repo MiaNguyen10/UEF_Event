@@ -1,5 +1,10 @@
 export const OrganizationalUnit = [
     {
+        label: '===========Chọn đơn vị tổ chức===========',
+        value: '===========Chọn đơn vị tổ chức===========',
+
+    },
+    {
         label: 'Trường UEF',
         value:'Trường UEF',
     },
