@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import './Sidebar.css';
+import { BsList } from "react-icons/bs";
 
 class Sidebar extends Component {
   constructor(props){
@@ -27,8 +28,8 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div className="menuContainer">
-        <div className="btnContainer"><button className="menuBtnSmall" onClick={() => this.setState({active: !this.state.active})}>GHeel</button></div>
+      <div className="menu-container">
+        <BsList className="menu-btn-small " onClick={() => this.setState({active: !this.state.active})}/>
         {this.state.active && 
         <div className='side-menu'>
             <ul >

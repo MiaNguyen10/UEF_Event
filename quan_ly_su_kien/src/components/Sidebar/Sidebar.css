@@ -72,14 +72,29 @@ span {
 
 @media screen and (max-width: 960px) {
   .side-menu{
-    /* display: none; */
     width: 40%;
+    background-color: #060b26;
+   transition: 850ms;
+   margin: 0;
   }
+
+  .menu-btn-small{
+    position: sticky;
+    top: 0;
+    margin: 5% 5% 0;
+    font-size: 5vmin;
+  }
+
+  .menu-container{
+    position: fixed;
+    padding:  0;
+  }
+
 }
 
 
 @media screen and (min-width: 970px) {
-  .menuBtnSmall {
+  .menu-btn-small{
     display: none;
   }
 }

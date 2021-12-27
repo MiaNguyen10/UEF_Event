@@ -3,6 +3,8 @@ import "./Navbar.css";
 import logo from "../../asset/img/logo.png";
 import { DropdownMenuItems } from "./DropdownMenuItems";
 import { MenuItems } from "./MenuItems";
+import { NavDropdown } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 class Navbar extends Component {
   state = { clicked: false };
@@ -22,29 +24,18 @@ class Navbar extends Component {
             <a href="/">HỆ THỐNG QUẢN LÝ SỰ KIỆN</a>
           </li>
           
-          <li className="dropdown nav-links">
-            <a
-              className="dropdown-toggle"
-              href="/department"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              KHOA TỔ CHỨC
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li className="dropdown ">
+            <NavDropdown className="nav-links" title="KHOA TỔ CHỨC">
               {DropdownMenuItems.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <a className={item.cName} href={item.path}>
-                      {item.title}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+                  return (
+                    <div key={index}>
+                      <Dropdown.Item className={item.cName} href={item.path}>
+                        {item.title}
+                      </Dropdown.Item>
+                    </div>
+                  );
+                })}
+            </NavDropdown>
           </li>
 
           {MenuItems.map((item, index) => {
