@@ -30,7 +30,11 @@
 
 .dropdown-item{
     width: 400px;
+    text-decoration: none;
+}
 
+.dropdown-item:hover{
+    text-decoration: none;
 }
 
 img{

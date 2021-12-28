@@ -72,11 +72,47 @@ ul{
 
 .event-des-item{
     background-color: #ffffff;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 5%;
     margin-bottom: 2%;
     margin-left: 1%;
     box-shadow: 1px 1px 5px #999;
+}
+
+.header-event{
+    display: flex;
+}
+
+
+#three-dots{
+    font-size: 18px;
+}
+
+.dropdown-choose{
+    background-color: #FFF;
+}
+
+.event-name{
+    flex-grow: 1;
+    font-weight: 700;
+    font-size: 18px;
+    align-self: center;
+}
+
+.ic-in-3-dots{
+    font-size: 20px;
+    width: 30px;
+    margin: 0;
+    padding: 4px 0;
+}
+
+#drop-item{
+    color: black;
+    padding: 5px;
+}
+
+#drop-item:hover{
+    background-color: #E5E5E5;
 }
 
 @media screen and (max-width: 960px) {

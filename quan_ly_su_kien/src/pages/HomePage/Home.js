@@ -5,6 +5,8 @@ import Popup from "reactjs-popup";
 import Modal from "react-modal";
 import { OrganizationalUnit } from "./OrganizationalUnit";
 import { TypeOfEvent } from "./TypeOfEvent";
+import { BsThreeDots } from "react-icons/bs";
+import { Dropdown } from 'react-bootstrap';
 
 class Home extends Component {
   constructor(props) {
@@ -256,31 +258,50 @@ class Home extends Component {
 
         {/* Display event data */}
         <div className="event-des">
-          <ul>
-            {this.state.event.map((item) => (
-              <li className="event-des-item" key={item.id_event}>
-                {/* click to show edit form */}
-                <button onClick={() => this.openModal(item)}>
-                  <i className="far fa-edit"></i>
-                </button>
-                {/* Click to delete event data */}
-                <button onClick={() => this.handleDelete(item)}>
-                  <i class="far fa-trash-alt"></i>
-                </button>
-                {/* Click to end event */}
-                <button onClick={() => this.handleEndEvent(item)}>
-                  <i class="fas fa-hourglass-end"></i>
-                </button>
-                <h2>
-                  <b>{item.name}</b>
-                </h2>
-                <br />
-                  <div className="description">{item.description}</div> 
-                <br />
-                <img src={item.image} alt="image_event" className="img-fluid" width={500}/>
-              </li>
-            ))}
-          </ul>
+          {this.state.event.map((item) => (
+            <div className="event-des-item" key={item.id_event}>
+              <div className="header-event">
+                
+                <div className="event-name">{item.name}</div>
+
+                <Dropdown >
+                  <Dropdown.Toggle variant="" className="dropdown-choose">
+                    <BsThreeDots id="three-dots"></BsThreeDots>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                      {/* click to show edit form */}
+                    <Dropdown.Item onClick={() => this.openModal(item)}>
+                    <div id="drop-item">
+                      <button className="far fa-edit ic-in-3-dots"/>
+                      <span>Chỉnh sửa</span>
+                    </div>
+                    </Dropdown.Item>
+
+                      {/* Click to delete event data */}
+                    <Dropdown.Item onClick={() => this.handleDelete(item)}>
+                    <div id="drop-item">
+                      <button className="far fa-trash-alt ic-in-3-dots"/>
+                      <span>Xóa</span>
+                    </div>
+                    </Dropdown.Item>
+
+                      {/* Click to end event */}
+                    <Dropdown.Item  onClick={() => this.handleEndEvent(item)}>
+                      <div id="drop-item">
+                        <button className="fas fa-hourglass-end ic-in-3-dots"/>
+                        <span>Kết thúc sự kiện</span>
+                      </div>
+                      
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              
+                <div className="description">{item.description}</div> 
+              <img src={item.image} alt="image_event" className="img-fluid" width={500}/>
+            </div>
+          ))}
         </div>
 
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
