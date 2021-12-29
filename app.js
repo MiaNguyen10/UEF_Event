@@ -59,6 +59,16 @@ app.get("/api/eventended", (req, res) => {
   }); 
 });
 
+// get event by search 
+app.get("/api/searchEvent", (req, res) => {
+  let title = req.query.search 
+  var sql = "SELECT * FROM event WHERE name like '%" + title + "%'";
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ event: results });
+  }); 
+})
+
 // API for files
 app.post('/uploadfile', upload.single('file'), (req, res, next) => {
   //console.log(req.file)

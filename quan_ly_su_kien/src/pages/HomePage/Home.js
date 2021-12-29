@@ -21,7 +21,8 @@ class Home extends Component {
       image: "",
       organizationalUnit: "",
       typeOfEvent: "",
-      eventended:""
+      eventended:"",
+      searchData: ""
     };
   }
   //get data
@@ -181,7 +182,15 @@ class Home extends Component {
       .catch((error) => console.log(error));
   };
 
-  
+  handleSearch = () => {
+    axios
+      .get(`/api/searchEvent?search=${this.state.searchData}`)
+      .then((res) => {
+        const event = res.data;
+        this.setState({ event: event.event });
+      })
+      .catch((error) => console.log(error));
+  }
 
   render() {
     return (
@@ -258,6 +267,11 @@ class Home extends Component {
 
         {/* Display event data */}
         <div className="event-des">
+          <div>
+            <p>Search bar</p>
+            <input name="searchData" onChange={this.handleInputChange}/>
+            <button onClick={this.handleSearch}>Search</button>
+          </div> 
           {this.state.event.map((item) => (
             <div className="event-des-item" key={item.id_event}>
               <div className="header-event">

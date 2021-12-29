@@ -4,7 +4,6 @@ import logo from "../../asset/img/logo.png";
 import { DropdownMenuItems } from "./DropdownMenuItems";
 import { MenuItems } from "./MenuItems";
 import { NavDropdown } from 'react-bootstrap';
-import { Dropdown } from 'react-bootstrap';
 
 class Navbar extends Component {
   state = { clicked: false };
@@ -29,9 +28,9 @@ class Navbar extends Component {
               {DropdownMenuItems.map((item, index) => {
                   return (
                     <div key={index}>
-                      <Dropdown.Item className={item.cName} href={item.path}>
+                      <NavDropdown.Item className={item.cName} href={item.path}>
                         {item.title}
-                      </Dropdown.Item>
+                      </NavDropdown.Item>
                     </div>
                   );
                 })}

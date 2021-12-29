@@ -51,8 +51,12 @@ li a {
 .nav-links:hover {
     background-color: #bdc1ff;
     border-radius: 2px;
-    text-decoration: none;
+    text-decoration: none !important;
     transition: all 0.2s ease-out;
+}
+
+.nav-links:active{
+    text-decoration: none;
 }
 
 .navbar-logo a:hover{
