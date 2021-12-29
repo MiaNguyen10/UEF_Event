@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import "./Home.css";
+import "../HomePage/Home.css";
 import axios from "axios";
-import Popup from "reactjs-popup";
 import Modal from "react-modal";
-import { OrganizationalUnit } from "./OrganizationalUnit";
-import { TypeOfEvent } from "./TypeOfEvent";
+import { OrganizationalUnit } from "../HomePage/OrganizationalUnit";
+import { TypeOfEvent } from "../HomePage/TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown } from "react-bootstrap";
 
-class Home extends Component {
+
+class UEF extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,8 @@ class Home extends Component {
       image: "",
       organizationalUnit: "",
       typeOfEvent: "",
-      eventended:"",
-      searchData: ""
+      eventended: "",
+      searchData:""
     };
   }
   //get data
@@ -43,7 +43,7 @@ class Home extends Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -66,8 +66,7 @@ class Home extends Component {
       description: this.state.description,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
-      typeOfEvent: this.state.typeOfEvent
-  
+      typeOfEvent: this.state.typeOfEvent,
     };
     console.log(newEvent);
     axios
@@ -94,7 +93,7 @@ class Home extends Component {
       description: item.description,
       image: item.image,
       organizationalUnit: item.organizationalUnit,
-      typeOfEvent: item.typeOfEvent
+      typeOfEvent: item.typeOfEvent,
     });
   };
 
@@ -115,10 +114,10 @@ class Home extends Component {
       description: this.state.description,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
-      typeOfEvent: this.state.typeOfEvent
+      typeOfEvent: this.state.typeOfEvent,
     };
     console.log(newUpdate);
-    
+
     axios
       .post("/api/edit", newUpdate)
       .then((res) => {
@@ -132,7 +131,7 @@ class Home extends Component {
                   description: this.state.description,
                   image: this.state.image,
                   organizationalUnit: this.state.organizationalUnit,
-                  typeOfEvent: this.state.typeOfEvent 
+                  typeOfEvent: this.state.typeOfEvent,
                 }
               : elm
           ),
@@ -145,9 +144,9 @@ class Home extends Component {
   handleEndEvent = (item) => {
     const eventId = {
       id_event: item.id_event,
-      eventended: 1
+      eventended: 1,
     };
-    console.log(eventId)
+    console.log(eventId);
 
     axios
       .post("/eventended", eventId)
@@ -157,7 +156,7 @@ class Home extends Component {
             elm.id_event === item.id_event
               ? {
                   ...elm,
-                  eventended:1
+                  eventended: 1,
                 }
               : elm
           ),
@@ -195,128 +194,64 @@ class Home extends Component {
   render() {
     return (
       <div className="homepage">
-        {/* Insert new event */}
-        <Popup modal trigger={<button className="btn-create-event fa fa-plus" title="Tạo sự kiện"></button>}>
-          <div className="card form-event">
-            <div className="card-header text-center form-header">
-              Sự kiện mới
-            </div>
-            <div className="card-body">
-              <form onSubmit={this.handleInsertSubmit}>
-                <div className="form-group">
-                  <label for="eventName">Tên sự kiện</label>
-                  <input
-                    name="name"
-                    type="text"
-                    className="form-control"
-                    id="eventName"
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label for="eventDescription">Mô tả</label>
-                  <textarea
-                    name="description"
-                    className="form-control"
-                    id="eventDescription"
-                    rows="4"
-                    onChange={this.handleInputChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label for="eventImage">Chọn hình ảnh</label>
-                  <input
-                    name="image"
-                    type="file"
-                    accept="image/*"
-                    className="form-control-file"
-                    id="eventImage"
-                    multiple
-                    onChange={this.setImage}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>
-                    Đơn vị tổ chức:
-                    <select name="organizationalUnit" onChange={this.handleInputChange}>
-                      {OrganizationalUnit.map((option) => (
-                        <option value={option.value}>{option.label}</option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-
-                <div className="form-group">
-                  <label>
-                    Loại sự kiện:
-                    <select name="typeOfEvent" onChange={this.handleInputChange}>
-                      {TypeOfEvent.map((option) => (
-                        <option value={option.value}>{option.label}</option>
-                      ))}
-                    </select>
-                  </label>
-                </div>
-                <div className="card-footer text-right">
-                  <button>Đăng sự kiện</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </Popup>
-
         {/* Display event data */}
         <div className="event-des">
           <div>
             <p>Search bar</p>
-            <input name="searchData" onChange={this.handleInputChange}/>
+            <input name="searchData" onChange={this.handleInputChange} />
             <button onClick={this.handleSearch}>Search</button>
-          </div> 
-          {this.state.event.map((item) => (
+          </div>
+          {this.state.event.filter(u => u.organizationalUnit.includes("Trường UEF")).map((item) => (
             <div className="event-des-item" key={item.id_event}>
               <div className="header-event">
-                
                 <div className="event-name">{item.name}</div>
 
-                <Dropdown >
+                <Dropdown>
                   <Dropdown.Toggle variant="" className="dropdown-choose">
                     <BsThreeDots id="three-dots"></BsThreeDots>
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                      {/* click to show edit form */}
+                    {/* click to show edit form */}
                     <Dropdown.Item onClick={() => this.openModal(item)}>
-                    <div id="drop-item">
-                      <button className="far fa-edit ic-in-3-dots"/>
-                      <span>Chỉnh sửa</span>
-                    </div>
-                    </Dropdown.Item>
-
-                      {/* Click to delete event data */}
-                    <Dropdown.Item onClick={() => this.handleDelete(item)}>
-                    <div id="drop-item">
-                      <button className="far fa-trash-alt ic-in-3-dots"/>
-                      <span>Xóa</span>
-                    </div>
-                    </Dropdown.Item>
-
-                      {/* Click to end event */}
-                    <Dropdown.Item  onClick={() => this.handleEndEvent(item)}>
                       <div id="drop-item">
-                        <button className="fas fa-hourglass-end ic-in-3-dots"/>
+                        <button className="far fa-edit ic-in-3-dots" />
+                        <span>Chỉnh sửa</span>
+                      </div>
+                    </Dropdown.Item>
+
+                    {/* Click to delete event data */}
+                    <Dropdown.Item onClick={() => this.handleDelete(item)}>
+                      <div id="drop-item">
+                        <button className="far fa-trash-alt ic-in-3-dots" />
+                        <span>Xóa</span>
+                      </div>
+                    </Dropdown.Item>
+
+                    {/* Click to end event */}
+                    <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                      <div id="drop-item">
+                        <button className="fas fa-hourglass-end ic-in-3-dots" />
                         <span>Kết thúc sự kiện</span>
                       </div>
-                      
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
-              
-                <div className="description">{item.description}</div> 
-              <img src={item.image} alt="image_event" className="img-fluid" width={500}/>
+
+              <div className="description">{item.description}</div>
+              <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
+              <div>Loại sự kiện: {item.typeOfEvent}</div>
+              <img
+                src={item.image}
+                alt="image_event"
+                className="img-fluid"
+                width={500}
+              />
             </div>
           ))}
         </div>
-
+        
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
           <button onClick={this.closeModal}>
             <i className="fas fa-times"></i>
@@ -397,4 +332,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default UEF;

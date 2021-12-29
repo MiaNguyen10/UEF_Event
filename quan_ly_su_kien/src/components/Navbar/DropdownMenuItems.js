@@ -6,37 +6,37 @@ export const DropdownMenuItems = [
     },
     {
         title: 'KHOA KINH TẾ',
-        path: '/uef',
+        path: '/kinhte',
         cName: 'dropdown-item'
     },
     {
         title: 'KHOA QUAN HỆ CÔNG CHÚNG VÀ TRUYỀN THÔNG',
-        path: '/uef',
+        path: '/qhcc',
         cName: 'dropdown-item'
     },
     {
         title: 'KHOA CÔNG NGHỆ THÔNG TIN',
-        path: '/uef',
+        path: '/cntt',
         cName: 'dropdown-item'
     },
     {
         title: 'KHOA TIẾNG ANH',
-        path: '/uef',
+        path: '/tienganh',
         cName: 'dropdown-item'
     },
     {
         title: 'KHOA LUẬT VÀ QUAN HỆ QUỐC TẾ',
-        path: '/uef',
+        path: '/qhqt',
         cName: 'dropdown-item'
     },
     {
         title: 'KHOA QUẢN TRỊ DU LỊCH - KHÁCH SẠN',
-        path: '/uef',
+        path: '/dlks',
         cName: 'dropdown-item'
     },
     {
         title: 'KHOA NGÔN NGỮ VÀ VĂN HÓA QUỐC TẾ',
-        path: '/uef',
+        path: '/vhqt',
         cName: 'dropdown-item'
     },
 ]

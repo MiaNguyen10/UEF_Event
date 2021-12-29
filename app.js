@@ -26,7 +26,7 @@ var upload = multer({ storage: storage })
 const connection = mysql.createConnection({
   host: "localhost", 
   user: "root", // change this
-  password: "", // change this
+  password: "MySQL", // change this
   database: "quan_ly_su_kien",
 });
 
@@ -63,6 +63,16 @@ app.get("/api/eventended", (req, res) => {
 app.get("/api/searchEvent", (req, res) => {
   let title = req.query.search 
   var sql = "SELECT * FROM event WHERE name like '%" + title + "%'";
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ event: results });
+  }); 
+})
+
+// get event by organization unit 
+app.get("/api/searchEventUnit", (req, res) => {
+  let title = req.query.search 
+  var sql = "SELECT * FROM event WHERE organizationalUnit like '%" + title + "%'";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
@@ -129,6 +139,7 @@ app.post('/eventended', (req, res) => {
     res.json({event: results});
   });
 });
+
 //Restore event
 app.post('/restoreevent', (req, res) => {
   var sql = "UPDATE event SET "
