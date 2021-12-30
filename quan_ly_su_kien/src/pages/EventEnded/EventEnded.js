@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../HomePage/Home.css";
 import axios from "axios";
-import Popup from "reactjs-popup";
 import Modal from "react-modal";
 import { OrganizationalUnit } from "../HomePage/OrganizationalUnit";
 import { TypeOfEvent } from "../HomePage/TypeOfEvent";

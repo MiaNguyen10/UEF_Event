@@ -1,42 +1,50 @@
 export const DropdownMenuItems = [
     {
         title: 'TRƯỜNG UEF',
-        path: '/uef',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Trường UEF'
     },
     {
         title: 'KHOA KINH TẾ',
-        path: '/kinhte',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Kinh tế'
     },
     {
         title: 'KHOA QUAN HỆ CÔNG CHÚNG VÀ TRUYỀN THÔNG',
-        path: '/qhcc',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Quan hệ công chúng và Truyền thông'
     },
     {
         title: 'KHOA CÔNG NGHỆ THÔNG TIN',
-        path: '/cntt',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Công nghệ thông tin'
     },
     {
         title: 'KHOA TIẾNG ANH',
-        path: '/tienganh',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Tiếng anh'
     },
     {
         title: 'KHOA LUẬT VÀ QUAN HỆ QUỐC TẾ',
-        path: '/qhqt',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Luật và Quan hệ quốc tế'
     },
     {
         title: 'KHOA QUẢN TRỊ DU LỊCH - KHÁCH SẠN',
-        path: '/dlks',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Quản trị du lịch - Khách sạn'
     },
     {
         title: 'KHOA NGÔN NGỮ VÀ VĂN HÓA QUỐC TẾ',
-        path: '/vhqt',
-        cName: 'dropdown-item'
+        path: '/displayEventByUnit',
+        cName: 'dropdown-item',
+        label: 'Khoa Ngôn ngữ và Văn hóa quốc tế'
     },
 ]

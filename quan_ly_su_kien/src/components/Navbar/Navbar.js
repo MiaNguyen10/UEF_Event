@@ -6,6 +6,12 @@ import { MenuItems } from "./MenuItems";
 import { NavDropdown } from 'react-bootstrap';
 
 class Navbar extends Component {
+
+  handleUnit = (props) => {
+    localStorage.setItem('unit', props);
+    console.log("ii");
+  };
+
   state = { clicked: false };
 
   handleClick = () => {
@@ -27,8 +33,8 @@ class Navbar extends Component {
             <NavDropdown className="nav-links" title="KHOA TỔ CHỨC">
               {DropdownMenuItems.map((item, index) => {
                   return (
-                    <div key={index}>
-                      <NavDropdown.Item className={item.cName} href={item.path}>
+                    <div key={index} >
+                      <NavDropdown.Item className={item.cName} href={item.path} onClick={() =>this.handleUnit(item.label)}>
                         {item.title}
                       </NavDropdown.Item>
                     </div>
