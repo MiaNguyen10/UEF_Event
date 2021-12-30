@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../HomePage/Home.css";
 import axios from "axios";
-import Popup from "reactjs-popup";
 import Modal from "react-modal";
 import { OrganizationalUnit } from "../HomePage/OrganizationalUnit";
 import { TypeOfEvent } from "../HomePage/TypeOfEvent";
@@ -20,6 +19,7 @@ class EventEnded extends Component {
       organizationalUnit: "",
       typeOfEvent: "",
       eventended: "",
+      searchData: ""
     };
   }
   //get data
@@ -155,43 +155,72 @@ class EventEnded extends Component {
       .catch((error) => console.log(error));
   };
 
+  handleSearch = () => {
+    axios
+      .get(`/api/searchEvent?search=${this.state.searchData}`)
+      .then((res) => {
+        const event = res.data;
+        this.setState({ event: event.event });
+      })
+      .catch((error) => console.log(error));
+  }
+
   render() {
     return (
       <div className="homepage">
         {/* Display event data */}
         <div className="event-des">
-          <ul>
-            {this.state.event.map((item) => (
-              <li className="event-des-item" key={item.id_event}>
-                {/* click to show edit form */}
-                <button onClick={() => this.openModal(item)}>
-                  <i className="far fa-edit"></i>
-                </button>
-                {/* Click to delete event data */}
-                <button onClick={() => this.handleDelete(item)}>
-                  <i class="far fa-trash-alt"></i>
-                </button>
-                {/* Click to restore event */}
-                <button onClick={() => this.handleRestoreEvent(item)}>
-                  <i class="fas fa-hourglass-start"></i>
-                </button>
-                <h2>
-                  <b>{item.name}</b>
-                </h2>
-                <br />
-                <div className="description">{item.description}</div>
-                <br />
-                <img
-                  src={item.image}
-                  alt="image_event"
-                  className="img-fluid"
-                  width={300}
-                  height={100}
-                />
-              </li>
-            ))}
-          </ul>
+          <div>
+            <p>Search bar</p>
+            <input name="searchData" onChange={this.handleInputChange}/>
+            <button onClick={this.handleSearch}>Search</button>
+          </div> 
+          {this.state.event.map((item) => (
+            <div className="event-des-item" key={item.id_event}>
+              <div className="header-event">
+                
+                <div className="event-name">{item.name}</div>
+
+                <Dropdown >
+                  <Dropdown.Toggle variant="" className="dropdown-choose">
+                    <BsThreeDots id="three-dots"></BsThreeDots>
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                      {/* click to show edit form */}
+                    <Dropdown.Item onClick={() => this.openModal(item)}>
+                    <div id="drop-item">
+                      <button className="far fa-edit ic-in-3-dots"/>
+                      <span>Chỉnh sửa</span>
+                    </div>
+                    </Dropdown.Item>
+
+                      {/* Click to delete event data */}
+                    <Dropdown.Item onClick={() => this.handleRestoreEvent(item)}>
+                    <div id="drop-item">
+                      <button className="far fa-trash-alt ic-in-3-dots"/>
+                      <span>Xóa</span>
+                    </div>
+                    </Dropdown.Item>
+
+                      {/* Click to end event */}
+                    <Dropdown.Item  onClick={() => this.handleEndEvent(item)}>
+                      <div id="drop-item">
+                        <button className="fas fa-hourglass-end ic-in-3-dots"/>
+                        <span>Kết thúc sự kiện</span>
+                      </div>
+                      
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+              
+                <div className="description">{item.description}</div> 
+              <img src={item.image} alt="image_event" className="img-fluid" width={500}/>
+            </div>
+          ))}
         </div>
+
 
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
           <button onClick={this.closeModal}>
