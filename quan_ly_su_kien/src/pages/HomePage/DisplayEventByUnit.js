@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import "../HomePage/Home.css";
+import "./Home.css";
 import axios from "axios";
+import Popup from "reactjs-popup";
 import Modal from "react-modal";
-import { OrganizationalUnit } from "../HomePage/OrganizationalUnit";
-import { TypeOfEvent } from "../HomePage/TypeOfEvent";
+import { OrganizationalUnit } from "./OrganizationalUnit";
+import { TypeOfEvent } from "./TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { Dropdown } from "react-bootstrap";
 
-class FOPublicRelations extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +23,7 @@ class FOPublicRelations extends Component {
       organizationalUnit: "",
       typeOfEvent: "",
       eventended: "",
-      searchData:""
+      searchData: "",
     };
   }
   //get data
@@ -48,7 +50,6 @@ class FOPublicRelations extends Component {
 
   setImage = async (event) => {
     const formData = new FormData();
-    //console.log(event.target.files);
     formData.append("file", event.target.files[0]);
     axios.post("/uploadfile", formData).then((res) => {
       this.setState({ image: `${res.data}` });
@@ -180,6 +181,7 @@ class FOPublicRelations extends Component {
       .catch((error) => console.log(error));
   };
 
+  //Search event by name
   handleSearch = () => {
     axios
       .get(`/api/searchEvent?search=${this.state.searchData}`)
@@ -188,67 +190,158 @@ class FOPublicRelations extends Component {
         this.setState({ event: event.event });
       })
       .catch((error) => console.log(error));
-  }
+  };
 
   render() {
     return (
       <div className="homepage">
+        {/* Insert new event */}
+        <Popup
+          modal
+          trigger={
+            <button
+              className="btn-create-event fa fa-plus"
+              title="Tạo sự kiện"
+            ></button>
+          }
+        >
+
+          <div className="card form-event">
+            <div className="card-header text-center form-header">
+              Sự kiện mới
+            </div>
+            <div className="card-body">
+              <form onSubmit={this.handleInsertSubmit}>
+                <div className="form-group">
+                  <label for="eventName">Tên sự kiện</label>
+                  <input
+                    name="name"
+                    type="text"
+                    className="form-control"
+                    id="eventName"
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventDescription">Mô tả</label>
+                  <textarea
+                    name="description"
+                    className="form-control"
+                    id="eventDescription"
+                    rows="4"
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventImage">Chọn hình ảnh</label>
+                  <input
+                    name="image"
+                    type="file"
+                    accept="image/*"
+                    className="form-control-file"
+                    id="eventImage"
+                    multiple
+                    onChange={this.setImage}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>
+                    Đơn vị tổ chức:
+                    <select
+                      name="organizationalUnit"
+                      onChange={this.handleInputChange}
+                    >
+                      {OrganizationalUnit.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+
+                <div className="form-group">
+                  <label>
+                    Loại sự kiện:
+                    <select
+                      name="typeOfEvent"
+                      onChange={this.handleInputChange}
+                    >
+                      {TypeOfEvent.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <div className="card-footer text-right">
+                  <button>Đăng sự kiện</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </Popup>
+
         {/* Display event data */}
         <div className="event-des">
-          <div>
-            <p>Search bar</p>
-            <input name="searchData" onChange={this.handleInputChange} />
-            <button onClick={this.handleSearch}>Search</button>
+          <div className="search-bar">
+            <input name="searchData" onChange={this.handleInputChange} placeholder="Tìm sự kiện..."/>
+            <BsSearch className="BsSearch" onClick={this.handleSearch}/>
           </div>
-          {this.state.event.filter(u => u.organizationalUnit.includes("Khoa Quan hệ công chúng và Truyền thông")).map((item) => (
-            <div className="event-des-item" key={item.id_event}>
-              <div className="header-event">
-                <div className="event-name">{item.name}</div>
 
-                <Dropdown>
-                  <Dropdown.Toggle variant="" className="dropdown-choose">
-                    <BsThreeDots id="three-dots"></BsThreeDots>
-                  </Dropdown.Toggle>
+          {this.state.event.filter(u => u.organizationalUnit.includes(localStorage.getItem('unit'))).map((item) => (
+              <div className="event-des-item" key={item.id_event}>
+                <div className="header-event">
 
-                  <Dropdown.Menu>
-                    {/* click to show edit form */}
-                    <Dropdown.Item onClick={() => this.openModal(item)}>
-                      <div id="drop-item">
-                        <button className="far fa-edit ic-in-3-dots" />
-                        <span>Chỉnh sửa</span>
-                      </div>
-                    </Dropdown.Item>
+                  {/*display name */}
+                  <div className="event-name">{item.name}</div>
 
-                    {/* Click to delete event data */}
-                    <Dropdown.Item onClick={() => this.handleDelete(item)}>
-                      <div id="drop-item">
-                        <button className="far fa-trash-alt ic-in-3-dots" />
-                        <span>Xóa</span>
-                      </div>
-                    </Dropdown.Item>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="" className="dropdown-choose">
+                      <BsThreeDots id="three-dots"></BsThreeDots>
+                    </Dropdown.Toggle>
 
-                    {/* Click to end event */}
-                    <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
-                      <div id="drop-item">
-                        <button className="fas fa-hourglass-end ic-in-3-dots" />
-                        <span>Kết thúc sự kiện</span>
-                      </div>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                    <Dropdown.Menu>
+                      {/* click to show edit form */}
+                      <Dropdown.Item onClick={() => this.openModal(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-edit ic-in-3-dots" />
+                          <span>Chỉnh sửa</span>
+                        </div>
+                      </Dropdown.Item>
+
+                      {/* Click to delete event data */}
+                      <Dropdown.Item onClick={() => this.handleDelete(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-trash-alt ic-in-3-dots" />
+                          <span>Xóa</span>
+                        </div>
+                      </Dropdown.Item>
+
+                      {/* Click to end event */}
+                      <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                        <div id="drop-item">
+                          <button className="fas fa-hourglass-end ic-in-3-dots" />
+                          <span>Kết thúc sự kiện</span>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+
+                {/* display description */}
+                <div className="description">{item.description}</div>
+
+                {/* display widge */}
+                <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
+                <div>Loại sự kiện: {item.typeOfEvent}</div>
+
+                {/* display image */}
+                <img
+                  src={item.image}
+                  alt="image_event"
+                  className="img-fluid"
+                  width={500}
+                />
               </div>
-
-              <div className="description">{item.description}</div>
-              <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
-              <div>Loại sự kiện: {item.typeOfEvent}</div>
-              <img
-                src={item.image}
-                alt="image_event"
-                className="img-fluid"
-                width={500}
-              />
-            </div>
-          ))}
+            ))}
         </div>
 
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
@@ -331,4 +424,4 @@ class FOPublicRelations extends Component {
   }
 }
 
-export default FOPublicRelations;
+export default Home;

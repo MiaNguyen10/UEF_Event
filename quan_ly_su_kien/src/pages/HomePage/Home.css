@@ -73,10 +73,39 @@ ul{
 .event-des-item{
     background-color: #ffffff;
     border-radius: 10px;
-    padding: 5%;
+    padding: 2% 4%;
     margin-bottom: 2%;
     margin-left: 1%;
     box-shadow: 1px 1px 5px #999;
+}
+
+.search-bar{
+    background-color: #FFF;
+    position:fixed;
+	right: 1%;
+	box-shadow: 2px 2px 3px #999;
+    border-radius: 5px;
+    display: flex;
+    border: 0.5px solid #999;
+}
+
+.search-bar input{
+    border-radius: 5px;
+    border: none;
+    height: 20px;
+}
+
+.BsSearch{
+    padding: 4px;
+    width: 20px;
+    height: auto;
+    border-radius: 4px;
+    background-color: #0074CC;
+    color: #FFF;
+}
+
+.BsSearch:hover{
+    background-color: #6b74f3;
 }
 
 .header-event{
