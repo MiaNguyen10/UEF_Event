@@ -3,6 +3,7 @@ import "./Home.css";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import Modal from "react-modal";
+import ShowMoreText from "react-show-more-text";
 import { OrganizationalUnit } from "./OrganizationalUnit";
 import { TypeOfEvent } from "./TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
@@ -205,7 +206,6 @@ class Home extends Component {
             ></button>
           }
         >
-
           <div className="card form-event">
             <div className="card-header text-center form-header">
               Sự kiện mới
@@ -282,14 +282,21 @@ class Home extends Component {
         {/* Display event data */}
         <div className="event-des">
           <div className="search-bar">
-            <input name="searchData" onChange={this.handleInputChange} placeholder="Tìm sự kiện..."/>
-            <BsSearch className="BsSearch" onClick={this.handleSearch}/>
+            <input
+              name="searchData"
+              onChange={this.handleInputChange}
+              placeholder="Tìm sự kiện..."
+            />
+            <BsSearch className="BsSearch" onClick={this.handleSearch} />
           </div>
 
-          {this.state.event.filter(u => u.organizationalUnit.includes(localStorage.getItem('unit'))).map((item) => (
+          {this.state.event
+            .filter((u) =>
+              u.organizationalUnit.includes(localStorage.getItem("unit"))
+            )
+            .map((item) => (
               <div className="event-des-item" key={item.id_event}>
                 <div className="header-event">
-
                   {/*display name */}
                   <div className="event-name">{item.name}</div>
 
@@ -327,7 +334,15 @@ class Home extends Component {
                 </div>
 
                 {/* display description */}
-                <div className="description">{item.description}</div>
+                <ShowMoreText
+                  /* Default options */
+                  lines={3}
+                  more="Show more"
+                  less="Show less"
+                  expanded={false}
+                >
+                  <div className="description">{item.description}</div>
+                </ShowMoreText>
 
                 {/* display widge */}
                 <div>Đơn vị tổ chức: {item.organizationalUnit}</div>

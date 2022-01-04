@@ -3,6 +3,7 @@ import "./Home.css";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import Modal from "react-modal";
+import ShowMoreText from "react-show-more-text";
 import { OrganizationalUnit } from "./OrganizationalUnit";
 import { TypeOfEvent } from "./TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
@@ -205,7 +206,6 @@ class Home extends Component {
             ></button>
           }
         >
-
           <div className="card form-event">
             <div className="card-header text-center form-header">
               Sự kiện mới
@@ -282,66 +282,77 @@ class Home extends Component {
         {/* Display event data */}
         <div className="event-des">
           <div className="search-bar">
-            <input name="searchData" onChange={this.handleInputChange} placeholder="Tìm sự kiện..."/>
-            <BsSearch className="BsSearch" onClick={this.handleSearch}/>
+            <input
+              name="searchData"
+              onChange={this.handleInputChange}
+              placeholder="Tìm sự kiện..."
+            />
+            <BsSearch className="BsSearch" onClick={this.handleSearch} />
           </div>
 
-            {this.state.event.map((item) => (
-              <div className="event-des-item" key={item.id_event}>
-                <div className="header-event">
+          {this.state.event.map((item) => (
+            <div className="event-des-item" key={item.id_event}>
+              <div className="header-event">
+                {/*display name */}
+                <div className="event-name">{item.name}</div>
 
-                  {/*display name */}
-                  <div className="event-name">{item.name}</div>
+                <Dropdown>
+                  <Dropdown.Toggle variant="" className="dropdown-choose">
+                    <BsThreeDots id="three-dots"></BsThreeDots>
+                  </Dropdown.Toggle>
 
-                  <Dropdown>
-                    <Dropdown.Toggle variant="" className="dropdown-choose">
-                      <BsThreeDots id="three-dots"></BsThreeDots>
-                    </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {/* click to show edit form */}
+                    <Dropdown.Item onClick={() => this.openModal(item)}>
+                      <div id="drop-item">
+                        <button className="far fa-edit ic-in-3-dots" />
+                        <span>Chỉnh sửa</span>
+                      </div>
+                    </Dropdown.Item>
 
-                    <Dropdown.Menu>
-                      {/* click to show edit form */}
-                      <Dropdown.Item onClick={() => this.openModal(item)}>
-                        <div id="drop-item">
-                          <button className="far fa-edit ic-in-3-dots" />
-                          <span>Chỉnh sửa</span>
-                        </div>
-                      </Dropdown.Item>
+                    {/* Click to delete event data */}
+                    <Dropdown.Item onClick={() => this.handleDelete(item)}>
+                      <div id="drop-item">
+                        <button className="far fa-trash-alt ic-in-3-dots" />
+                        <span>Xóa</span>
+                      </div>
+                    </Dropdown.Item>
 
-                      {/* Click to delete event data */}
-                      <Dropdown.Item onClick={() => this.handleDelete(item)}>
-                        <div id="drop-item">
-                          <button className="far fa-trash-alt ic-in-3-dots" />
-                          <span>Xóa</span>
-                        </div>
-                      </Dropdown.Item>
-
-                      {/* Click to end event */}
-                      <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
-                        <div id="drop-item">
-                          <button className="fas fa-hourglass-end ic-in-3-dots" />
-                          <span>Kết thúc sự kiện</span>
-                        </div>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
-
-                {/* display description */}
-                <div className="description">{item.description}</div>
-
-                {/* display widge */}
-                <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
-                <div>Loại sự kiện: {item.typeOfEvent}</div>
-
-                {/* display image */}
-                <img
-                  src={item.image}
-                  alt="image_event"
-                  className="img-fluid"
-                  width={500}
-                />
+                    {/* Click to end event */}
+                    <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                      <div id="drop-item">
+                        <button className="fas fa-hourglass-end ic-in-3-dots" />
+                        <span>Kết thúc sự kiện</span>
+                      </div>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
-            ))}
+
+              {/* display description */}
+              <ShowMoreText
+                /* Default options */
+                lines={3}
+                more="Show more"
+                less="Show less"
+                expanded={false}
+              >
+              <div className="description">{item.description}</div>
+              </ShowMoreText>
+
+              {/* display widge */}
+              <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
+              <div>Loại sự kiện: {item.typeOfEvent}</div>
+
+              {/* display image */}
+              <img
+                src={item.image}
+                alt="image_event"
+                className="img-fluid"
+                width={500}
+              />
+            </div>
+          ))}
         </div>
 
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
