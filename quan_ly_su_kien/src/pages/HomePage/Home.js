@@ -19,6 +19,7 @@ class Home extends Component {
       id_event: "",
       name: "",
       description: "",
+      address: "",
       image: "",
       organizationalUnit: "",
       typeOfEvent: "",
@@ -64,6 +65,7 @@ class Home extends Component {
       id_event: "",
       name: this.state.name,
       description: this.state.description,
+      address: this.state.address,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
@@ -91,6 +93,7 @@ class Home extends Component {
       id_event: item.id_event,
       name: item.name,
       description: item.description,
+      address: item.address,
       image: item.image,
       organizationalUnit: item.organizationalUnit,
       typeOfEvent: item.typeOfEvent,
@@ -112,6 +115,7 @@ class Home extends Component {
       id_event: this.state.id_event,
       name: this.state.name,
       description: this.state.description,
+      address: this.state.address,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
@@ -129,6 +133,7 @@ class Home extends Component {
                   ...elm,
                   name: this.state.name,
                   description: this.state.description,
+                  address: this.state.address,
                   image: this.state.image,
                   organizationalUnit: this.state.organizationalUnit,
                   typeOfEvent: this.state.typeOfEvent,
@@ -233,6 +238,16 @@ class Home extends Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label for="eventAddress">Địa điểm</label>
+                  <textarea
+                    name="address"
+                    className="form-control"
+                    id="eventAddress"
+                    rows="2"
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
                   <label for="eventImage">Chọn hình ảnh</label>
                   <input
                     name="image"
@@ -328,18 +343,23 @@ class Home extends Component {
 
                 {/* display description */}
                 <div className="description">{item.description}</div>
-
-                {/* display widge */}
-                <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
-                <div>Loại sự kiện: {item.typeOfEvent}</div>
-
+                <div className="img-unit-type">
                 {/* display image */}
-                <img
-                  src={item.image}
-                  alt="image_event"
-                  className="img-fluid"
-                  width={500}
-                />
+                  <img
+                    src={item.image}
+                    alt="image_event"
+                    className="img-fluid"
+                    width={500}
+                  />
+
+                  {/* display widge */}
+                  <div id="unit-type" >
+                    <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
+                    <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
+                    <p><strong>Địa điểm:</strong> {item.address}</p>
+                    <p><strong>Thời gian:</strong>  {new Date(item.date).toLocaleDateString()} lúc {item.time}</p>
+                  </div>
+                </div>  
               </div>
             ))}
         </div>
@@ -371,6 +391,17 @@ class Home extends Component {
                     id="eventDescription"
                     rows="4"
                     value={this.state.description}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventAddress">Địa điểm</label>
+                  <textarea
+                    name="address"
+                    className="form-control"
+                    id="eventAddress"
+                    // rows="4"
+                    value={this.state.address}
                     onChange={this.handleInputChange}
                   />
                 </div>

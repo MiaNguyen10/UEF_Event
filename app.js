@@ -96,11 +96,13 @@ app.post('/uploadfile', upload.single('file'), (req, res, next) => {
 //Insert event
 app.post("/api/insert", function (req, res) {  
    var sql = "INSERT "
-          + "INTO event(name,description,image,organizationalUnit,typeOfEvent,eventended) "
+          + "INTO event(name,description,address,image,organizationalUnit,typeOfEvent,eventended) "
           + "VALUES('"+
           req.body.name +
           "','" +
           req.body.description +
+          "','" +
+          req.body.address +
           "','" +
           req.body.image +
           "','" +
@@ -119,6 +121,7 @@ app.post('/api/edit', (req, res) => {
   var sql = "UPDATE event SET "
           +   "name='"+req.body.name+"',"
           +   "description='"+req.body.description+"',"
+          +   "address='"+req.body.address+"',"
           +   "image='"+req.body.image+"',"
           +   "organizationalUnit='"+req.body.organizationalUnit+"',"
           +   "typeOfEvent='"+req.body.typeOfEvent+"'"
