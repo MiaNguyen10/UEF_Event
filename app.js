@@ -62,7 +62,7 @@ app.get("/api/eventended", (req, res) => {
 // get event by search 
 app.get("/api/searchEvent", (req, res) => {
   let title = req.query.search 
-  var sql = "SELECT * FROM event WHERE name like '%" + title + "%'";
+  var sql = "SELECT * FROM event WHERE name like '%" + title + "%' OR description like '%" + title + "%' OR organizationalUnit like '%" + title + "%' OR typeOfEvent like '%" + title + "%'";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });

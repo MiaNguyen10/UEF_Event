@@ -3,6 +3,7 @@ import "./Home.css";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import Modal from "react-modal";
+import ShowMoreText from "react-show-more-text";
 import { OrganizationalUnit } from "./OrganizationalUnit";
 import { TypeOfEvent } from "./TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
@@ -210,7 +211,6 @@ class Home extends Component {
             ></button>
           }
         >
-
           <div className="card form-event">
             <div className="card-header text-center form-header">
               Sự kiện mới
@@ -297,8 +297,12 @@ class Home extends Component {
         {/* Display event data */}
         <div className="event-des">
           <div className="search-bar">
-            <input name="searchData" onChange={this.handleInputChange} placeholder="Tìm sự kiện..."/>
-            <BsSearch className="BsSearch" onClick={this.handleSearch}/>
+            <input
+              name="searchData"
+              onChange={this.handleInputChange}
+              placeholder="Tìm sự kiện..."
+            />
+            <BsSearch className="BsSearch" onClick={this.handleSearch} />
           </div>
 
             {this.state.event.map((item) => (
@@ -340,29 +344,36 @@ class Home extends Component {
                     </Dropdown.Menu>
                   </Dropdown>
                 </div>
-
                 {/* display description */}
+              <ShowMoreText
+                /* Default options */
+                lines={3}
+                more="Show more"
+                less="Show less"
+                expanded={false}
+              >
                 <div className="description">{item.description}</div>
-                <div className="img-unit-type">
+              </ShowMoreText>
+              <div className="img-unit-type">
                 {/* display image */}
-                  <img
-                    src={item.image}
-                    alt="image_event"
-                    className="img-fluid"
-                    width={500}
-                  />
-
-                  {/* display widge */}
-                  <div id="unit-type" >
-                    <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
-                    <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
-                    <p><strong>Địa điểm:</strong> {item.address}</p>
-                    <p><strong>Thời gian:</strong>  {new Date(item.date).toLocaleDateString()} lúc {item.time}</p>
-                  </div>
-                </div>  
-              </div>
-            ))}
+                <img
+                  src={item.image}
+                  alt="image_event"
+                  className="img-fluid"
+                  width={500}
+                />
+                {/* display widge */}
+                <div id="unit-type" >
+                  <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
+                  <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
+                  <p><strong>Địa điểm:</strong> {item.address}</p>
+                  <p><strong>Thời gian:</strong>  {new Date(item.date).toLocaleDateString()} lúc {item.time}</p>
+                </div>
+              </div> 
+            </div>
+          ))}
         </div>
+                
 
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
           <button onClick={this.closeModal}>
