@@ -20,6 +20,7 @@ class Home extends Component {
       id_event: "",
       name: "",
       description: "",
+      address: "",
       image: "",
       organizationalUnit: "",
       typeOfEvent: "",
@@ -65,6 +66,7 @@ class Home extends Component {
       id_event: "",
       name: this.state.name,
       description: this.state.description,
+      address: this.state.address,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
@@ -92,6 +94,7 @@ class Home extends Component {
       id_event: item.id_event,
       name: item.name,
       description: item.description,
+      address: item.address,
       image: item.image,
       organizationalUnit: item.organizationalUnit,
       typeOfEvent: item.typeOfEvent,
@@ -113,6 +116,7 @@ class Home extends Component {
       id_event: this.state.id_event,
       name: this.state.name,
       description: this.state.description,
+      address: this.state.address,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
@@ -130,6 +134,7 @@ class Home extends Component {
                   ...elm,
                   name: this.state.name,
                   description: this.state.description,
+                  address: this.state.address,
                   image: this.state.image,
                   organizationalUnit: this.state.organizationalUnit,
                   typeOfEvent: this.state.typeOfEvent,
@@ -233,6 +238,16 @@ class Home extends Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label for="eventAddress">Địa điểm</label>
+                  <textarea
+                    name="address"
+                    className="form-control"
+                    id="eventAddress"
+                    rows="2"
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
                   <label for="eventImage">Chọn hình ảnh</label>
                   <input
                     name="image"
@@ -290,46 +305,46 @@ class Home extends Component {
             <BsSearch className="BsSearch" onClick={this.handleSearch} />
           </div>
 
-          {this.state.event.map((item) => (
-            <div className="event-des-item" key={item.id_event}>
-              <div className="header-event">
-                {/*display name */}
-                <div className="event-name">{item.name}</div>
+            {this.state.event.map((item) => (
+              <div className="event-des-item" key={item.id_event}>
+                <div className="header-event">
 
-                <Dropdown>
-                  <Dropdown.Toggle variant="" className="dropdown-choose">
-                    <BsThreeDots id="three-dots"></BsThreeDots>
-                  </Dropdown.Toggle>
+                  {/*display name */}
+                  <div className="event-name">{item.name}</div>
 
-                  <Dropdown.Menu>
-                    {/* click to show edit form */}
-                    <Dropdown.Item onClick={() => this.openModal(item)}>
-                      <div id="drop-item">
-                        <button className="far fa-edit ic-in-3-dots" />
-                        <span>Chỉnh sửa</span>
-                      </div>
-                    </Dropdown.Item>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="" className="dropdown-choose">
+                      <BsThreeDots id="three-dots"></BsThreeDots>
+                    </Dropdown.Toggle>
 
-                    {/* Click to delete event data */}
-                    <Dropdown.Item onClick={() => this.handleDelete(item)}>
-                      <div id="drop-item">
-                        <button className="far fa-trash-alt ic-in-3-dots" />
-                        <span>Xóa</span>
-                      </div>
-                    </Dropdown.Item>
+                    <Dropdown.Menu>
+                      {/* click to show edit form */}
+                      <Dropdown.Item onClick={() => this.openModal(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-edit ic-in-3-dots" />
+                          <span>Chỉnh sửa</span>
+                        </div>
+                      </Dropdown.Item>
 
-                    {/* Click to end event */}
-                    <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
-                      <div id="drop-item">
-                        <button className="fas fa-hourglass-end ic-in-3-dots" />
-                        <span>Kết thúc sự kiện</span>
-                      </div>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
+                      {/* Click to delete event data */}
+                      <Dropdown.Item onClick={() => this.handleDelete(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-trash-alt ic-in-3-dots" />
+                          <span>Xóa</span>
+                        </div>
+                      </Dropdown.Item>
 
-              {/* display description */}
+                      {/* Click to end event */}
+                      <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                        <div id="drop-item">
+                          <button className="fas fa-hourglass-end ic-in-3-dots" />
+                          <span>Kết thúc sự kiện</span>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+                {/* display description */}
               <ShowMoreText
                 /* Default options */
                 lines={3}
@@ -337,23 +352,28 @@ class Home extends Component {
                 less="Show less"
                 expanded={false}
               >
-              <div className="description">{item.description}</div>
+                <div className="description">{item.description}</div>
               </ShowMoreText>
-
-              {/* display widge */}
-              <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
-              <div>Loại sự kiện: {item.typeOfEvent}</div>
-
-              {/* display image */}
-              <img
-                src={item.image}
-                alt="image_event"
-                className="img-fluid"
-                width={500}
-              />
+              <div className="img-unit-type">
+                {/* display image */}
+                <img
+                  src={item.image}
+                  alt="image_event"
+                  className="img-fluid"
+                  width={500}
+                />
+                {/* display widge */}
+                <div id="unit-type" >
+                  <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
+                  <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
+                  <p><strong>Địa điểm:</strong> {item.address}</p>
+                  <p><strong>Thời gian:</strong>  {new Date(item.date).toLocaleDateString()} lúc {item.time}</p>
+                </div>
+              </div> 
             </div>
           ))}
         </div>
+                
 
         <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
           <button onClick={this.closeModal}>
@@ -382,6 +402,17 @@ class Home extends Component {
                     id="eventDescription"
                     rows="4"
                     value={this.state.description}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
+                  <label for="eventAddress">Địa điểm</label>
+                  <textarea
+                    name="address"
+                    className="form-control"
+                    id="eventAddress"
+                    // rows="4"
+                    value={this.state.address}
                     onChange={this.handleInputChange}
                   />
                 </div>

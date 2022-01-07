@@ -1,7 +1,7 @@
 export const TypeOfEvent = [
     {
-        label: '===Chọn loại sự kiện===',
-        value: '===Chọn loại sự kiện===',
+        label: '---Chọn loại sự kiện---',
+        value: '---Chọn loại sự kiện---',
 
     },
     {

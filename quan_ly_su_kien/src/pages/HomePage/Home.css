@@ -144,6 +144,18 @@ ul{
     background-color: #E5E5E5;
 }
 
+.img-unit-type{
+    display: flex;
+}
+
+#unit-type{
+    margin: 2rem;
+}
+
+#unit-type p{
+    margin: 1.5rem 0;
+}
+
 @media screen and (max-width: 960px) {
     .homepage{
         margin: 2% 10%;

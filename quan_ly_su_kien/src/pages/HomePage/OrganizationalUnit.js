@@ -1,7 +1,7 @@
 export const OrganizationalUnit = [
     {
-        label: '===========Chọn đơn vị tổ chức===========',
-        value: '===========Chọn đơn vị tổ chức===========',
+        label: '----------Chọn đơn vị tổ chức----------',
+        value: '----------Chọn đơn vị tổ chức----------',
 
     },
     {
@@ -22,7 +22,7 @@ export const OrganizationalUnit = [
     },
     {
         label: 'Khoa Tiếng anh',
-        value:'tKhoa Tiếng anh',
+        value:'Khoa Tiếng anh',
     },
     {
         label: 'Khoa Luật và Quan hệ quốc tế',
