@@ -96,7 +96,7 @@ app.post('/uploadfile', upload.single('file'), (req, res, next) => {
 //Insert event
 app.post("/api/insert", function (req, res) {  
    var sql = "INSERT "
-          + "INTO event(name,description,address,image,organizationalUnit,typeOfEvent,eventended) "
+          + "INTO event(name,description,address,image,organizationalUnit,typeOfEvent, eventDate,eventended) "
           + "VALUES('"+
           req.body.name +
           "','" +
@@ -109,7 +109,8 @@ app.post("/api/insert", function (req, res) {
           req.body.organizationalUnit +
           "','" +
           req.body.typeOfEvent +
-          "', 0)";
+          "', '"+ req.body.eventDate + " " + req.body.eventTime + ":00'" +
+          ", 0)";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
@@ -124,7 +125,8 @@ app.post('/api/edit', (req, res) => {
           +   "address='"+req.body.address+"',"
           +   "image='"+req.body.image+"',"
           +   "organizationalUnit='"+req.body.organizationalUnit+"',"
-          +   "typeOfEvent='"+req.body.typeOfEvent+"'"
+          +   "typeOfEvent='"+req.body.typeOfEvent+"',"
+          +   "eventDate='"+req.body.eventDate + " " + req.body.eventTime + ":00' "
           + "WHERE id_event='"+req.body.id_event+"'";
   connection.query(sql, function(err, results) {
     if (err) throw err;

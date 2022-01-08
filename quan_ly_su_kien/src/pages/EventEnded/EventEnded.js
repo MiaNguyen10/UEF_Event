@@ -7,8 +7,19 @@ import { OrganizationalUnit } from "../HomePage/OrganizationalUnit";
 import { TypeOfEvent } from "../HomePage/TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
+import { BsFillXCircleFill } from "react-icons/bs";
 import { Dropdown } from "react-bootstrap";
+import Swal from 'sweetalert2'
 
+const customModal = {
+  content: {
+    position: "fixed",
+    inset: "0px",
+    border: "none",
+    background: "none",
+    "z-index": "1000"
+  },
+};
 class EventEnded extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +30,10 @@ class EventEnded extends Component {
       id_event: "",
       name: "",
       description: "",
+      address: "",
       image: "",
+      eventDate: "",
+      eventTime: "",
       organizationalUnit: "",
       typeOfEvent: "",
       eventended: "",
@@ -69,9 +83,12 @@ class EventEnded extends Component {
       id_event: item.id_event,
       name: item.name,
       description: item.description,
+      address: item.address,
       image: item.image,
       organizationalUnit: item.organizationalUnit,
       typeOfEvent: item.typeOfEvent,
+      eventDate: item.eventDate,
+      eventTime: item.eventTime,
     });
   };
 
@@ -90,9 +107,12 @@ class EventEnded extends Component {
       id_event: this.state.id_event,
       name: this.state.name,
       description: this.state.description,
+      address: this.state.address,
       image: this.state.image,
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
+      eventDate: this.state.eventDate,
+      eventTime: this.state.eventTime  
     };
     console.log(newUpdate);
 
@@ -107,15 +127,19 @@ class EventEnded extends Component {
                   ...elm,
                   name: this.state.name,
                   description: this.state.description,
+                  address: this.state.address,
                   image: this.state.image,
                   organizationalUnit: this.state.organizationalUnit,
                   typeOfEvent: this.state.typeOfEvent,
+                  eventDate: this.state.eventDate,
+                  eventTime: this.state.eventTime   
                 }
               : elm
           ),
         }));
       })
       .catch((error) => console.log(error));
+      window.location.reload();
   };
 
   //Restore event
@@ -125,22 +149,38 @@ class EventEnded extends Component {
       eventended: 0,
     };
     console.log(eventId);
-
-    axios
-      .post("/restoreevent", eventId)
-      .then((res) => {
-        this.setState((prevState) => ({
-          event: prevState.event.map((elm) =>
-            elm.id_event === item.id_event
-              ? {
-                  ...elm,
-                  eventended: 0,
-                }
-              : elm
-          ),
-        }));
-      })
-      .catch((error) => console.log(error));
+    Swal.fire({
+      title: 'Bạn muốn khôi phục sự kiện không?',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {        
+        axios
+        .post("/restoreevent", eventId)
+        .then((res) => {
+          this.setState((prevState) => ({
+            event: prevState.event.map((elm) =>
+              elm.id_event === item.id_event
+                ? {
+                    ...elm,
+                    eventended: 0,
+                  }
+                : elm
+            ),
+          }));
+        })
+        .catch((error) => console.log(error));
+        Swal.fire('Đã khôi phục sự kiện', '', 'info').then((res) =>{
+          if(res.isConfirmed){
+            window.location.reload();
+          }
+        })
+      } else{
+        Swal.fire('Chưa khôi phục sự kiện', '', 'info')
+      }
+    })
   };
 
   //Delete event data
@@ -148,15 +188,28 @@ class EventEnded extends Component {
     const eventId = {
       id_event: item.id_event,
     };
-
-    axios
-      .post("/api/delete", eventId)
-      .then((res) => {
-        this.setState((prevState) => ({
-          event: prevState.event.filter((el) => el.id_event !== item.id_event),
-        }));
+      Swal.fire({
+        title: 'Bạn muốn xóa sự kiện không?',
+        showCancelButton: true,
+        confirmButtonText: 'Có',
+        cancelButtonText: 'Không'
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire('Đã xóa sự kiện', '', 'info')
+          axios
+          .post("/api/delete", eventId)
+          .then((res) => {
+            this.setState((prevState) => ({
+              event: prevState.event.filter((el) => el.id_event !== item.id_event),
+            }));
+          })
+          .catch((error) => console.log(error));
+          
+        } else{
+          Swal.fire('Không xóa sự kiện', '', 'info')
+        }
       })
-      .catch((error) => console.log(error));
   };
 
   handleSearch = () => {
@@ -194,7 +247,7 @@ class EventEnded extends Component {
                     <BsThreeDots id="three-dots"></BsThreeDots>
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
+                  <Dropdown.Menu className="dropdown-menu-3-dots">
                     {/* click to show edit form */}
                     <Dropdown.Item onClick={() => this.openModal(item)}>
                       <div id="drop-item">
@@ -205,7 +258,7 @@ class EventEnded extends Component {
 
                     {/* Click to delete event data */}
                     <Dropdown.Item
-                      onClick={() => this.handleRestoreEvent(item)}
+                      onClick={() => this.handleDelete(item)}
                     >
                       <div id="drop-item">
                         <button className="far fa-trash-alt ic-in-3-dots" />
@@ -234,27 +287,32 @@ class EventEnded extends Component {
               >
               <div className="description">{item.description}</div>
               </ShowMoreText>
-
-              {/* display widge */}
-              <div>Đơn vị tổ chức: {item.organizationalUnit}</div>
-              <div>Loại sự kiện: {item.typeOfEvent}</div>
-
-              <img
-                src={item.image}
-                alt="image_event"
-                className="img-fluid"
-                width={500}
-              />
+              <div className="img-unit-type">
+                {/* display image */}
+                <img
+                  src={item.image}
+                  alt="image_event"
+                  className="img-fluid"
+                  width={500}
+                />
+                {/* display widge */}
+                <div id="unit-type" >
+                  <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
+                  <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
+                  <p><strong>Địa điểm:</strong> {item.address}</p>
+                  <p><strong>Thời gian:</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                </div>
+              </div> 
             </div>
           ))}
         </div>
 
-        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
-          <button onClick={this.closeModal}>
-            <i className="fas fa-times"></i>
-          </button>
+        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal} style={customModal}>
           <div className="card">
-            <div className="card-header text-center form-header">Sự kiện</div>
+            <div className="card-header text-center form-header">
+              <p>Chỉnh sửa</p>
+              <p className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closeModal}/></p>
+            </div>
             <div className="card-body">
               <form onSubmit={this.handleEditSubmit}>
                 <div className="form-group">
@@ -280,6 +338,17 @@ class EventEnded extends Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label for="eventAddress">Địa điểm</label>
+                  <textarea
+                    name="address"
+                    className="form-control"
+                    id="eventAddress"
+                    // rows="4"
+                    value={this.state.address}
+                    onChange={this.handleInputChange}
+                  />
+                </div>
+                <div className="form-group">
                   <label for="eventImage">Chọn hình ảnh</label>
                   <input
                     name="image"
@@ -290,33 +359,42 @@ class EventEnded extends Component {
                     onChange={this.setImage}
                   />
                 </div>
-                <label>
-                  Đơn vị tổ chức:
-                  <select
-                    name="organizationalUnit"
-                    onChange={this.handleInputChange}
-                    value={this.state.organizationalUnit}
-                  >
-                    {OrganizationalUnit.map((option) => (
-                      <option value={option.value}>{option.label}</option>
-                    ))}
-                  </select>
-                </label>
-                <br />
-
-                <label>
-                  Loại sự kiện:
-                  <select
-                    name="typeOfEvent"
-                    onChange={this.handleInputChange}
-                    value={this.state.typeOfEvent}
-                  >
-                    {TypeOfEvent.map((option) => (
-                      <option value={option.value}>{option.label}</option>
-                    ))}
-                  </select>
-                </label>
-                <br />
+                <div className="form-group date-time">
+                  <div className="event-date">
+                    <label>Ngày tổ chức:</label>
+                    <input name="eventDate" type="date" onChange={this.handleInputChange} /> 
+                  </div>
+                  <div className="event-time">
+                    <label>Giờ:</label>
+                    <input name="eventTime" type="time" onChange={this.handleInputChange} />
+                  </div>         
+                </div>
+                <div className="form-group">
+                    <label>
+                      Đơn vị tổ chức:
+                      <select
+                        name="organizationalUnit"
+                        onChange={this.handleInputChange}
+                      >
+                        {OrganizationalUnit.map((option) => (
+                          <option value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                  <div className="form-group">
+                    <label>
+                      Loại sự kiện:
+                      <select
+                        name="typeOfEvent"
+                        onChange={this.handleInputChange}
+                      >
+                        {TypeOfEvent.map((option) => (
+                          <option value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
                 <div className="card-footer text-right">
                   <button>Cập nhật sự kiện</button>
                 </div>
