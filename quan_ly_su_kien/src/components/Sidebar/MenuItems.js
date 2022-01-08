@@ -15,7 +15,7 @@ import logout from "../../asset/img/logout.png";
 export const MenuItems = [
   {
     title: 'Tên đăng nhập',
-    path: '/',
+    path: '',
     icon: logo, //fix later
     cName: 'nav-text nav-username'
   },

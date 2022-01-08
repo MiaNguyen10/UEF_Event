@@ -20,7 +20,7 @@ const Admin = () => {
         <Sidebar />
 
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/homepage" element={<Home />} />
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/eventended" element={<EventEnded />} />
           <Route exact path="/displayEventByUnit" element={<DisplayEventByUnit />} />
