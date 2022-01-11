@@ -26,7 +26,7 @@ class Navbar extends Component {
             <img src={logo} alt="" width={50} height={50} />
           </li>
           <li className="navbar-logo">
-            <a href="/homepage">HỆ THỐNG QUẢN LÝ SỰ KIỆN</a>
+            <a href="/">HỆ THỐNG QUẢN LÝ SỰ KIỆN</a>
           </li>
           
           <li className="dropdown ">

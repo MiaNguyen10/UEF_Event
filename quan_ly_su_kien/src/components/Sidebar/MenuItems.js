@@ -1,9 +1,3 @@
-// import React from 'react';
-// import * as RiIcons from 'react-icons/ri';
-// import * as AiIcons from 'react-icons/ai';
-// import * as IoIcons from 'react-icons/io';
-// import * as GiIcons from 'react-icons/gi';
-// import * as GrIcons from 'react-icons/gr';
 import logo from "../../asset/img/logo.png";
 import past_event from "../../asset/img/past_even.png";
 import love_event from "../../asset/img/love_event.png";
@@ -11,10 +5,16 @@ import language from "../../asset/img/language.png";
 import theme from "../../asset/img/theme.png";
 import setting from "../../asset/img/setting.png";
 import logout from "../../asset/img/logout.png";
+import Cookies from 'universal-cookie';
+
+  let account = new Cookies().get('authToken');    
+  let username =""
+  if (account)
+    {username = account.name}
 
 export const MenuItems = [
   {
-    title: 'Tên đăng nhập',
+    title: username,
     path: '',
     icon: logo, //fix later
     cName: 'nav-text nav-username'

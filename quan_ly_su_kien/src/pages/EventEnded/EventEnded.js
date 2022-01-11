@@ -10,6 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import { BsFillXCircleFill } from "react-icons/bs";
 import { Dropdown } from "react-bootstrap";
 import Swal from 'sweetalert2'
+import Cookies from 'universal-cookie';
 
 const customModal = {
   content: {
@@ -38,8 +39,18 @@ class EventEnded extends Component {
       typeOfEvent: "",
       eventended: "",
       searchData: "",
+      auth:""
     };
   }
+
+  handleAuth = () => {
+    const cookies = new Cookies()
+    let account = cookies.get('authToken');    
+    if (account){
+      this.state.auth = account.role;
+    }
+  }
+
   //get data
   componentDidMount() {
     axios
@@ -49,6 +60,7 @@ class EventEnded extends Component {
         this.setState({ event: event.event });
       })
       .catch((error) => console.log(error));
+    this.handleAuth();
   }
 
   //handle data input
@@ -242,39 +254,41 @@ class EventEnded extends Component {
               <div className="header-event">
                 <div className="event-name">{item.name}</div>
 
-                <Dropdown>
-                  <Dropdown.Toggle variant="" className="dropdown-choose">
-                    <BsThreeDots id="three-dots"></BsThreeDots>
-                  </Dropdown.Toggle>
+                {this.state.auth ==="admin" ?  
+                  <Dropdown>
+                    <Dropdown.Toggle variant="" className="dropdown-choose">
+                      <BsThreeDots id="three-dots"></BsThreeDots>
+                    </Dropdown.Toggle>
 
-                  <Dropdown.Menu className="dropdown-menu-3-dots">
-                    {/* click to show edit form */}
-                    <Dropdown.Item onClick={() => this.openModal(item)}>
-                      <div id="drop-item">
-                        <button className="far fa-edit ic-in-3-dots" />
-                        <span>Chỉnh sửa</span>
-                      </div>
-                    </Dropdown.Item>
+                    <Dropdown.Menu className="dropdown-menu-3-dots">
+                      {/* click to show edit form */}
+                      <Dropdown.Item onClick={() => this.openModal(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-edit ic-in-3-dots" />
+                          <span>Chỉnh sửa</span>
+                        </div>
+                      </Dropdown.Item>
 
-                    {/* Click to delete event data */}
-                    <Dropdown.Item
-                      onClick={() => this.handleDelete(item)}
-                    >
-                      <div id="drop-item">
-                        <button className="far fa-trash-alt ic-in-3-dots" />
-                        <span>Xóa</span>
-                      </div>
-                    </Dropdown.Item>
+                      {/* Click to delete event data */}
+                      <Dropdown.Item
+                        onClick={() => this.handleDelete(item)}
+                      >
+                        <div id="drop-item">
+                          <button className="far fa-trash-alt ic-in-3-dots" />
+                          <span>Xóa</span>
+                        </div>
+                      </Dropdown.Item>
 
-                    {/* Click to end event */}
-                    <Dropdown.Item onClick={() => this.handleRestoreEvent(item)}>
-                      <div id="drop-item">
-                        <button className="fas fa-hourglass-end ic-in-3-dots" />
-                        <span>Khôi phục sự kiện</span>
-                      </div>
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                      {/* Click to end event */}
+                      <Dropdown.Item onClick={() => this.handleRestoreEvent(item)}>
+                        <div id="drop-item">
+                          <button className="fas fa-hourglass-end ic-in-3-dots" />
+                          <span>Khôi phục sự kiện</span>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  : ''}
               </div>
 
               {/* display description */}
