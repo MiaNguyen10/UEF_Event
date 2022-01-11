@@ -1,7 +1,8 @@
 import React from "react";
-import { createBrowserHistory } from 'history';
-const history = createBrowserHistory({forceRefresh:true});
+// import { createBrowserHistory } from 'history';
+import Cookies from 'universal-cookie';
 
+// const history = createBrowserHistory({forceRefresh:true});
 class Login extends React.Component{
   constructor(props) {
     super(props);
@@ -26,27 +27,44 @@ class Login extends React.Component{
   onSubmit = (e) => {
     //let { history } = this.props;
     
+    // e.preventDefault();
+    // let oldaccount = localStorage.getItem("formData");
+    // let oldArr = JSON.parse(oldaccount);
+    // oldArr.map((arr) => {
+    //   if (
+    //     this.state.name.length > 0 &&
+    //     this.state.email.length > 0 &&
+    //     this.state.password.length > 0
+    //   ) {
+    //     if (
+    //       arr.name === this.state.name &&
+    //       arr.email === this.state.email &&
+    //       arr.password === this.state.password &&
+    //       arr.role === "user"
+    //     ) {
+    //       history.push("/admin");
+    //     } else {
+    //       this.setState({ error: "Please check your email or password" });
+    //     }
+    //   }
+    // });
+
     e.preventDefault();
-    let oldaccount = localStorage.getItem("formData");
-    let oldArr = JSON.parse(oldaccount);
-    oldArr.map((arr) => {
-      if (
-        this.state.name.length > 0 &&
-        this.state.email.length > 0 &&
-        this.state.password.length > 0
-      ) {
-        if (
-          arr.name === this.state.name &&
-          arr.email === this.state.email &&
-          arr.password === this.state.password &&
-          arr.role === "user"
-        ) {
-          history.push("/admin");
-        } else {
-          this.setState({ error: "Please check your email or password" });
-        }
+    let submitData = {email: this.state.email, password: this.state.password}
+    fetch("/api/auth", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(submitData)
+    }).then(res => res.json()).then(data => {
+      // save login token to cookies
+      if (data[0]) {
+        const cookies = new Cookies();
+        cookies.set('authToken', JSON.stringify(data[0]), { path: '/' });
+        window.location.reload()
+      } else {
+        this.setState({ error: "Please check your email or password" });
       }
-    });
+    })
   };
 
   onChangePassword = (e) => {
@@ -62,17 +80,6 @@ class Login extends React.Component{
       <form onSubmit={this.onSubmit}>
         <p className="error">{this.state.error}</p>
         <h2>LOGIN</h2>
-        <div className="form-group">
-          <label>Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.name}
-            placeholder="Enter Full Name"
-            onChange={this.onChangeName}
-            required
-          />
-        </div>
         <div className="form-group">
           <label>Email</label>
           <input

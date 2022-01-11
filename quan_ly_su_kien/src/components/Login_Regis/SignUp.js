@@ -3,6 +3,7 @@ import { Alert } from "react-bootstrap";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { isEmail } from "validator";
+import Swal from "sweetalert2";
 
 function required(value) {
   if (!value) {
@@ -56,29 +57,49 @@ function SignUp() {
   function handleFormSubmit(e) {
     e.preventDefault();
 
-    if (!name || !email || !password) {
-      setFlag(true);
-    } else {
-      let account = {
-        name: name,
-        email:email,
-        password: password,
-        role:"user",
-      }
-      let oldaccount = localStorage.getItem("formData");
-      if(oldaccount == null){
-        oldaccount = []
-        oldaccount.push(account)
-        localStorage.setItem("formData", JSON.stringify(oldaccount))
-      }else{
-        let oldArr = JSON.parse(oldaccount)
-        oldArr.push(account)
-        localStorage.setItem("formData",JSON.stringify(oldArr))
-      }
-      console.log("Saved in Local Storage");
+    // if (!name || !email || !password) {
+    //   setFlag(true);
+    // } else {
+    //   let account = {
+    //     name: name,
+    //     email:email,
+    //     password: password,
+    //     role:"user",
+    //   }
+    //   let oldaccount = localStorage.getItem("formData");
+    //   if(oldaccount == null){
+    //     oldaccount = []
+    //     oldaccount.push(account)
+    //     localStorage.setItem("formData", JSON.stringify(oldaccount))
+    //   }else{
+    //     let oldArr = JSON.parse(oldaccount)
+    //     oldArr.push(account)
+    //     localStorage.setItem("formData",JSON.stringify(oldArr))
+    //   }
+    //   console.log("Saved in Local Storage");
 
-      setLogin(!login);
-    }
+    //   setLogin(!login);
+    // }
+
+    let submitData = {email: email, password: password, name: name}
+    // console.log(submitData)
+    fetch("/api/register", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(submitData)
+    }).then(res => res.json()).then(data => {
+      // save login token to cookies
+      console.log(data)
+      if (data.result === "sucess") {
+        Swal.fire({
+          title: "Register Sucess",
+          icon: "info",
+          html: "Go to <a href='http://localhost:3000'>Login</a> page for sign in"
+        })
+      } else {
+        Swal.fire("Register failed", data.result, "error")
+      }
+    })
   }
 
   // Directly to the login page
@@ -129,7 +150,7 @@ function SignUp() {
       </button>
       <p className="forgot-password text-right">
         Already registered{" "}
-        <a href="/sign-in" onClick={handleClick}>
+        <a href="/" onClick={handleClick}>
           log in?
         </a>
       </p>

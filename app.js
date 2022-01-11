@@ -166,5 +166,29 @@ app.post('/api/delete', (req, res) => {
   });
 });
 
+// login API
+app.post("/api/auth", (req, res) => {
+  var sql = "SELECT email, name, role FROM account WHERE email='" + req.body.email + "' AND password='" + req.body.password + "'"
+  console.log(sql)
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json(results);
+  });
+})
+
+// student register API
+app.post("/api/register", (req, res) => {
+  var sql = "INSERT INTO account (email, name, password, role) VALUE ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.password + "', 'student');"
+  console.log(sql)
+  connection.query(sql, function(err, results) {
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") res.json({result: "Email has exsist"})
+      else throw err
+    } else {
+      res.json({result: "sucess"});
+    }
+  });
+})
+
 //create connection
 app.listen(4000, () => console.log("App listening on port 4000"));
