@@ -1,3 +1,20 @@
 .contact{
-    margin: 30px 0px 0px 230px;
+    margin: 2% 15% 0 25%;
+}
+
+.heading{
+    text-align: center;
+}
+
+.table-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2% 4%;
+    margin-bottom: 2%;
+    margin-left: 1%;
+    box-shadow: 1px 1px 5px #999;
+}
+
+.container{
+    width: 99%;
 }

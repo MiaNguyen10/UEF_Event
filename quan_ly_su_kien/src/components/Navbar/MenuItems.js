@@ -6,7 +6,7 @@ export const MenuItems = [
     },
     {
         title: 'TRANG CHỦ',
-        path: '/homepage',
+        path: '/',
         cName: 'nav-links',
     }
 ]

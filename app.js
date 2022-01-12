@@ -26,8 +26,8 @@ var upload = multer({ storage: storage })
 const connection = mysql.createConnection({
   host: "localhost", 
   user: "root", // change this
-  password: "MySQL", // change this
-  database: "quan_ly_su_kien",
+  password: "", // change this
+  database: "event_management",
 });
 
 connection.connect(function (err) {
@@ -166,6 +166,40 @@ app.post('/api/delete', (req, res) => {
   });
 });
 
+//get account
+app.get('/api/account', (req, res) => {
+  const role="Khoa";
+  var sql = "SELECT * FROM account WHERE role like '  " + role + "%'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({account: results});
+  });
+});
+
+//Edit account
+app.post('/api/editaccount', (req, res) => {
+  var sql = "UPDATE account SET "
+          +   "email='"+req.body.email+"',"
+          +   "name='"+req.body.name+"',"
+          +   "password='"+req.body.password+"',"
+          +   "role='"+req.body.role+"'"
+          + "WHERE id='"+req.body.id+"'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({account: results});
+  });
+});
+
+//Delete account
+app.post('/api/deleteaccount', (req, res) => {
+  var sql = "DELETE FROM account "
+          + "WHERE id='"+req.body.id+"'";
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({account: results});
+  });
+});
+
 // login API
 app.post("/api/auth", (req, res) => {
   var sql = "SELECT email, name, role FROM account WHERE email='" + req.body.email + "' AND password='" + req.body.password + "'"
@@ -179,6 +213,20 @@ app.post("/api/auth", (req, res) => {
 // student register API
 app.post("/api/register", (req, res) => {
   var sql = "INSERT INTO account (email, name, password, role) VALUE ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.password + "', 'student');"
+  console.log(sql)
+  connection.query(sql, function(err, results) {
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") res.json({result: "Email has exsist"})
+      else throw err
+    } else {
+      res.json({result: "sucess"});
+    }
+  });
+})
+// admin register API
+app.post("/api/registeradmin", (req, res) => {
+  var sql = "INSERT INTO account (email, name, password, role) VALUE ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.password + "','" 
+  + req.body.role+"')";
   console.log(sql)
   connection.query(sql, function(err, results) {
     if (err) {

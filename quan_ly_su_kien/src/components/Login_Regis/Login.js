@@ -25,30 +25,6 @@ class Login extends React.Component{
   };
 
   onSubmit = (e) => {
-    //let { history } = this.props;
-    
-    // e.preventDefault();
-    // let oldaccount = localStorage.getItem("formData");
-    // let oldArr = JSON.parse(oldaccount);
-    // oldArr.map((arr) => {
-    //   if (
-    //     this.state.name.length > 0 &&
-    //     this.state.email.length > 0 &&
-    //     this.state.password.length > 0
-    //   ) {
-    //     if (
-    //       arr.name === this.state.name &&
-    //       arr.email === this.state.email &&
-    //       arr.password === this.state.password &&
-    //       arr.role === "user"
-    //     ) {
-    //       history.push("/admin");
-    //     } else {
-    //       this.setState({ error: "Please check your email or password" });
-    //     }
-    //   }
-    // });
-
     e.preventDefault();
     let submitData = {email: this.state.email, password: this.state.password}
     fetch("/api/auth", {

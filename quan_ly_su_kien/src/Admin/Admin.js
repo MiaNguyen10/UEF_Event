@@ -8,6 +8,7 @@ import Contact from "../pages/Contact/contact";
 import EventEnded from "../pages/EventEnded/EventEnded";
 import DisplayEventByUnit from "../pages/HomePage/DisplayEventByUnit";
 import Logout from "../pages/Login/Logout";
+import ManageAccount from "../components/Login_Regis/ManageAccount";
 
 
 const Admin = () => {
@@ -26,6 +27,7 @@ const Admin = () => {
           <Route exact path="/eventended" element={<EventEnded />} />
           <Route exact path="/displayEventByUnit" element={<DisplayEventByUnit />} />
           <Route exact path="/logout" element={<Logout />} />
+          <Route exact path="//manageaccount" element={<ManageAccount/>} />
         </Routes>
       {/* </Router> */}
 
