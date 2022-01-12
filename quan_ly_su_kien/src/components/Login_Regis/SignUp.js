@@ -90,7 +90,6 @@ function SignUp() {
       <Form onSubmit={handleFormSubmit} className="container-login">
         <div className="form-lg-header">
           <img src={Logo} alt="Logo"/>
-          {/* <p>Hệ thống quản lý sự kiện</p> */}
         </div>
 
         <div className="form-lg-group">

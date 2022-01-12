@@ -3,6 +3,8 @@ import './Login.css'
 import Cookies from 'universal-cookie';
 import Logo from '../../asset/img/logo_login.png'
 import bg from '../../asset/img/background_login.png'
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
 class Login extends React.Component{
   constructor(props) {
     super(props);
@@ -55,15 +57,14 @@ class Login extends React.Component{
     return (
       <div className="bg">
         <img src={bg} id="bg" alt=""/>    
-        <form onSubmit={this.onSubmit} className="container-login">
+        <Form onSubmit={this.onSubmit} className="container-login">
           <p className="error">{this.state.error}</p>
           <div className="form-lg-header">
             <img src={Logo} alt="Logo"/>
-            {/* <p>Hệ thống quản lý sự kiện</p> */}
           </div>          
           <div className="form-lg-group">
             <label>Email</label>
-            <input
+            <Input
               type="text"
               className="form-lg-control"
               placeholder="Nhập email"
@@ -74,7 +75,7 @@ class Login extends React.Component{
           </div>
           <div className="form-lg-group">
             <label>Mật khẩu</label>
-            <input
+            <Input
               type="password"
               className="form-lg-control"
               placeholder="Nhập mật khẩu"
@@ -98,7 +99,7 @@ class Login extends React.Component{
             </p>
           </div>
           
-        </form>  
+        </Form>  
       </div>
     );
   }
