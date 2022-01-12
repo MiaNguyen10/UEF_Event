@@ -88,16 +88,16 @@ function SignUp() {
     <div className="gb">
       <img src={bg} id="bg" alt=""/>   
       <Form onSubmit={handleFormSubmit} className="container-login">
-        <div className="form-header">
+        <div className="form-lg-header">
           <img src={Logo} alt="Logo"/>
           {/* <p>Hệ thống quản lý sự kiện</p> */}
         </div>
 
-        <div className="form-group">
+        <div className="form-lg-group">
           <label>Tên</label>
           <Input
             type="text"
-            className="form-control"
+            className="form-lg-control"
             placeholder="Nhập tên đầy đủ"
             name="name"
             onChange={(event) => setName(event.target.value)}
@@ -105,28 +105,28 @@ function SignUp() {
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-lg-group">
           <label>Email</label>
           <Input
             type="email"
-            className="form-control"
+            className="form-lg-control"
             placeholder="Nhập email"
             onChange={(event) => setEmail(event.target.value)}
             validations={[required, vemail]}
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-lg-group">
           <label>Mật khẩu</label>
           <Input
             type="password"
-            className="form-control"
+            className="form-lg-control"
             placeholder="Nhập mật khẩu"
             onChange={(event) => setPassword(event.target.value)}
             validations={[required, vpassword]}
           />
         </div>
-        <div className="form-footer">
+        <div className="form-lg-footer">
           <button type="submit" className="btn btn-primary btn-block">
             Đăng ký
           </button>
@@ -137,8 +137,6 @@ function SignUp() {
             </a>
           </p>
         </div>
-        
-        
       </Form>
     </div>
   );

@@ -23,41 +23,41 @@
     transform: translate(-50%, -50%);
 }
 
-.form-header{
+.form-lg-header{
     text-align: center;
     display: block !important;
     font-weight: 700 !important;
     padding-bottom: 5px !important;
 }
 
-.form-header img{
+.form-lg-header img{
     margin-left: 0 !important;
     width: 70%;
 }
 
-.form-group{
+.form-lg-group{
     margin: 20px 0;
     font-size: 16px;
 }
 
-.form-group input{
+.form-lg-group input{
     padding: 10px;
 }
 
-.form-group label{
+.form-lg-group label{
     font-weight: 500 !important;
 }
 
-.form-footer{
+.form-lg-footer{
     margin-top: 20px;
 }
 
-.form-footer button{
+.form-lg-footer button{
     width: max-content;
     margin: auto;
     height: max-content;
     font-size: 17px;
 }
-.form-footer p{
+.form-lg-footer p{
     margin-top: 10px;
 }

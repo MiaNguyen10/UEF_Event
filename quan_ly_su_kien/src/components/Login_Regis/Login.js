@@ -57,33 +57,33 @@ class Login extends React.Component{
         <img src={bg} id="bg" alt=""/>    
         <form onSubmit={this.onSubmit} className="container-login">
           <p className="error">{this.state.error}</p>
-          <div className="form-header">
+          <div className="form-lg-header">
             <img src={Logo} alt="Logo"/>
             {/* <p>Hệ thống quản lý sự kiện</p> */}
           </div>          
-          <div className="form-group">
+          <div className="form-lg-group">
             <label>Email</label>
             <input
               type="text"
-              className="form-control"
+              className="form-lg-control"
               placeholder="Nhập email"
               value={this.state.email}
               onChange={this.onChangeEmail}
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-lg-group">
             <label>Mật khẩu</label>
             <input
               type="password"
-              className="form-control"
+              className="form-lg-control"
               placeholder="Nhập mật khẩu"
               value={this.state.password}
               onChange={this.onChangePassword}
               required
             />
           </div>
-          <div className="form-footer">
+          <div className="form-lg-footer">
             <button
               type="submit"
               className="btn btn-primary btn-block"
