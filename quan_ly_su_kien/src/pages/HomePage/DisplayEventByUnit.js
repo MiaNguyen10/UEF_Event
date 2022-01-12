@@ -298,17 +298,14 @@ class Home extends Component {
 
   render() {
     const { t } = this.props;
-    return (
-      
+    return (      
       <div className="homepage">
-
-
         {/* Insert new event */}
         <Popup
           className="popup_content"
           modal
           trigger={
-            this.state.auth ==="admin" ?
+            this.state.auth !=="student" ?
             <button
               className="btn-create-event fa fa-plus"
               title={t("Home.create_event")}
@@ -381,14 +378,24 @@ class Home extends Component {
                   <div className="form-group">
                     <label>
                       {t('Form.lb_unit')}
-                      <select
-                        name="organizationalUnit"
-                        onChange={this.handleInputChange}
-                      >
-                        {OrganizationalUnit.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
+                      {this.state.auth === "admin" ? (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          {OrganizationalUnit.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>Chọn đơn vị tổ chức</option>
+                          <option value={userRole}>{userRole}</option>
+                        </select>
+                      )}
                     </label>
                   </div>
                   <div className="form-group">
@@ -499,7 +506,8 @@ class Home extends Component {
                   <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
               
         

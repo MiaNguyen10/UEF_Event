@@ -4,8 +4,9 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 function MultiLanguage () {
+    const lang = localStorage.getItem('lang');
+    i18next.changeLanguage(lang);
     const { t, i18n } = useTranslation();
-
   return (
     Swal.fire({
         title: t('Popup.language'),
