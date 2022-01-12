@@ -21,9 +21,16 @@ const customModal = {
     inset: "0px",
     border: "none",
     background: "none",
-    "z-index": "1000"
+    "z-index": "1000",
   },
 };
+
+let account = new Cookies().get("authToken");
+let userRole = "";
+if (account) {
+  userRole = account.role;
+}
+
 class Home extends Component {
 
   constructor(props) {
@@ -44,17 +51,17 @@ class Home extends Component {
       typeOfEvent: "",
       eventended: "",
       searchData: "",
-      auth:""
+      auth: "",
     };
   }
 
   handleAuth = () => {
-    const cookies = new Cookies()
-    let account = cookies.get('authToken');    
-    if (account){
+    const cookies = new Cookies();
+    let account = cookies.get("authToken");
+    if (account) {
       this.state.auth = account.role;
     }
-  }
+  };
 
   //get data
   componentDidMount() {
@@ -92,7 +99,7 @@ class Home extends Component {
   handleInsertSubmit = (event) => {
     event.preventDefault();
 
-    console.log(this.state)
+    console.log(this.state);
     //khai báo một item mới, với các giá trị là các giá trị được nhập từ form
     const newEvent = {
       id_event: "",
@@ -103,7 +110,7 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
       eventDate: this.state.eventDate,
-      eventTime: this.state.eventTime      
+      eventTime: this.state.eventTime,
     };
     console.log(newEvent);
     axios
@@ -145,11 +152,11 @@ class Home extends Component {
     });
   };
 
-  openPopup = () =>{
+  openPopup = () => {
     this.setState({
       popupIsOpen: true,
     });
-  }
+  };
 
   closePopup = () => {
     this.setState({
@@ -171,7 +178,7 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
       eventDate: this.state.eventDate,
-      eventTime: this.state.eventTime  
+      eventTime: this.state.eventTime,
     };
     console.log(newUpdate);
 
@@ -198,7 +205,7 @@ class Home extends Component {
         }));
       })
       .catch((error) => console.log(error));
-      window.location.reload();
+    window.location.reload();
   };
 
   //End event
@@ -215,7 +222,7 @@ class Home extends Component {
       cancelButtonText: t('Popup.no')
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {        
+      if (result.isConfirmed) {
         axios
         .post("/eventended", eventId)
         .then((res) => {
@@ -239,7 +246,7 @@ class Home extends Component {
       } else{
         Swal.fire(t('Popup.no_ended_event'), '', 'success')
       }
-    })
+    });
   };
 
   //Delete event data
@@ -261,7 +268,9 @@ class Home extends Component {
           .post("/api/delete", eventId)
           .then((res) => {
             this.setState((prevState) => ({
-              event: prevState.event.filter((el) => el.id_event !== item.id_event),
+              event: prevState.event.filter(
+                (el) => el.id_event !== item.id_event
+              ),
             }));
           })
           .catch((error) => console.log(error));
@@ -296,6 +305,7 @@ class Home extends Component {
 
         {/* Insert new event */}
         <Popup
+          className="popup_content"
           modal
           trigger={
             this.state.auth ==="admin" ?
@@ -411,7 +421,7 @@ class Home extends Component {
               onChange={this.handleInputChange}
               placeholder={t('Home.search')}
             />
-            <BsSearch className="BsSearch" onClick={ () => this.handleSearch} />
+            <BsSearch className="BsSearch" onClick={() => this.handleSearch} />
           </div>
 
           {this.state.event
@@ -421,11 +431,10 @@ class Home extends Component {
             .map((item) => (
               <div className="event-des-item" key={item.id_event}>
                 <div className="header-event">
-
                   {/*display name */}
                   <div className="event-name">{item.name}</div>
-                  
-                  {this.state.auth ==="admin" ?                   
+
+                  {(this.state.auth === localStorage.getItem("unit") || this.state.auth === "admin") ? (
                     <Dropdown>
                       <Dropdown.Toggle variant="" className="dropdown-choose">
                         <BsThreeDots id="three-dots"></BsThreeDots>
@@ -449,7 +458,9 @@ class Home extends Component {
                         </Dropdown.Item>
 
                         {/* Click to end event */}
-                        <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                        <Dropdown.Item
+                          onClick={() => this.handleEndEvent(item)}
+                        >
                           <div id="drop-item">
                             <button className="fas fa-hourglass-end ic-in-3-dots" />
                             <span>{t('Home.end_event')}</span>
@@ -457,7 +468,9 @@ class Home extends Component {
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
-                  : ''}
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 {/* display description */}
@@ -485,9 +498,8 @@ class Home extends Component {
                   <p><strong>{t('Home.venue')}</strong> {item.address}</p>
                   <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
-              </div> 
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
               
         
