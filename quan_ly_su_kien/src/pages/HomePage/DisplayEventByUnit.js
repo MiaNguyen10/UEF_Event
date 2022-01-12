@@ -10,8 +10,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 import { BsFillXCircleFill } from "react-icons/bs";
 import { Dropdown } from "react-bootstrap";
-import Swal from 'sweetalert2'
-import Cookies from 'universal-cookie';
+import Swal from "sweetalert2";
+import Cookies from "universal-cookie";
 
 const customModal = {
   content: {
@@ -19,9 +19,16 @@ const customModal = {
     inset: "0px",
     border: "none",
     background: "none",
-    "z-index": "1000"
+    "z-index": "1000",
   },
 };
+
+let account = new Cookies().get("authToken");
+let userRole = "";
+if (account) {
+  userRole = account.role;
+}
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -41,17 +48,17 @@ class Home extends Component {
       typeOfEvent: "",
       eventended: "",
       searchData: "",
-      auth:""
+      auth: "",
     };
   }
 
   handleAuth = () => {
-    const cookies = new Cookies()
-    let account = cookies.get('authToken');    
-    if (account){
+    const cookies = new Cookies();
+    let account = cookies.get("authToken");
+    if (account) {
       this.state.auth = account.role;
     }
-  }
+  };
 
   //get data
   componentDidMount() {
@@ -87,7 +94,7 @@ class Home extends Component {
   handleInsertSubmit = (event) => {
     event.preventDefault();
 
-    console.log(this.state)
+    console.log(this.state);
     //khai báo một item mới, với các giá trị là các giá trị được nhập từ form
     const newEvent = {
       id_event: "",
@@ -98,7 +105,7 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
       eventDate: this.state.eventDate,
-      eventTime: this.state.eventTime      
+      eventTime: this.state.eventTime,
     };
     console.log(newEvent);
     axios
@@ -140,11 +147,11 @@ class Home extends Component {
     });
   };
 
-  openPopup = () =>{
+  openPopup = () => {
     this.setState({
       popupIsOpen: true,
     });
-  }
+  };
 
   closePopup = () => {
     this.setState({
@@ -166,7 +173,7 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
       eventDate: this.state.eventDate,
-      eventTime: this.state.eventTime  
+      eventTime: this.state.eventTime,
     };
     console.log(newUpdate);
 
@@ -193,7 +200,7 @@ class Home extends Component {
         }));
       })
       .catch((error) => console.log(error));
-      window.location.reload();
+    window.location.reload();
   };
 
   //End event
@@ -204,37 +211,37 @@ class Home extends Component {
     };
     console.log(eventId);
     Swal.fire({
-      title: 'Bạn muốn kết thúc sự kiện không?',
+      title: "Bạn muốn kết thúc sự kiện không?",
       showCancelButton: true,
-      confirmButtonText: 'Có',
-      cancelButtonText: 'Không'
+      confirmButtonText: "Có",
+      cancelButtonText: "Không",
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {        
+      if (result.isConfirmed) {
         axios
-        .post("/eventended", eventId)
-        .then((res) => {
-          this.setState((prevState) => ({
-            event: prevState.event.map((elm) =>
-              elm.id_event === item.id_event
-                ? {
-                    ...elm,
-                    eventended: 1,
-                  }
-                : elm
-            ),
-          }));
-        })
-        .catch((error) => console.log(error));
-        Swal.fire('Đã kết thúc sự kiện', '', 'success').then((res) =>{
-          if(res.isConfirmed){
+          .post("/eventended", eventId)
+          .then((res) => {
+            this.setState((prevState) => ({
+              event: prevState.event.map((elm) =>
+                elm.id_event === item.id_event
+                  ? {
+                      ...elm,
+                      eventended: 1,
+                    }
+                  : elm
+              ),
+            }));
+          })
+          .catch((error) => console.log(error));
+        Swal.fire("Đã kết thúc sự kiện", "", "success").then((res) => {
+          if (res.isConfirmed) {
             window.location.reload();
           }
-        })
-      } else{
-        Swal.fire('Chưa kết thúc sự kiện', '', 'success')
+        });
+      } else {
+        Swal.fire("Chưa kết thúc sự kiện", "", "success");
       }
-    })
+    });
   };
 
   //Delete event data
@@ -242,28 +249,29 @@ class Home extends Component {
     const eventId = {
       id_event: item.id_event,
     };
-      Swal.fire({
-        title: 'Bạn muốn xóa sự kiện không?',
-        showCancelButton: true,
-        confirmButtonText: 'Có',
-        cancelButtonText: 'Không'
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire('Đã xóa sự kiện', '', 'info')
-          axios
+    Swal.fire({
+      title: "Bạn muốn xóa sự kiện không?",
+      showCancelButton: true,
+      confirmButtonText: "Có",
+      cancelButtonText: "Không",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Đã xóa sự kiện", "", "info");
+        axios
           .post("/api/delete", eventId)
           .then((res) => {
             this.setState((prevState) => ({
-              event: prevState.event.filter((el) => el.id_event !== item.id_event),
+              event: prevState.event.filter(
+                (el) => el.id_event !== item.id_event
+              ),
             }));
           })
           .catch((error) => console.log(error));
-          
-        } else{
-          Swal.fire('Không xóa sự kiện', '', 'info')
-        }
-      })
+      } else {
+        Swal.fire("Không xóa sự kiện", "", "info");
+      }
+    });
   };
 
   //Search event by name
@@ -282,16 +290,19 @@ class Home extends Component {
       <div className="homepage">
         {/* Insert new event */}
         <Popup
+          className="popup_content"
           modal
           trigger={
-            this.state.auth ==="admin" ?
+            this.state.auth !== "student" ? (
               <button
                 className="btn-create-event fa fa-plus"
                 title="Tạo sự kiện"
               ></button>
-            : ''
+            ) : (
+              ""
+            )
           }
-          on='click'
+          on="click"
           open={this.state.popupIsOpen}
           onOpen={this.openPopup}
           onRequestClose={this.closePopup}
@@ -300,7 +311,12 @@ class Home extends Component {
             <div className="card form-event">
               <div className="card-header text-center form-header">
                 <p>Sự kiện mới</p>
-                <p className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closePopup}/></p>
+                <p className="ic-close">
+                  <BsFillXCircleFill
+                    id="BsFillXCircleFill"
+                    onClick={this.closePopup}
+                  />
+                </p>
               </div>
               <div className="card-body">
                 <form onSubmit={this.handleInsertSubmit}>
@@ -349,24 +365,42 @@ class Home extends Component {
                   <div className="form-group date-time">
                     <div className="event-date">
                       <label>Ngày tổ chức:</label>
-                      <input name="eventDate" type="date" onChange={this.handleInputChange} /> 
+                      <input
+                        name="eventDate"
+                        type="date"
+                        onChange={this.handleInputChange}
+                      />
                     </div>
                     <div className="event-time">
                       <label>Giờ:</label>
-                      <input name="eventTime" type="time" onChange={this.handleInputChange} />
-                    </div>         
+                      <input
+                        name="eventTime"
+                        type="time"
+                        onChange={this.handleInputChange}
+                      />
+                    </div>
                   </div>
                   <div className="form-group">
                     <label>
                       Đơn vị tổ chức:
-                      <select
-                        name="organizationalUnit"
-                        onChange={this.handleInputChange}
-                      >
-                        {OrganizationalUnit.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
+                      {this.state.auth === "admin" ? (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          {OrganizationalUnit.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>Chọn đơn vị tổ chức</option>
+                          <option value={userRole}>{userRole}</option>
+                        </select>
+                      )}
                     </label>
                   </div>
                   <div className="form-group">
@@ -399,7 +433,7 @@ class Home extends Component {
               onChange={this.handleInputChange}
               placeholder="Tìm sự kiện..."
             />
-            <BsSearch className="BsSearch" onClick={ () => this.handleSearch} />
+            <BsSearch className="BsSearch" onClick={() => this.handleSearch} />
           </div>
 
           {this.state.event
@@ -409,11 +443,10 @@ class Home extends Component {
             .map((item) => (
               <div className="event-des-item" key={item.id_event}>
                 <div className="header-event">
-
                   {/*display name */}
                   <div className="event-name">{item.name}</div>
 
-                  {this.state.auth ==="admin" ? 
+                  {(this.state.auth === localStorage.getItem("unit") || this.state.auth === "admin") ? (
                     <Dropdown>
                       <Dropdown.Toggle variant="" className="dropdown-choose">
                         <BsThreeDots id="three-dots"></BsThreeDots>
@@ -437,7 +470,9 @@ class Home extends Component {
                         </Dropdown.Item>
 
                         {/* Click to end event */}
-                        <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                        <Dropdown.Item
+                          onClick={() => this.handleEndEvent(item)}
+                        >
                           <div id="drop-item">
                             <button className="fas fa-hourglass-end ic-in-3-dots" />
                             <span>Kết thúc sự kiện</span>
@@ -445,44 +480,70 @@ class Home extends Component {
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
-                  : ''}
+                  ) : (
+                    ""
+                  )}
                 </div>
                 {/* display description */}
-              <ShowMoreText
-                /* Default options */
-                lines={3}
-                more="Show more"
-                less="Show less"
-                expanded={false}
-              >
-              <div className="description">{item.description}</div>
-              </ShowMoreText>
-              <div className="img-unit-type">
-                {/* display image */}
-                <img
-                  src={item.image}
-                  alt="image_event"
-                  className="img-fluid"
-                  width={500}
-                />
-                {/* display widge */}
-                <div id="unit-type" >
-                  <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
-                  <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
-                  <p><strong>Địa điểm:</strong> {item.address}</p>
-                  <p><strong>Thời gian:</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                <ShowMoreText
+                  /* Default options */
+                  lines={3}
+                  more="Show more"
+                  less="Show less"
+                  expanded={false}
+                >
+                  <div className="description">{item.description}</div>
+                </ShowMoreText>
+                <div className="img-unit-type">
+                  {/* display image */}
+                  <img
+                    src={item.image}
+                    alt="image_event"
+                    className="img-fluid"
+                    width={500}
+                  />
+                  {/* display widge */}
+                  <div id="unit-type">
+                    <p>
+                      <strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}
+                    </p>
+                    <p>
+                      <strong>Loại sự kiện:</strong> {item.typeOfEvent}
+                    </p>
+                    <p>
+                      <strong>Địa điểm:</strong> {item.address}
+                    </p>
+                    <p>
+                      <strong>Thời gian:</strong>{" "}
+                      {new Date(Date.parse(item.eventDate)).toLocaleDateString(
+                        undefined
+                      )}{" "}
+                      lúc{" "}
+                      {new Date(Date.parse(item.eventDate)).toLocaleTimeString(
+                        [],
+                        { hour: "2-digit", minute: "2-digit" }
+                      )}
+                    </p>
+                  </div>
                 </div>
-              </div> 
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
-                
 
-        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal} style={customModal}>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          style={customModal}
+        >
           <div className="card">
             <div className="card-header text-center form-header">
               <p>Chỉnh sửa</p>
-              <p className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closeModal}/></p>
+              <p className="ic-close">
+                <BsFillXCircleFill
+                  id="BsFillXCircleFill"
+                  onClick={this.closeModal}
+                />
+              </p>
             </div>
             <div className="card-body">
               <form onSubmit={this.handleEditSubmit}>
@@ -533,39 +594,47 @@ class Home extends Component {
                 <div className="form-group date-time">
                   <div className="event-date">
                     <label>Ngày tổ chức:</label>
-                    <input name="eventDate" type="date" onChange={this.handleInputChange} /> 
+                    <input
+                      name="eventDate"
+                      type="date"
+                      onChange={this.handleInputChange}
+                    />
                   </div>
                   <div className="event-time">
                     <label>Giờ:</label>
-                    <input name="eventTime" type="time" onChange={this.handleInputChange} />
-                  </div>         
+                    <input
+                      name="eventTime"
+                      type="time"
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
                 </div>
                 <div className="form-group">
-                    <label>
-                      Đơn vị tổ chức:
-                      <select
-                        name="organizationalUnit"
-                        onChange={this.handleInputChange}
-                      >
-                        {OrganizationalUnit.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label>
-                      Loại sự kiện:
-                      <select
-                        name="typeOfEvent"
-                        onChange={this.handleInputChange}
-                      >
-                        {TypeOfEvent.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
-                    </label>
-                  </div>
+                  <label>
+                    Đơn vị tổ chức:
+                    <select
+                      name="organizationalUnit"
+                      onChange={this.handleInputChange}
+                    >
+                      {OrganizationalUnit.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label>
+                    Loại sự kiện:
+                    <select
+                      name="typeOfEvent"
+                      onChange={this.handleInputChange}
+                    >
+                      {TypeOfEvent.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
                 <div className="card-footer text-right">
                   <button>Cập nhật sự kiện</button>
                 </div>

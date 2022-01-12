@@ -12,6 +12,7 @@ import Cookies from 'universal-cookie';
   if (account)
     {username = account.name}
 
+  
 export const MenuItems = [
   {
     title: username,

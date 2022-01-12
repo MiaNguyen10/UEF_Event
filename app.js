@@ -169,7 +169,7 @@ app.post('/api/delete', (req, res) => {
 //get account
 app.get('/api/account', (req, res) => {
   const role="Khoa";
-  var sql = "SELECT * FROM account WHERE role like '  " + role + "%'";
+  var sql = "SELECT * FROM account WHERE role like '" + role + "%'";
   connection.query(sql, function(err, results) {
     if (err) throw err;
     res.json({account: results});
