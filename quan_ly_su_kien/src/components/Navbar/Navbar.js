@@ -9,7 +9,6 @@ class Navbar extends Component {
 
   handleUnit = (props) => {
     localStorage.setItem('unit', props);
-    console.log("ii");
   };
 
   state = { clicked: false };

@@ -9,13 +9,11 @@ const LoginUI = () => {
 
   return (
     <div>
-      {/* <Router> */}
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/sign-up" element={<SignUp />} />
           <Route exact path="/logout" element={<Logout />} />
         </Routes>
-      {/* </Router> */}
     </div>
   );
 };

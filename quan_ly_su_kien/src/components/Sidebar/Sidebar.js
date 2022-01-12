@@ -9,7 +9,6 @@ class Sidebar extends Component {
     super(props)
     this.state = {
       active: true,
-      // username: ''
     }
     this.updatePredicate = this.updatePredicate.bind(this);
   }

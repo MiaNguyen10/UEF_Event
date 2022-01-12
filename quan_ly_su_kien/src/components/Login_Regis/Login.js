@@ -1,8 +1,8 @@
 import React from "react";
-// import { createBrowserHistory } from 'history';
+import './Login.css'
 import Cookies from 'universal-cookie';
-
-// const history = createBrowserHistory({forceRefresh:true});
+import Logo from '../../asset/img/logo_login.png'
+import bg from '../../asset/img/background_login.png'
 class Login extends React.Component{
   constructor(props) {
     super(props);
@@ -53,44 +53,53 @@ class Login extends React.Component{
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
-        <p className="error">{this.state.error}</p>
-        <h2>LOGIN</h2>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Enter email"
-            value={this.state.email}
-            onChange={this.onChangeEmail}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Enter password"
-            value={this.state.password}
-            onChange={this.onChangePassword}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary btn-block"
-        >
-          Login
-        </button>
-        <p className="forgot-password text-right">
-          Don't have account ? Please{" "}
-          <a href="/sign-up" onClick={this.handleClick}>
-            sign up
-          </a>
-        </p>
-      </form>
+      <div className="bg">
+        <img src={bg} id="bg" alt=""/>    
+        <form onSubmit={this.onSubmit} className="container-login">
+          <p className="error">{this.state.error}</p>
+          <div className="form-header">
+            <img src={Logo} alt="Logo"/>
+            {/* <p>Hệ thống quản lý sự kiện</p> */}
+          </div>          
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Nhập email"
+              value={this.state.email}
+              onChange={this.onChangeEmail}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Mật khẩu</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Nhập mật khẩu"
+              value={this.state.password}
+              onChange={this.onChangePassword}
+              required
+            />
+          </div>
+          <div className="form-footer">
+            <button
+              type="submit"
+              className="btn btn-primary btn-block"
+            >
+              Đăng nhập
+            </button>
+            <p className="forgot-password text-right">
+              Bạn chưa có tài khoản ? Hãy{" "}  
+              <a href="/sign-up" onClick={this.handleClick}>
+                đăng ký
+              </a>
+            </p>
+          </div>
+          
+        </form>  
+      </div>
     );
   }
 }

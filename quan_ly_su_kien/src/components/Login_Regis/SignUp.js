@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import './Login.css'
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import { isEmail } from "validator";
 import Swal from "sweetalert2";
+import Logo from '../../asset/img/logo_login.png'
+import bg from '../../asset/img/background_login.png'
 
 function required(value) {
   if (!value) {
@@ -82,54 +85,62 @@ function SignUp() {
   }
 
   return (
-    <Form onSubmit={handleFormSubmit}>
-      <h3>Sign Up</h3>
+    <div className="gb">
+      <img src={bg} id="bg" alt=""/>   
+      <Form onSubmit={handleFormSubmit} className="container-login">
+        <div className="form-header">
+          <img src={Logo} alt="Logo"/>
+          {/* <p>Hệ thống quản lý sự kiện</p> */}
+        </div>
 
-      <div className="form-group">
-        <label>Name</label>
-        <Input
-          type="text"
-          className="form-control"
-          placeholder="Enter Full Name"
-          name="name"
-          onChange={(event) => setName(event.target.value)}
-          validations={[required, vusername]}
-        />
-      </div>
+        <div className="form-group">
+          <label>Tên</label>
+          <Input
+            type="text"
+            className="form-control"
+            placeholder="Nhập tên đầy đủ"
+            name="name"
+            onChange={(event) => setName(event.target.value)}
+            validations={[required, vusername]}
+          />
+        </div>
 
-      <div className="form-group">
-        <label>Email</label>
-        <Input
-          type="email"
-          className="form-control"
-          placeholder="Enter email"
-          onChange={(event) => setEmail(event.target.value)}
-          validations={[required, vemail]}
-        />
-      </div>
+        <div className="form-group">
+          <label>Email</label>
+          <Input
+            type="email"
+            className="form-control"
+            placeholder="Nhập email"
+            onChange={(event) => setEmail(event.target.value)}
+            validations={[required, vemail]}
+          />
+        </div>
 
-      <div className="form-group">
-        <label>Password</label>
-        <Input
-          type="password"
-          className="form-control"
-          placeholder="Enter password"
-          onChange={(event) => setPassword(event.target.value)}
-          validations={[required, vpassword]}
-        />
-      </div>
-
-      <button type="submit" className="btn btn-primary btn-block">
-        Sign Up
-      </button>
-      <p className="forgot-password text-right">
-        Already registered{" "}
-        <a href="/" onClick={handleClick}>
-          log in?
-        </a>
-      </p>
-      
-    </Form>
+        <div className="form-group">
+          <label>Mật khẩu</label>
+          <Input
+            type="password"
+            className="form-control"
+            placeholder="Nhập mật khẩu"
+            onChange={(event) => setPassword(event.target.value)}
+            validations={[required, vpassword]}
+          />
+        </div>
+        <div className="form-footer">
+          <button type="submit" className="btn btn-primary btn-block">
+            Đăng ký
+          </button>
+          <p className="forgot-password text-right">
+            Bạn đã đăng ký? Hãy{" "}
+            <a href="/" onClick={handleClick}>
+              đăng nhập
+            </a>
+          </p>
+        </div>
+        
+        
+      </Form>
+    </div>
   );
 }
 
