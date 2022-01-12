@@ -5,11 +5,17 @@ import language from "../../asset/img/language.png";
 import theme from "../../asset/img/theme.png";
 import setting from "../../asset/img/setting.png";
 import logout from "../../asset/img/logout.png";
+import Cookies from 'universal-cookie';
+
+  let account = new Cookies().get('authToken');    
+  let username =""
+  if (account)
+    {username = account.name}
 
 export const MenuItems = [
   {
-    title: 'Tên đăng nhập',
-    path: '/',
+    title: username,
+    path: '',
     icon: logo, //fix later
     cName: 'nav-text nav-username'
   },
