@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import './Sidebar.css';
 import { BsList } from "react-icons/bs";
-import Cookies from 'universal-cookie';
 
 class Sidebar extends Component {
   constructor(props){
     super(props)
     this.state = {
-      active: true,
+      active: true
     }
     this.updatePredicate = this.updatePredicate.bind(this);
   }

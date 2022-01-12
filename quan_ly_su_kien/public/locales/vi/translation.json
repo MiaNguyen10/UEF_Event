@@ -1,0 +1,51 @@
+{
+  "Home": {
+      "unit": "Đơn vị tổ chức:",
+      "type_event": "Loại sự kiện:",
+      "venue": "Địa điểm:",
+      "time": "Thời gian:",
+      "create_event": "Tạo sự kiện",
+      "fix": "Chỉnh sửa",
+      "delete": "Xóa",
+      "end_event": "Kết thúc sự kiện",
+      "restore_event": "Khôi phục sự kiện",
+      "search": "Tìm sự kiện..."
+     
+  },
+  "Form": {
+    "title_create": "Tạo sự kiện mới",
+    "title_fix": "Chỉnh sửa",
+    "lb_name_event": "Tên sự kiện",
+    "lb_des": "Mô tả",
+    "lb_venue": "Địa điểm",
+    "lb_img": "Chọn hình ảnh",
+    "btn_img": "Chọn tệp",
+    "lb_date": "Ngày tổ chức:",
+    "lb_time": "Thời gian:",
+    "lb_unit": "Đơn vị tổ chức:",
+    "sl_unit": "Chọn đơn vị tổ chức",
+    "lb_type": "Loại sự kiện:",
+    "sl_type": "Chọn loại sự kiện",
+    "btn_post": "Đăng sự kiện",
+    "btn_fix": "Cập nhật"
+  },
+  "Popup":{
+    "end_event": "Bạn muốn kết thúc sự kiện này không?",
+    "ended_event": "Đã kết thúc sự kiện này",
+    "no_ended_event": "Chưa kết thúc sự kiện này",
+    "restore_event": "Bạn muốn khôi phục sự kiện này không?",
+    "restored_event": "Đã khôi phục sự kiện này",
+    "no_restore_event": "Chưa khôi phục sự kiện này",
+    "delete_event": "Bạn muốn xóa sự kiện này không?",
+    "deleted_event": "Sự kiện này đã được xóa",
+    "no_delete_event": "Sự kiện này chưa được xóa",
+    "language":"Bạn muốn chọn ngôn ngữ nào?",
+    "vi": "Tiếng Việt",
+    "en": "Tiếng Anh",
+    "yes": "Có",
+    "no": "Không",
+      "come_home1": "Bấm",
+      "come_home2": "tại đây",
+      "come_home3": "để trở về trang chủ"
+  }
+}

@@ -1,0 +1,50 @@
+{
+    "Home": {
+        "unit": "Unit:",
+        "type_event": "Type:",
+        "venue": "Venue:",
+        "time": "Time:",
+        "create_event": "Create event",
+        "fix": "Update",
+        "delete": "Delete",
+        "end_event": "End of event",
+        "restore_event": "Restore event",
+        "search": "Search event..."
+        },
+    "Form": {
+        "title_create": "Create new event",
+        "title_fix": "Update event",
+        "lb_name_event": "Title of event",
+        "lb_des": "Description",
+        "lb_venue": "Venue",
+        "lb_img": "Choose image",
+        "btn_img": "Choose file",
+        "lb_date": "Date of organization:",
+        "lb_time": "Time:",
+        "lb_unit": "Unit:",
+        "sl_unit": "Choose unit",
+        "lb_type": "Type:",
+        "sl_type": "Choose type",
+        "btn_post": "Post",
+        "btn_fix": "Update"
+    },
+    "Popup":{
+        "end_event": "Would you like to end this event?",
+        "ended_event": "This event is ended",
+        "no_ended_event": "This event has not been ended",
+        "restore_event": "Would you like to restore this event?",
+        "restored_event": "This event is restored",
+        "no_restore_event": "This event has not been restored",
+        "delete_event": "Would you like to delete this event?",
+        "deleted_event": "This event is deleted",
+        "no_delete_event": "This event has not been deleted",
+        "language":"Which language would you like?",
+        "vi": "Vietnamese",
+        "en": "English",
+        "yes": "Yes",
+        "no": "No",
+        "come_home1": "Press ",
+        "come_home2": "here ",
+        "come_home3": "to return home page"
+    }
+}

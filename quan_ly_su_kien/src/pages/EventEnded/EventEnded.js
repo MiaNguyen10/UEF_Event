@@ -11,6 +11,8 @@ import { BsFillXCircleFill } from "react-icons/bs";
 import { Dropdown } from "react-bootstrap";
 import Swal from 'sweetalert2'
 import Cookies from 'universal-cookie';
+import i18next from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 const customModal = {
   content: {
@@ -61,6 +63,8 @@ class EventEnded extends Component {
       })
       .catch((error) => console.log(error));
     this.handleAuth();
+    const lang = localStorage.getItem('lang');
+    this.handleLanguage(lang);
   }
 
   //handle data input
@@ -160,12 +164,12 @@ class EventEnded extends Component {
       id_event: item.id_event,
       eventended: 0,
     };
-    console.log(eventId);
+    const { t } = this.props;
     Swal.fire({
-      title: 'Bạn muốn khôi phục sự kiện không?',
+      title: t('Popup.restore_event'),
       showCancelButton: true,
-      confirmButtonText: 'Có',
-      cancelButtonText: 'Không'
+      confirmButtonText: t('Popup.yes'),
+      cancelButtonText: t('Popup.no')
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {        
@@ -184,13 +188,13 @@ class EventEnded extends Component {
           }));
         })
         .catch((error) => console.log(error));
-        Swal.fire('Đã khôi phục sự kiện', '', 'info').then((res) =>{
+        Swal.fire(t('Popup.restored_event'), '', 'info').then((res) =>{
           if(res.isConfirmed){
             window.location.reload();
           }
         })
       } else{
-        Swal.fire('Chưa khôi phục sự kiện', '', 'info')
+        Swal.fire(t('Popup.no_restore_event'), '', 'info')
       }
     })
   };
@@ -200,15 +204,16 @@ class EventEnded extends Component {
     const eventId = {
       id_event: item.id_event,
     };
+    const { t } = this.props;
       Swal.fire({
-        title: 'Bạn muốn xóa sự kiện không?',
+        title: t('Popup.delete_event'),
         showCancelButton: true,
-        confirmButtonText: 'Có',
-        cancelButtonText: 'Không'
+        confirmButtonText: t('Popup.yes'),
+        cancelButtonText: t('Popup.no')
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire('Đã xóa sự kiện', '', 'info')
+          Swal.fire(t('Popup.deleted_event'), '', 'info')
           axios
           .post("/api/delete", eventId)
           .then((res) => {
@@ -219,7 +224,7 @@ class EventEnded extends Component {
           .catch((error) => console.log(error));
           
         } else{
-          Swal.fire('Không xóa sự kiện', '', 'info')
+          Swal.fire(t('Popup.no_delete_event'), '', 'info')
         }
       })
   };
@@ -234,7 +239,12 @@ class EventEnded extends Component {
       .catch((error) => console.log(error));
   };
 
+  handleLanguage = (lang) => {
+    i18next.changeLanguage(lang)
+  };
+
   render() {
+    const { t } = this.props;
     return (
       <div className="homepage">
         {/* Display event data */}
@@ -244,7 +254,7 @@ class EventEnded extends Component {
             <input
               name="searchData"
               onChange={this.handleInputChange}
-              placeholder="Tìm sự kiện..."
+              placeholder={t('Home.search')}
             />
             <BsSearch className="BsSearch" onClick={this.handleSearch} />
           </div>
@@ -265,7 +275,7 @@ class EventEnded extends Component {
                       <Dropdown.Item onClick={() => this.openModal(item)}>
                         <div id="drop-item">
                           <button className="far fa-edit ic-in-3-dots" />
-                          <span>Chỉnh sửa</span>
+                          <span>{t('Home.fix')}</span>
                         </div>
                       </Dropdown.Item>
 
@@ -275,7 +285,7 @@ class EventEnded extends Component {
                       >
                         <div id="drop-item">
                           <button className="far fa-trash-alt ic-in-3-dots" />
-                          <span>Xóa</span>
+                          <span>{t('Home.delete')}</span>
                         </div>
                       </Dropdown.Item>
 
@@ -283,7 +293,7 @@ class EventEnded extends Component {
                       <Dropdown.Item onClick={() => this.handleRestoreEvent(item)}>
                         <div id="drop-item">
                           <button className="fas fa-hourglass-end ic-in-3-dots" />
-                          <span>Khôi phục sự kiện</span>
+                          <span>{t('Home.restore_event')}</span>
                         </div>
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -311,10 +321,10 @@ class EventEnded extends Component {
                 />
                 {/* display widge */}
                 <div id="unit-type" >
-                  <p><strong>Đơn vị tổ chức:</strong> {item.organizationalUnit}</p>
-                  <p><strong>Loại sự kiện:</strong> {item.typeOfEvent}</p>
-                  <p><strong>Địa điểm:</strong> {item.address}</p>
-                  <p><strong>Thời gian:</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                  <p><strong>{t('Home.unit')}</strong> {item.organizationalUnit}</p>
+                  <p><strong>{t('Home.type_event')}</strong> {item.typeOfEvent}</p>
+                  <p><strong>{t('Home.venue')}</strong> {item.address}</p>
+                  <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                 </div>
               </div> 
             </div>
@@ -330,7 +340,7 @@ class EventEnded extends Component {
             <div className="card-body">
               <form onSubmit={this.handleEditSubmit}>
                 <div className="form-group">
-                  <label for="eventName">Tên sự kiện</label>
+                  <label for="eventName">{t('Form.lb_name_event')}</label>
                   <input
                     name="name"
                     type="text"
@@ -341,7 +351,7 @@ class EventEnded extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventDescription">Mô tả</label>
+                  <label for="eventDescription">{t('Form.lb_des')}</label>
                   <textarea
                     name="description"
                     className="form-control"
@@ -352,7 +362,7 @@ class EventEnded extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventAddress">Địa điểm</label>
+                  <label for="eventAddress">{t('Form.lb_venue')}</label>
                   <textarea
                     name="address"
                     className="form-control"
@@ -363,7 +373,7 @@ class EventEnded extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventImage">Chọn hình ảnh</label>
+                  <label for="eventImage">{t('Form.lb_img')}</label>
                   <input
                     name="image"
                     type="file"
@@ -375,17 +385,17 @@ class EventEnded extends Component {
                 </div>
                 <div className="form-group date-time">
                   <div className="event-date">
-                    <label>Ngày tổ chức:</label>
+                    <label>{t('Form.lb_date')}</label>
                     <input name="eventDate" type="date" onChange={this.handleInputChange} /> 
                   </div>
                   <div className="event-time">
-                    <label>Giờ:</label>
+                    <label>{t('Form.lb_time')}</label>
                     <input name="eventTime" type="time" onChange={this.handleInputChange} />
                   </div>         
                 </div>
                 <div className="form-group">
                     <label>
-                      Đơn vị tổ chức:
+                    {t('Form.lb_unit')}
                       <select
                         name="organizationalUnit"
                         onChange={this.handleInputChange}
@@ -398,7 +408,7 @@ class EventEnded extends Component {
                   </div>
                   <div className="form-group">
                     <label>
-                      Loại sự kiện:
+                    {t('Form.lb_type')}
                       <select
                         name="typeOfEvent"
                         onChange={this.handleInputChange}
@@ -421,4 +431,4 @@ class EventEnded extends Component {
   }
 }
 
-export default EventEnded;
+export default withTranslation() (EventEnded);

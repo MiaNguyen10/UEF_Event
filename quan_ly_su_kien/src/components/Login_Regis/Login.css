@@ -40,8 +40,10 @@
     font-size: 16px;
 }
 
-.form-lg-group input{
+.form-lg-group Input{
     padding: 10px;
+    border-radius: 5px;
+    border: solid 0.5px #999;
 }
 
 .form-lg-group label{

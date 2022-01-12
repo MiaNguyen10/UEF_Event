@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../pages/HomePage/Home";
 import Contact from "../pages/Contact/contact";
 import EventEnded from "../pages/EventEnded/EventEnded";
+import Language from "../pages/MultiLanguage/MultiLanguage";
 import DisplayEventByUnit from "../pages/HomePage/DisplayEventByUnit";
 import Logout from "../pages/Login/Logout";
 import ManageAccount from "../components/Login_Regis/ManageAccount";
@@ -24,6 +25,7 @@ const Admin = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/contact" element={<Contact />} />
+          <Route exact path="/language" element={<Language />} />
           <Route exact path="/eventended" element={<EventEnded />} />
           <Route exact path="/displayEventByUnit" element={<DisplayEventByUnit />} />
           <Route exact path="/logout" element={<Logout />} />
