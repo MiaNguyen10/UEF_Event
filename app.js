@@ -8,23 +8,23 @@ const bodyParser = require("body-parser");
 
 //CORS
 // app.use(cors()); // dont need cors
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 // config file storage
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/images/upload_images') // localtion store file
+    cb(null, "public/images/upload_images"); // localtion store file
   },
   filename: function (req, file, cb) {
-    cb(null, "upload" + '-' + Date.now() + "_" + file.originalname) // config filename
-  }
-})
-var upload = multer({ storage: storage })
+    cb(null, "upload" + "-" + Date.now() + "_" + file.originalname); // config filename
+  },
+});
+var upload = multer({ storage: storage });
 
 //DB Connection
 const connection = mysql.createConnection({
-  host: "localhost", 
+  host: "localhost",
   user: "root", // change this
   password: "MySQL", // change this
   database: "quan_ly_su_kien",
@@ -34,11 +34,10 @@ connection.connect(function (err) {
   err ? console.log(err) : console.log();
 });
 
-
 // API part
 app.get("/", (req, res) => {
-  res.send("API server")
-})
+  res.send("API server");
+});
 app.use("/static", express.static("public/images/upload_images")); // host static file
 
 //Get on-going events
@@ -47,7 +46,7 @@ app.get("/api/event", (req, res) => {
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
-  }); 
+  });
 });
 
 //Get ended events
@@ -56,61 +55,76 @@ app.get("/api/eventended", (req, res) => {
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
-  }); 
+  });
 });
 
-// get event by search 
+// get event by search
 app.get("/api/searchEvent", (req, res) => {
-  let title = req.query.search 
-  var sql = "SELECT * FROM event WHERE name like '%" + title + "%' OR description like '%" + title + "%' OR organizationalUnit like '%" + title + "%' OR typeOfEvent like '%" + title + "%'";
+  let title = req.query.search;
+  var sql =
+    "SELECT * FROM event WHERE name like '%" +
+    title +
+    "%' OR description like '%" +
+    title +
+    "%' OR organizationalUnit like '%" +
+    title +
+    "%' OR typeOfEvent like '%" +
+    title +
+    "%'";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
-  }); 
-})
+  });
+});
 
-// get event by organization unit 
+// get event by organization unit
 app.get("/api/searchEventUnit", (req, res) => {
-  let title = req.query.search 
-  var sql = "SELECT * FROM event WHERE organizationalUnit like '%" + title + "%'";
+  let title = req.query.search;
+  var sql =
+    "SELECT * FROM event WHERE organizationalUnit like '%" + title + "%'";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
-  }); 
-})
+  });
+});
 
 // API for files
-app.post('/uploadfile', upload.single('file'), (req, res, next) => {
+app.post("/uploadfile", upload.single("file"), (req, res, next) => {
   //console.log(req.file)
-  const file = req.file
+  const file = req.file;
   if (!file) {
-    const error = new Error('Please upload a file')
-    error.httpStatusCode = 400
-    return next(error)
+    const error = new Error("Please upload a file");
+    error.httpStatusCode = 400;
+    return next(error);
   }
 
-  let fileUrl = `http://localhost:4000/static/${req.file.filename}`
-  res.send(fileUrl)
-})
+  let fileUrl = `http://localhost:4000/static/${req.file.filename}`;
+  res.send(fileUrl);
+});
 
 //Insert event
-app.post("/api/insert", function (req, res) {  
-   var sql = "INSERT "
-          + "INTO event(name,description,address,image,organizationalUnit,typeOfEvent, eventDate,eventended) "
-          + "VALUES('"+
-          req.body.name +
-          "','" +
-          req.body.description +
-          "','" +
-          req.body.address +
-          "','" +
-          req.body.image +
-          "','" +
-          req.body.organizationalUnit +
-          "','" +
-          req.body.typeOfEvent +
-          "', '"+ req.body.eventDate + " " + req.body.eventTime + ":00'" +
-          ", 0)";
+app.post("/api/insert", function (req, res) {
+  var sql =
+    "INSERT " +
+    "INTO event(name,description,address,image,organizationalUnit,typeOfEvent, eventDate,eventended) " +
+    "VALUES('" +
+    req.body.name +
+    "','" +
+    req.body.description +
+    "','" +
+    req.body.address +
+    "','" +
+    req.body.image +
+    "','" +
+    req.body.organizationalUnit +
+    "','" +
+    req.body.typeOfEvent +
+    "', '" +
+    req.body.eventDate +
+    " " +
+    req.body.eventTime +
+    ":00'" +
+    ", 0)";
   connection.query(sql, function (err, results) {
     if (err) throw err;
     res.json({ event: results });
@@ -118,69 +132,186 @@ app.post("/api/insert", function (req, res) {
 });
 
 //Edit event
-app.post('/api/edit', (req, res) => {
-  var sql = "UPDATE event SET "
-          +   "name='"+req.body.name+"',"
-          +   "description='"+req.body.description+"',"
-          +   "address='"+req.body.address+"',"
-          +   "image='"+req.body.image+"',"
-          +   "organizationalUnit='"+req.body.organizationalUnit+"',"
-          +   "typeOfEvent='"+req.body.typeOfEvent+"',"
-          +   "eventDate='"+req.body.eventDate + " " + req.body.eventTime + ":00' "
-          + "WHERE id_event='"+req.body.id_event+"'";
-  connection.query(sql, function(err, results) {
+app.post("/api/edit", (req, res) => {
+  var sql =
+    "UPDATE event SET " +
+    "name='" +
+    req.body.name +
+    "'," +
+    "description='" +
+    req.body.description +
+    "'," +
+    "address='" +
+    req.body.address +
+    "'," +
+    "image='" +
+    req.body.image +
+    "'," +
+    "organizationalUnit='" +
+    req.body.organizationalUnit +
+    "'," +
+    "typeOfEvent='" +
+    req.body.typeOfEvent +
+    "'," +
+    "eventDate='" +
+    req.body.eventDate +
+    " " +
+    req.body.eventTime +
+    ":00' " +
+    "WHERE id_event='" +
+    req.body.id_event +
+    "'";
+  connection.query(sql, function (err, results) {
     if (err) throw err;
-    res.json({event: results});
+    res.json({ event: results });
   });
 });
 
 //End event
-app.post('/eventended', (req, res) => {
-  var sql = "UPDATE event SET "
-          +   "eventended='"+req.body.eventended+"'"
-          + "WHERE id_event='"+req.body.id_event+"'";
-  connection.query(sql, function(err, results) {
+app.post("/eventended", (req, res) => {
+  var sql =
+    "UPDATE event SET " +
+    "eventended='" +
+    req.body.eventended +
+    "'" +
+    "WHERE id_event='" +
+    req.body.id_event +
+    "'";
+  connection.query(sql, function (err, results) {
     if (err) throw err;
-    res.json({event: results});
+    res.json({ event: results });
   });
 });
 
 //Restore event
-app.post('/restoreevent', (req, res) => {
-  var sql = "UPDATE event SET "
-          +   "eventended='"+req.body.eventended+"'"
-          + "WHERE id_event='"+req.body.id_event+"'";
-  connection.query(sql, function(err, results) {
+app.post("/restoreevent", (req, res) => {
+  var sql =
+    "UPDATE event SET " +
+    "eventended='" +
+    req.body.eventended +
+    "'" +
+    "WHERE id_event='" +
+    req.body.id_event +
+    "'";
+  connection.query(sql, function (err, results) {
     if (err) throw err;
-    res.json({event: results});
+    res.json({ event: results });
   });
 });
 
 //Delete event
-app.post('/api/delete', (req, res) => {
-  var sql = "DELETE FROM event "
-          + "WHERE id_event='"+req.body.id_event+"'";
-  connection.query(sql, function(err, results) {
+app.post("/api/delete", (req, res) => {
+  var sql = "DELETE FROM event " + "WHERE id_event='" + req.body.id_event + "'";
+  connection.query(sql, function (err, results) {
     if (err) throw err;
-    res.json({event: results});
+    res.json({ event: results });
   });
 });
 
-//get account
-app.get('/api/account', (req, res) => {
-  const role="Khoa";
+//get admim account of faculties
+app.get("/api/account", (req, res) => {
+  const role = "Khoa";
   var sql = "SELECT * FROM account WHERE role like '" + role + "%'";
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ account: results });
+  });
+});
+
+//Edit account
+app.post("/api/editaccount", (req, res) => {
+  var sql =
+    "UPDATE account SET " +
+    "email='" +
+    req.body.email +
+    "'," +
+    "name='" +
+    req.body.name +
+    "'," +
+    "password='" +
+    req.body.password +
+    "'," +
+    "role='" +
+    req.body.role +
+    "'" +
+    "WHERE id='" +
+    req.body.id +
+    "'";
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ account: results });
+  });
+});
+
+//Delete account
+app.post("/api/deleteaccount", (req, res) => {
+  var sql = "DELETE FROM account " + "WHERE id='" + req.body.id + "'";
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ account: results });
+  });
+});
+
+// login API
+app.post("/api/auth", (req, res) => {
+  var sql =
+    "SELECT * FROM account WHERE email='" +
+    req.body.email +
+    "' AND password='" +
+    req.body.password +
+    "'";
+  console.log(sql);
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+// student register API
+app.post("/api/register", (req, res) => {
+  var sql =
+    "INSERT INTO account (email, name, password, studentCode, userclass, faculty, role) VALUE ('" +
+    req.body.email +
+    "', '" +
+    req.body.name +
+    "', '" +
+    req.body.password +
+    "', '" +
+    req.body.studentCode +
+    "', '" +
+    req.body.userclass +
+    "', '" +
+    req.body.faculty +
+    "', 'student');";
+  console.log(sql);
+  connection.query(sql, function (err, results) {
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") res.json({ result: "Email has exsist" });
+      else throw err;
+    } else {
+      res.json({ result: "sucess" });
+    }
+  });
+});
+
+//get student account
+app.get('/api/accountstudent', (req, res) => {
+  var sql = "SELECT * FROM account WHERE name LIKE'" + req.query.name + "'";
   connection.query(sql, function(err, results) {
     if (err) throw err;
     res.json({account: results});
   });
 });
 
-//Edit account
-app.post('/api/editaccount', (req, res) => {
+//edit student account
+app.post('/api/editAccount', (req, res) => {
+  const role="student"
   var sql = "UPDATE account SET "
           +   "email='"+req.body.email+"',"
           +   "name='"+req.body.name+"',"
+          +   "studentCode='"+req.body.studentCode+"',"
+          +   "userclass='"+req.body.userclass+"',"
+          +   "faculty='"+req.body.faculty+"',"
           +   "password='"+req.body.password+"',"
           +   "role='"+req.body.role+"'"
           + "WHERE id='"+req.body.id+"'";
@@ -190,53 +321,29 @@ app.post('/api/editaccount', (req, res) => {
   });
 });
 
-//Delete account
-app.post('/api/deleteaccount', (req, res) => {
-  var sql = "DELETE FROM account "
-          + "WHERE id='"+req.body.id+"'";
-  connection.query(sql, function(err, results) {
-    if (err) throw err;
-    res.json({account: results});
-  });
-});
 
-// login API
-app.post("/api/auth", (req, res) => {
-  var sql = "SELECT email, name, role FROM account WHERE email='" + req.body.email + "' AND password='" + req.body.password + "'"
-  console.log(sql)
-  connection.query(sql, function(err, results) {
-    if (err) throw err;
-    res.json(results);
-  });
-})
-
-// student register API
-app.post("/api/register", (req, res) => {
-  var sql = "INSERT INTO account (email, name, password, role) VALUE ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.password + "', 'student');"
-  console.log(sql)
-  connection.query(sql, function(err, results) {
-    if (err) {
-      if (err.code === "ER_DUP_ENTRY") res.json({result: "Email has exsist"})
-      else throw err
-    } else {
-      res.json({result: "sucess"});
-    }
-  });
-})
 // admin register API
 app.post("/api/registeradmin", (req, res) => {
-  var sql = "INSERT INTO account (email, name, password, role) VALUE ('" + req.body.email + "', '" + req.body.name + "', '" + req.body.password + "','" 
-  + req.body.role+"')";
-  console.log(sql)
-  connection.query(sql, function(err, results) {
+  var sql =
+    "INSERT INTO account (email, name, password, role) VALUE ('" +
+    req.body.email +
+    "', '" +
+    req.body.name +
+    "', '" +
+    req.body.password +
+    "','" +
+    req.body.role +
+    "')";
+  console.log(sql);
+  connection.query(sql, function (err, results) {
     if (err) {
-      if (err.code === "ER_DUP_ENTRY") res.json({result: "Email has exsist"})
-      else throw err
+      if (err.code === "ER_DUP_ENTRY") res.json({ result: "Email has exsist" });
+      else throw err;
     } else {
-      res.json({result: "sucess"});
+      res.json({ result: "sucess" });
     }
   });
-})
+});
 
 //create connection
 app.listen(4000, () => console.log("App listening on port 4000"));
