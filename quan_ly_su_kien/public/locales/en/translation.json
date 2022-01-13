@@ -9,11 +9,17 @@
         "delete": "Delete",
         "end_event": "End of event",
         "restore_event": "Restore event",
-        "search": "Search event..."
+        "search": "Search event...",
+        "name":"Name",
+        "mssv": "Student Code",
+        "class":"Class",
+        "faculty":"Faculty",
+        "heading_setting": "User Profile"
         },
     "Form": {
         "title_create": "Create new event",
         "title_fix": "Update event",
+        "title_account":"Update Profile",
         "lb_name_event": "Title of event",
         "lb_des": "Description",
         "lb_venue": "Venue",
@@ -24,6 +30,10 @@
         "lb_unit": "Unit:",
         "sl_unit": "Choose unit",
         "lb_type": "Type:",
+        "lb_name":"Name",
+        "lb_mssv": "Student Code",
+        "lb_class":"Class",
+        "lb_faculty":"Faculty",
         "sl_type": "Choose type",
         "btn_post": "Post",
         "btn_fix": "Update"

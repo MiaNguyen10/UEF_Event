@@ -6,6 +6,7 @@ import Modal from "react-modal";
 import { OrganizationalUnit } from "../../pages/HomePage/OrganizationalUnit";
 import { BsFillXCircleFill } from "react-icons/bs";
 import Swal from "sweetalert2";
+import Cookies from "universal-cookie";
 
 const customModal = {
   content: {
@@ -29,8 +30,18 @@ class ManageAccount extends Component {
       name: "",
       password: "",
       role: "",
+      auth: "",
     };
   }
+
+  handleAuth = () => {
+    const cookies = new Cookies();
+    let account = cookies.get("authToken");
+    if (account) {
+      this.state.auth = account.role;
+      this.state.username = account.name;
+    }
+  };
   //get data
   componentDidMount() {
     axios
@@ -40,6 +51,7 @@ class ManageAccount extends Component {
         this.setState({ account: account.account });
       })
       .catch((error) => console.log(error));
+    this.handleAuth();
   }
 
   //handle data input
@@ -185,7 +197,7 @@ class ManageAccount extends Component {
   };
 
   render() {
-    return (
+    return this.state.auth === "admin" ? (
       <div className="homepage">
         {/* Insert new event */}
         <Popup
@@ -291,7 +303,7 @@ class ManageAccount extends Component {
                           onClick={() => this.openModal(item)}
                         />
                         <button
-                          className="far fa-trash-alt ic-in-3-dots" 
+                          className="far fa-trash-alt ic-in-3-dots"
                           onClick={() => this.handleDelete(item)}
                         />
                       </td>
@@ -371,7 +383,7 @@ class ManageAccount extends Component {
           </div>
         </Modal>
       </div>
-    );
+    ) : ("");
   }
 }
 

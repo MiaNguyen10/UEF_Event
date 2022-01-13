@@ -428,7 +428,7 @@ class Home extends Component {
               onChange={this.handleInputChange}
               placeholder={t('Home.search')}
             />
-            <BsSearch className="BsSearch" onClick={() => this.handleSearch} />
+            <BsSearch className="BsSearch" onClick={() => this.handleSearch()} />
           </div>
 
           {this.state.event

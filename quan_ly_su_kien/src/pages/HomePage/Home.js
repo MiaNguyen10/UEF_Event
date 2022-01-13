@@ -173,7 +173,7 @@ class Home extends Component {
       eventDate: this.state.eventDate,
       eventTime: this.state.eventTime  
     };
-    console.log(newUpdate);
+    
 
     axios
       .post("/api/edit", newUpdate)
@@ -409,7 +409,7 @@ class Home extends Component {
               onChange={this.handleInputChange}
               placeholder={t('Home.search')}
             />
-            <BsSearch className="BsSearch" onClick={ () => this.handleSearch} />
+            <BsSearch className="BsSearch" onClick={ () => this.handleSearch()} />
           </div>
 
             {this.state.event.map((item) => (
