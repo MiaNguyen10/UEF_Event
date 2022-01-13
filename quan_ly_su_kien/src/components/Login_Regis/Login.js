@@ -5,6 +5,9 @@ import Logo from '../../asset/img/logo_login.png'
 import bg from '../../asset/img/background_login.png'
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import i18next from 'i18next';
+import { withTranslation } from 'react-i18next';
+import { Dropdown } from 'react-bootstrap';
 class Login extends React.Component{
   constructor(props) {
     super(props);
@@ -18,6 +21,20 @@ class Login extends React.Component{
     };
   }
 
+  componentDidMount() {
+    const lang = localStorage.getItem('lang');
+    this.handleLanguage(lang);
+  };
+
+  handleLanguage = (lang) => {
+    i18next.changeLanguage(lang);
+  };
+
+  handleDropdown = (lang) => {
+    localStorage.setItem('lang', lang);
+    this.handleLanguage(lang);
+  };
+
   onChangeName = (e) => {
     this.setState({ name: e.target.value });
   };
@@ -27,6 +44,7 @@ class Login extends React.Component{
   };
 
   onSubmit = (e) => {
+    const { t } = this.props;
     e.preventDefault();
     let submitData = {email: this.state.email, password: this.state.password}
     fetch("/api/auth", {
@@ -40,7 +58,7 @@ class Login extends React.Component{
         cookies.set('authToken', JSON.stringify(data[0]), { path: '/' });
         window.location.reload()
       } else {
-        this.setState({ error: "Please check your email or password" });
+        this.setState({ error: t('Login.error') });
       }
     })
   };
@@ -54,8 +72,21 @@ class Login extends React.Component{
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div className="bg">
+
+        <Dropdown>
+          <Dropdown.Toggle id="dropdown-basic">
+            {t('Login.lang')}
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu className="lg_drop_menu">
+            <Dropdown.Item className="lg_drop_item" onClick={() => this.handleLanguage('vi')}>{t('Login.lang_vi')}</Dropdown.Item>
+            <Dropdown.Item className="lg_drop_item" onClick={() => this.handleLanguage('en')}>{t('Login.lang_en')}</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
         <img src={bg} id="bg" alt=""/>    
         <Form onSubmit={this.onSubmit} className="container-login">
           <p className="error">{this.state.error}</p>
@@ -67,18 +98,18 @@ class Login extends React.Component{
             <Input
               type="text"
               className="form-lg-control"
-              placeholder="Nhập email"
+              placeholder={t('Login.placeholder_email')}
               value={this.state.email}
               onChange={this.onChangeEmail}
               required
             />
           </div>
           <div className="form-lg-group">
-            <label>Mật khẩu</label>
+            <label>{t('Login.lb_pass')}</label>
             <Input
               type="password"
               className="form-lg-control"
-              placeholder="Nhập mật khẩu"
+              placeholder={t('Login.placeholder_pass')}
               value={this.state.password}
               onChange={this.onChangePassword}
               required
@@ -89,12 +120,12 @@ class Login extends React.Component{
               type="submit"
               className="btn btn-primary btn-block"
             >
-              Đăng nhập
+              {t('Login.btn_login')}
             </button>
             <p className="forgot-password text-right">
-              Bạn chưa có tài khoản ? Hãy{" "}  
+              {t('Login.signup1')} {" "}  
               <a href="/sign-up" onClick={this.handleClick}>
-                đăng ký
+              {t('Login.signup2')}
               </a>
             </p>
           </div>
@@ -105,4 +136,4 @@ class Login extends React.Component{
   }
 }
 
-export default Login;
+export default withTranslation() (Login);

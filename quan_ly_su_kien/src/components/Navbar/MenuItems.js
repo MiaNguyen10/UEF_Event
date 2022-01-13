@@ -1,11 +1,19 @@
+let txtContact ="LIÊN HỆ",
+    txtHome ="TRANG CHỦ";
+
+if (localStorage.getItem('lang') === 'en'){
+    txtContact ="CONTACT";
+    txtHome ="HOME";
+  }
+
 export const MenuItems = [
     {
-        title: 'LIÊN HỆ',
+        title: txtHome,
         path: '/contact',
         cName: 'nav-links',
     },
     {
-        title: 'TRANG CHỦ',
+        title: txtContact,
         path: '/',
         cName: 'nav-links',
     }

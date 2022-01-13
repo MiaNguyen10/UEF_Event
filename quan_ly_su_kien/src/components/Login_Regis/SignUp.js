@@ -6,6 +6,15 @@ import { isEmail } from "validator";
 import Swal from "sweetalert2";
 import Logo from '../../asset/img/logo_login.png'
 import bg from '../../asset/img/background_login.png'
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { Dropdown } from 'react-bootstrap';
+
+// const lang = 'vi';
+function handleDrop(lang){
+  localStorage.setItem('lang', lang);
+  window.location.reload();
+}
 
 function required(value) {
   if (!value) {
@@ -48,11 +57,16 @@ function vpassword(value) {
 }
 
 function SignUp() {
+  const lang = 'vi';
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [login, setLogin] = useState(true);
+
+  const lang1 = localStorage.getItem('lang');
+  i18next.changeLanguage(lang1);
+  const { t, i18n } = useTranslation();
 
   // on form submit...
   function handleFormSubmit(e) {
@@ -86,6 +100,18 @@ function SignUp() {
 
   return (
     <div className="gb">
+
+        <Dropdown>
+          <Dropdown.Toggle id="dropdown-basic">
+            {t('Login.lang')}
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu className="lg_drop_menu">
+            <Dropdown.Item className="lg_drop_item" onClick={ () => handleDrop('vi')}>{t('Login.lang_vi')}</Dropdown.Item>
+            <Dropdown.Item className="lg_drop_item" onClick={ () => handleDrop('en')}>{t('Login.lang_en')}</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
       <img src={bg} id="bg" alt=""/>   
       <Form onSubmit={handleFormSubmit} className="container-login">
         <div className="form-lg-header">
