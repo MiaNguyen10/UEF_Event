@@ -1,6 +1,7 @@
-import logo from "../../asset/img/logo.png";
+import avar from "../../asset/img/user.png";
 import past_event from "../../asset/img/past_even.png";
 import love_event from "../../asset/img/love_event.png";
+import admin from "../../asset/img/management.png";
 import language from "../../asset/img/language.png";
 import theme from "../../asset/img/theme.png";
 import setting from "../../asset/img/setting.png";
@@ -34,7 +35,7 @@ export const MenuItems = [
   {
     title: username,
     path: '',
-    icon: logo, //fix later
+    icon: avar, //fix later
     cName: 'nav-text nav-username'
   },
   {
@@ -52,7 +53,7 @@ export const MenuItems = [
   {
     title: txtManageAccount,
     path: '/manageaccount',
-    icon: love_event,
+    icon: admin,
     cName: 'nav-text'
   },
   {
