@@ -47,5 +47,21 @@
     "come_home1": "Bấm ",
     "come_home2": "tại đây",
     "come_home3": " để trở về trang chủ"
+  },
+  "Navbar":{
+    "logo": "HỆ THỐNG QUẢN LÝ SỰ KIỆN",
+    "department": "KHOA TỔ CHỨC"
+  },
+  "Login":{
+      "error": "Vui lòng kiểm tra lại email hoặc mật khẩu",
+      "placeholder_email": "Nhập email",
+      "lb_pass": "Mật khẩu",
+      "placeholder_pass": "Nhập mật khẩu",
+      "btn_login": "Đăng nhập",
+      "signup1": "Bạn chưa có tài khoản ? Hãy",
+      "signup2": "đăng ký",
+      "lang": "Ngôn ngữ",
+      "lang_vi": "Tiếng Việt",
+      "lang_en": "Tiếng Anh"
   }
 }

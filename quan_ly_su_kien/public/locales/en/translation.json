@@ -46,5 +46,21 @@
         "come_home1": "Press ",
         "come_home2": "here",
         "come_home3": " to return home page"
+    },
+    "Navbar":{
+        "logo": "EVENT MANAGEMENT SYSTEM",
+        "department": "DEPARTMENT"
+    },
+    "Login":{
+        "error": "Please check your email or password",
+        "placeholder_email": "Enter email",
+        "lb_pass": "Password",
+        "placeholder_pass": "Enter password",
+        "btn_login": "Log in",
+        "signup1": "Don't have account ? Please",
+        "signup2": "register",
+        "lang": "Language",
+        "lang_vi": "Vietnamese",
+        "lang_en": "English"
     }
 }

@@ -8,7 +8,33 @@
     min-height: 100%;
     margin: 0 !important;
     object-fit: cover;
+    z-index: -1;
   }
+
+#dropdown-basic{
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+.lg_drop_menu{
+    min-width: fit-content !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+.lg_drop_item{
+    width: 100px !important;
+    /* text-align: center; */
+    display: flex;
+    padding: 10px !important;
+    color: black !important;
+}
+
+.lg_drop_item:hover{
+    background-color: #6b74f3;
+}
 
 .container-login{
     background-color: white;
@@ -34,6 +60,7 @@
     margin-left: 0 !important;
     width: 70%;
 }
+
 
 .form-lg-group{
     margin: 20px 0;

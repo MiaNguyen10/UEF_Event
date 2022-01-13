@@ -4,8 +4,19 @@ import logo from "../../asset/img/logo.png";
 import { DropdownMenuItems } from "./DropdownMenuItems";
 import { MenuItems } from "./MenuItems";
 import { NavDropdown } from 'react-bootstrap';
+import i18next from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 class Navbar extends Component {
+
+  componentDidMount() {
+    const lang = localStorage.getItem('lang');
+    this.handleLanguage(lang);
+  };
+
+  handleLanguage = (lang) => {
+    i18next.changeLanguage(lang)
+  };
 
   handleUnit = (props) => {
     localStorage.setItem('unit', props);
@@ -18,6 +29,7 @@ class Navbar extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <nav className="NavbarItems">
         <ul className={this.state.clicked ? "nav-menu active" : "nav-menu"}>
@@ -25,11 +37,11 @@ class Navbar extends Component {
             <img src={logo} alt="" width={50} height={50} />
           </li>
           <li className="navbar-logo">
-            <a href="/">HỆ THỐNG QUẢN LÝ SỰ KIỆN</a>
+            <a href="/">{t('Navbar.logo')}</a>
           </li>
           
           <li className="dropdown ">
-            <NavDropdown className="nav-links" title="KHOA TỔ CHỨC">
+            <NavDropdown className="nav-links" title={t('Navbar.department')}>
               {DropdownMenuItems.map((item, index) => {
                   return (
                     <div key={index} >
@@ -57,4 +69,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withTranslation() (Navbar);

@@ -8,10 +8,27 @@ import logout from "../../asset/img/logout.png";
 import Cookies from 'universal-cookie';
 
   let account = new Cookies().get('authToken');    
-  let username =""
+  let username ="", 
+      txtEndedEvent ="Sự kiện đã qua",
+      txtLoveEvent ="Sự kiện yêu thích",
+      txtManageAccount ="Quản lý quản trị viên",
+      txtLanguage ="Ngôn ngữ",
+      txtTheme ="Giao diện",
+      txtSetting ="Cài đặt",
+      txtLogout ="Đăng xuất";
+
   if (account)
     {username = account.name}
-
+  
+  if (localStorage.getItem('lang') === 'en'){
+    txtEndedEvent ="Past event";
+    txtLoveEvent ="Favorite event";
+    txtManageAccount ="Admin management";
+    txtLanguage ="Language";
+    txtTheme ="Theme";
+    txtSetting ="Setting";
+    txtLogout ="Log out";
+  }
   
 export const MenuItems = [
   {
@@ -21,43 +38,43 @@ export const MenuItems = [
     cName: 'nav-text nav-username'
   },
   {
-    title: 'Sự kiện đã qua',
+    title: txtEndedEvent,
     path: '/eventended',
     icon: past_event,
     cName: 'nav-text'
   },
   {
-    title: 'Sự kiện yêu thích',
+    title: txtLoveEvent,
     path: '/loveevent',
     icon: love_event,
     cName: 'nav-text'
   },
   {
-    title: 'Quản lý tài khoản',
+    title: txtManageAccount,
     path: '/manageaccount',
     icon: love_event,
     cName: 'nav-text'
   },
   {
-    title: 'Ngôn ngữ',
+    title: txtLanguage,
     path: '/language',
     icon: language,
     cName: 'nav-text side-end'
   },
   {
-    title: 'Giao diện',
+    title: txtTheme,
     path: '/theme',
     icon: theme,
     cName: 'nav-text side-end'
   },
   {
-    title: 'Cài đặt',
+    title: txtSetting,
     path: '/settings',
     icon: setting,
     cName: 'nav-text side-end'
   },
   {
-    title: 'Log out',
+    title: txtLogout,
     path: '/logout',
     icon: logout,
     cName: 'nav-text side-end'
