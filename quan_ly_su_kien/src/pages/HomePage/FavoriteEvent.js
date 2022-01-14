@@ -85,14 +85,6 @@ class FavoriteEvent extends Component {
     });
   };
 
-  // setImage = async (event) => {
-  //   const formData = new FormData();
-  //   formData.append("file", event.target.files[0]);
-  //   axios.post("/uploadfile", formData).then((res) => {
-  //     this.setState({ image: `${res.data}` });
-  //   });
-  // };
-
   //open and close modal
   componentWillMount() {
     Modal.setAppElement("body");
@@ -120,124 +112,9 @@ class FavoriteEvent extends Component {
     });
   };
 
-  //Edit event data
-  // handleEditSubmit = (event) => {
-  //   event.preventDefault();
-
-    //khai báo giá trị để truyền theo phương thức post
-    // const newUpdate = {
-    //   id_event: this.state.id_event,
-    //   name: this.state.name,
-    //   description: this.state.description,
-    //   address: this.state.address,
-    //   image: this.state.image,
-    //   organizationalUnit: this.state.organizationalUnit,
-    //   typeOfEvent: this.state.typeOfEvent,
-    //   eventDate: this.state.eventDate,
-    //   eventTime: this.state.eventTime  
-    // };
-    // console.log(newUpdate);
-
-  //   axios
-  //     .post("/api/edit", newUpdate)
-  //     .then((res) => {
-  //       let key = this.state.id_event;
-  //       this.setState((prevState) => ({
-  //         event: prevState.event.map((elm) =>
-  //           elm.id_event === key
-  //             ? {
-  //                 ...elm,
-  //                 name: this.state.name,
-  //                 description: this.state.description,
-  //                 address: this.state.address,
-  //                 image: this.state.image,
-  //                 organizationalUnit: this.state.organizationalUnit,
-  //                 typeOfEvent: this.state.typeOfEvent,
-  //                 eventDate: this.state.eventDate,
-  //                 eventTime: this.state.eventTime   
-  //               }
-  //             : elm
-  //         ),
-  //       }));
-  //     })
-  //     .catch((error) => console.log(error));
-  //     window.location.reload();
-  // };
-
-  //Restore event
-  // handleRestoreEvent = (item) => {
-  //   const eventId = {
-  //     id_event: item.id_event,
-  //     eventended: 0,
-  //   };
-  //   const { t } = this.props;
-  //   Swal.fire({
-  //     title: t('Popup.restore_event'),
-  //     showCancelButton: true,
-  //     confirmButtonText: t('Popup.yes'),
-  //     cancelButtonText: t('Popup.no')
-  //   }).then((result) => {
-  //     /* Read more about isConfirmed, isDenied below */
-  //     if (result.isConfirmed) {        
-  //       axios
-  //       .post("/restoreevent", eventId)
-  //       .then((res) => {
-  //         this.setState((prevState) => ({
-  //           event: prevState.event.map((elm) =>
-  //             elm.id_event === item.id_event
-  //               ? {
-  //                   ...elm,
-  //                   eventended: 0,
-  //                 }
-  //               : elm
-  //           ),
-  //         }));
-  //       })
-  //       .catch((error) => console.log(error));
-  //       Swal.fire(t('Popup.restored_event'), '', 'info').then((res) =>{
-  //         if(res.isConfirmed){
-  //           window.location.reload();
-  //         }
-  //       })
-  //     } else{
-  //       Swal.fire(t('Popup.no_restore_event'), '', 'info')
-  //     }
-  //   })
-  // };
-
-  //Delete event data
-  // handleDelete = (item) => {
-  //   const eventId = {
-  //     id_event: item.id_event,
-  //   };
-  //   const { t } = this.props;
-  //     Swal.fire({
-  //       title: t('Popup.delete_event'),
-  //       showCancelButton: true,
-  //       confirmButtonText: t('Popup.yes'),
-  //       cancelButtonText: t('Popup.no')
-  //     }).then((result) => {
-  //       /* Read more about isConfirmed, isDenied below */
-  //       if (result.isConfirmed) {
-  //         Swal.fire(t('Popup.deleted_event'), '', 'info')
-  //         axios
-  //         .post("/api/delete", eventId)
-  //         .then((res) => {
-  //           this.setState((prevState) => ({
-  //             event: prevState.event.filter((el) => el.id_event !== item.id_event),
-  //           }));
-  //         })
-  //         .catch((error) => console.log(error));
-          
-  //       } else{
-  //         Swal.fire(t('Popup.no_delete_event'), '', 'info')
-  //       }
-  //     })
-  // };
-
   handleSearch = () => {
     axios
-      .get(`/api/searchEvent?search=${this.state.searchData}`)
+      .get(`/api/searchFavEvent?search=${this.state.searchData}`)
       .then((res) => {
         const event = res.data;
         this.setState({ event: event.event });

@@ -14,7 +14,8 @@
         "mssv": "Student Code",
         "class":"Class",
         "faculty":"Faculty",
-        "heading_setting": "User Profile"
+        "heading_setting": "User Profile",
+        "btn_fav": "Add to favorite"
         },
     "Form": {
         "title_create": "Create new event",

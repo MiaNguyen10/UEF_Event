@@ -14,7 +14,8 @@
       "mssv": "Mã số sinh viên",
       "class":"Lớp",
       "faculty":"Khoa",
-      "heading_setting": "Thông tin người dùng "
+      "heading_setting": "Thông tin người dùng ",
+      "btn_fav": "Yêu thích"
      
   },
   "Form": {

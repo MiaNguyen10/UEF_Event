@@ -374,5 +374,39 @@ app.get("/api/favorite/get", (req, res) => {
   });
 })
 
+// delete favourite event AP
+app.delete("/api/favorite/delele", (req, res) => {
+  var sql =  "delete from favourite_event"
+  + ` where id_account = ${req.query.id_account} and id_event=${req.query.id_event};`
+  console.log('sql', sql);
+  connection.query(sql, function(err, results) {
+    if (err) {
+      res.json({results: "Error when delete"})
+      throw err;
+    }
+    res.json({results: "sucess"});
+  });
+})
+
+// get event by search in Favorite
+app.get("/api/searchFavEvent", (req, res) => {
+  let title = req.query.search;
+  var sql =
+    "SELECT * FROM favourite_event f join event e on e.id_event = f.id_event WHERE (f.id_account=13 and name like '%" +
+    title +
+    "%') OR (f.id_account=13 and description like '%" +
+    title +
+    "%') OR ( f.id_account=13 and organizationalUnit like '%" +
+    title +
+    "%') OR ( f.id_account=13 and typeOfEvent like '%" +
+    title +
+    "%')";
+  console.log(sql)
+  connection.query(sql, function (err, results) {
+    if (err) throw err;
+    res.json({ event: results });
+  });
+});
+
 //create connection
 app.listen(4000, () => console.log("App listening on port 4000"));
