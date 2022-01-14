@@ -2,19 +2,37 @@ import React, { Component } from "react";
 import { MenuItems } from "./MenuItems";
 import './Sidebar.css';
 import { BsList } from "react-icons/bs";
+import Cookies from 'universal-cookie';
+import i18next from 'i18next';
 
 class Sidebar extends Component {
   constructor(props){
     super(props)
     this.state = {
-      active: true
+      active: true,
+      auth: "",
+      titleAdmin: "Quản lý quản trị viên"
     }
     this.updatePredicate = this.updatePredicate.bind(this);
   }
 
-  componentDidMount() {
+  handleAuth = () => {
+    const cookies = new Cookies();
+    const lang = localStorage.getItem('lang');
+    let account = cookies.get('authToken');    
+    if (account){
+      this.state.auth = account.role;   
+    }
+    if (lang == "en"){
+      this.state.titleAdmin = "Admin management";
+    }
+  } 
+
+
+  componentDidMount() {    
+    this.handleAuth();
     this.updatePredicate();
-    window.addEventListener("resize", this.updatePredicate);
+    window.addEventListener("resize", this.updatePredicate);      
   }
 
   componentWillUnmount() {
@@ -25,7 +43,7 @@ class Sidebar extends Component {
     this.setState({ active: window.innerWidth > 960 });
   }
 
-  render() {
+  render() {    
     return (
       <div className="menu-container">
         <BsList className="menu-btn-small " onClick={() => this.setState({active: !this.state.active})}/>
@@ -33,13 +51,28 @@ class Sidebar extends Component {
         <div className='side-menu'>
             <ul >
               {MenuItems.map((item, index) => {
-                return (
-                  <li key={index} className={item.cName}>
-                    <a href={item.path}>
-                      <img src={item.icon} alt="icon"/>
-                      <span>{item.title}</span>
-                    </a>
-                  </li>
+                return (                   
+                  <div> 
+                    {this.state.auth ==="student" && item.title !== this.state.titleAdmin ? 
+                      <li key={index} className={item.cName}>
+                      
+                        <a href={item.path}>
+                          <img src={item.icon} alt="icon"/>
+                          <span>{item.title}</span>
+                        </a> 
+                      </li>
+                    : ""}
+
+                    {this.state.auth ==="admin" ? 
+                      <li key={index} className={item.cName}>
+                      
+                        <a href={item.path}>
+                          <img src={item.icon} alt="icon"/>
+                          <span>{item.title}</span>
+                        </a> 
+                      </li>
+                    : ""}
+                  </div>
                 );
               })}
             </ul>

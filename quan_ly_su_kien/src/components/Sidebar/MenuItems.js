@@ -3,7 +3,7 @@ import past_event from "../../asset/img/past_even.png";
 import fav_event from "../../asset/img/fav_event.png";
 import admin from "../../asset/img/management.png";
 import language from "../../asset/img/language.png";
-import theme from "../../asset/img/theme.png";
+// import theme from "../../asset/img/theme.png";
 import setting from "../../asset/img/setting.png";
 import logout from "../../asset/img/logout.png";
 import Cookies from 'universal-cookie';
@@ -68,12 +68,12 @@ export const MenuItems = [
     icon: language,
     cName: 'nav-text side-end'
   },
-  {
-    title: txtTheme,
-    path: '/theme',
-    icon: theme,
-    cName: 'nav-text side-end'
-  },
+  // {
+  //   title: txtTheme,
+  //   path: '/theme',
+  //   icon: theme,
+  //   cName: 'nav-text side-end'
+  // },
   {
     title: txtLogout,
     path: '/logout',
