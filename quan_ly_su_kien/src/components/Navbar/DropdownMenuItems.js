@@ -10,7 +10,7 @@ let txtuef ="TRƯỜNG UEF",
 
 
 if (localStorage.getItem('lang') === 'en'){
-    txtuef ="Past event";
+    txtuef ="UEF";
     txtEconomy ="FACULTY OF ECONOMICS";
     txtCommunication ="FACULTY OF PUBLIC RELATIONS AND COMMUNICATION";
     txtIT ="FACULTY OF INFORMATION TECHNOLOGY";

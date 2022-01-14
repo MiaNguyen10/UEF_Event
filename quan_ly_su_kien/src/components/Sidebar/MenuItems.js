@@ -14,7 +14,6 @@ import Cookies from 'universal-cookie';
       txtLoveEvent ="Sự kiện yêu thích",
       txtManageAccountAdmin ="Quản lý quản trị viên",
       txtLanguage ="Ngôn ngữ",
-      txtTheme ="Giao diện",
       txtManageAccount ="Quản lý tài khoản",
       txtLogout ="Đăng xuất";
 
@@ -26,7 +25,6 @@ import Cookies from 'universal-cookie';
     txtLoveEvent ="Favorite event";
     txtManageAccountAdmin ="Admin management";
     txtLanguage ="Language";
-    txtTheme ="Theme";
     txtManageAccount ="Account management";
     txtLogout ="Log out";
   }
@@ -66,12 +64,6 @@ export const MenuItems = [
     title: txtLanguage,
     path: '/language',
     icon: language,
-    cName: 'nav-text side-end'
-  },
-  {
-    title: txtTheme,
-    path: '/theme',
-    icon: theme,
     cName: 'nav-text side-end'
   },
   {
