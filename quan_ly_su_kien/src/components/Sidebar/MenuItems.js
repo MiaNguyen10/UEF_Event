@@ -1,6 +1,6 @@
 import avar from "../../asset/img/user.png";
 import past_event from "../../asset/img/past_even.png";
-import love_event from "../../asset/img/love_event.png";
+import fav_event from "../../asset/img/fav_event.png";
 import admin from "../../asset/img/management.png";
 import language from "../../asset/img/language.png";
 import theme from "../../asset/img/theme.png";
@@ -46,8 +46,8 @@ export const MenuItems = [
   },
   {
     title: txtLoveEvent,
-    path: '/loveevent',
-    icon: love_event,
+    path: '/favorite',
+    icon: fav_event,
     cName: 'nav-text'
   },
   {

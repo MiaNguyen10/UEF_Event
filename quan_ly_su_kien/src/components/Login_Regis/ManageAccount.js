@@ -246,7 +246,7 @@ class ManageAccount extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <input
                       name="password"
                       type="password"
@@ -284,7 +284,7 @@ class ManageAccount extends Component {
                 <tr>
                   <th scope="col">Email</th>
                   <th scope="col">Tên</th>
-                  <th scope="col">Password</th>
+                  <th scope="col">Mật khẩu</th>
                   <th scope="col">Khoa</th>
                   <th scope="col"></th>
                 </tr>
@@ -295,7 +295,8 @@ class ManageAccount extends Component {
                     <tr key={item.id}>
                       <th scope="row">{item.email}</th>
                       <td>{item.name}</td>
-                      <td>{item.password}</td>
+                      {/* <td>{item.password}</td> */}
+                      <td>*******</td>
                       <td>{item.role}</td>
                       <td>
                         <button
@@ -355,7 +356,7 @@ class ManageAccount extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventName">Password</label>
+                  <label for="eventName">Mật khẩu</label>
                   <input
                     name="password"
                     type="password"

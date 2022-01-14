@@ -8,12 +8,12 @@ if (localStorage.getItem('lang') === 'en'){
 
 export const MenuItems = [
     {
-        title: txtHome,
+        title: txtContact,
         path: '/contact',
         cName: 'nav-links',
     },
     {
-        title: txtContact,
+        title: txtHome,
         path: '/',
         cName: 'nav-links',
     }

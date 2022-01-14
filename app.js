@@ -256,7 +256,7 @@ app.post("/api/deleteaccount", (req, res) => {
 // login API
 app.post("/api/auth", (req, res) => {
   var sql =
-    "SELECT * FROM account WHERE email='" +
+    "SELECT id, email, name, studentCode, userclass, faculty, role FROM account WHERE email='" +
     req.body.email +
     "' AND password='" +
     req.body.password +
@@ -347,6 +347,32 @@ app.post("/api/registeradmin", (req, res) => {
     }
   });
 });
+
+// add to favorite API
+app.post("/api/favorite/add", (req, res) => {
+  var sql =
+    "INSERT INTO favourite_event (id_account, id_event) VALUE ('" + req.body.id_account + "', '" + req.body.id_event + "')";
+  console.log(sql);
+  connection.query(sql, function (err, results) {
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") res.json({ result: "Event has been in database" });
+      else throw err;
+    } else {
+      res.json({ result: "sucess" });
+    }
+  });
+})
+
+// get favorite event API
+app.get("/api/favorite/get", (req, res) => {
+  var sql =  "select * from favourite_event f join event e on e.id_event = f.id_event "
+  + `where id_account = ${req.query.id};`
+  console.log('sql', sql);
+  connection.query(sql, function(err, results) {
+    if (err) throw err;
+    res.json({event: results});
+  });
+})
 
 //create connection
 app.listen(4000, () => console.log("App listening on port 4000"));
