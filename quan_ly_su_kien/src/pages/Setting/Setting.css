@@ -1,0 +1,28 @@
+.acc_header{
+    margin: auto !important;
+    text-align: center;
+}
+
+.profile-container{
+    display: grid;
+    grid-template-columns: 20% 30% 20% 30%;
+    background-color: rgb(223, 223, 223);
+    padding: 3px;
+    margin-top: 30px;
+}
+
+.profile-item {
+    background-color: white;
+    border: 0.05px solid rgb(199, 199, 199);
+    padding: 15px;
+    font-size: 30px;
+    text-align: center;
+    font-size: 1.5rem;
+    text-align: start;
+}
+
+.btn-fix{
+    justify-items: center;
+    text-align: center;
+    margin-top: 30px;
+}

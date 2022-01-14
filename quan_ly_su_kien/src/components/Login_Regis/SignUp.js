@@ -56,11 +56,24 @@ function vpassword(value) {
   }
 }
 
+function vstudentcode(value) {
+  if (value.length != 9) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The student code must be 9 characters.
+      </div>
+    );
+  }
+}
+
 function SignUp() {
   const lang = 'vi';
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [studentCode, setStudentCode] = useState("");
   const [password, setPassword] = useState("");
+  const [userclass, setClassCode] = useState("");
+  const [faculty, setFaculty] = useState("");
 
   const [login, setLogin] = useState(true);
 
@@ -72,7 +85,7 @@ function SignUp() {
   function handleFormSubmit(e) {
     e.preventDefault();
 
-    let submitData = {email: email, password: password, name: name}
+    let submitData = {email: email, password: password, name: name, studentCode: studentCode, userclass: userclass, faculty: faculty}
     // console.log(submitData)
     fetch("/api/register", {
       method: 'POST',
@@ -114,16 +127,20 @@ function SignUp() {
 
       <img src={bg} id="bg" alt=""/>   
       <Form onSubmit={handleFormSubmit} className="container-login">
-        <div className="form-lg-header">
+        <div className="form-lg-header logo_signup">
           <img src={Logo} alt="Logo"/>
         </div>
 
+        <div className="container_signup_body">
+
+        
+
         <div className="form-lg-group">
-          <label>Tên</label>
+          <label>{t('Login.name')}</label>
           <Input
             type="text"
             className="form-lg-control"
-            placeholder="Nhập tên đầy đủ"
+            placeholder={t('Login.placeholder_name')}
             name="name"
             onChange={(event) => setName(event.target.value)}
             validations={[required, vusername]}
@@ -135,30 +152,68 @@ function SignUp() {
           <Input
             type="email"
             className="form-lg-control"
-            placeholder="Nhập email"
+            placeholder={t('Login.placeholder_email')}
             onChange={(event) => setEmail(event.target.value)}
             validations={[required, vemail]}
           />
         </div>
+        <div className="form-lg-group">
+          <label>{t('Login.std_id')}</label>
+          <Input
+            type="text"
+            className="form-lg-control"
+            placeholder={t('Login.placeholder_std_id')}
+            name="name"
+            onChange={(event) => setName(event.target.value)}
+            validations={[required, vstudentcode]}
+          />
+        </div>
 
         <div className="form-lg-group">
-          <label>Mật khẩu</label>
+          <label>{t('Login.lb_pass')}</label>
           <Input
             type="password"
             className="form-lg-control"
-            placeholder="Nhập mật khẩu"
+            placeholder={t('Login.placeholder_pass')}
             onChange={(event) => setPassword(event.target.value)}
             validations={[required, vpassword]}
           />
         </div>
+
+
+        <div className="form-lg-group">
+          <label>{t('Login.class')}</label>
+          <Input
+            type="text"
+            className="form-lg-control"
+            placeholder={t('Login.placeholder_class')}
+            name="name"
+            onChange={(event) => setClassCode(event.target.value)}
+            validations={[required, vusername]}
+          />
+        </div>
+
+        <div className="form-lg-group">
+          <label>{t('Login.department')}</label>
+          <Input
+            type="text"
+            className="form-lg-control"
+            placeholder={t('Login.placeholder_depart')}
+            name="name"
+            onChange={(event) => setFaculty(event.target.value)}
+            validations={[required, vusername]}
+          />
+        </div>
+        </div>
+
         <div className="form-lg-footer">
           <button type="submit" className="btn btn-primary btn-block">
-            Đăng ký
+          {t('Login.btn_signup')}
           </button>
           <p className="forgot-password text-right">
-            Bạn đã đăng ký? Hãy{" "}
+          {t('Login.login1')} {" "}
             <a href="/" onClick={handleClick}>
-              đăng nhập
+            {t('Login.login2')}
             </a>
           </p>
         </div>

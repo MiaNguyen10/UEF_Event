@@ -12,10 +12,10 @@ import Cookies from 'universal-cookie';
   let username ="", 
       txtEndedEvent ="Sự kiện đã qua",
       txtLoveEvent ="Sự kiện yêu thích",
-      txtManageAccount ="Quản lý quản trị viên",
+      txtManageAccountAdmin ="Quản lý quản trị viên",
       txtLanguage ="Ngôn ngữ",
       txtTheme ="Giao diện",
-      txtSetting ="Cài đặt",
+      txtManageAccount ="Quản lý tài khoản",
       txtLogout ="Đăng xuất";
 
   if (account)
@@ -24,10 +24,10 @@ import Cookies from 'universal-cookie';
   if (localStorage.getItem('lang') === 'en'){
     txtEndedEvent ="Past event";
     txtLoveEvent ="Favorite event";
-    txtManageAccount ="Admin management";
+    txtManageAccountAdmin ="Admin management";
     txtLanguage ="Language";
     txtTheme ="Theme";
-    txtSetting ="Setting";
+    txtManageAccount ="Account management";
     txtLogout ="Log out";
   }
   
@@ -51,10 +51,16 @@ export const MenuItems = [
     cName: 'nav-text'
   },
   {
-    title: txtManageAccount,
+    title: txtManageAccountAdmin,
     path: '/manageaccount',
     icon: admin,
     cName: 'nav-text'
+  },
+  {
+    title: txtManageAccount,
+    path: '/settings',
+    icon: setting,
+    cName: 'nav-text side-end'
   },
   {
     title: txtLanguage,
@@ -66,12 +72,6 @@ export const MenuItems = [
     title: txtTheme,
     path: '/theme',
     icon: theme,
-    cName: 'nav-text side-end'
-  },
-  {
-    title: txtSetting,
-    path: '/settings',
-    icon: setting,
     cName: 'nav-text side-end'
   },
   {

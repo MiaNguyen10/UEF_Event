@@ -309,8 +309,8 @@ class Home extends Component {
           <div className="card-container-create-event">
             <div className="card">
               <div className="card-header text-center form-header">
-                <p>{t('Form.title_create')}</p>
-                <p className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closePopup}/></p>
+                <div className="lb-header">{t('Form.title_create')}</div>
+                <div className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closePopup}/></div>
               </div>
               <div className="card-body">
                 <form onSubmit={this.handleInsertSubmit}>
@@ -521,7 +521,6 @@ class Home extends Component {
                     name="address"
                     className="form-control"
                     id="eventAddress"
-                    // rows="4"
                     value={this.state.address}
                     onChange={this.handleInputChange}
                   />

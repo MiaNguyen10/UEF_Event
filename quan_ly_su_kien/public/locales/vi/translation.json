@@ -68,10 +68,21 @@
       "lb_pass": "Mật khẩu",
       "placeholder_pass": "Nhập mật khẩu",
       "btn_login": "Đăng nhập",
+      "btn_signup": "Đăng ký",
       "signup1": "Bạn chưa có tài khoản ? Hãy",
       "signup2": "đăng ký",
+      "login1": "Bạn đã đăng ký? Hãy",
+      "login2": "đăng nhập",
       "lang": "Ngôn ngữ",
       "lang_vi": "Tiếng Việt",
-      "lang_en": "Tiếng Anh"
+      "lang_en": "Tiếng Anh",
+      "std_id": "MSSV",
+      "class": "Lớp",
+      "department": "Khoa",
+      "name": "Tên",
+      "placeholder_name": "Nhập tên đầy đủ",
+      "placeholder_std_id": "Nhập mã số sinh viên",
+      "placeholder_class": "Nhập mã lớp",
+      "placeholder_depart": "Nhập tên khoa"
   }
 }

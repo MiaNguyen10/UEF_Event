@@ -67,10 +67,21 @@
         "lb_pass": "Password",
         "placeholder_pass": "Enter password",
         "btn_login": "Log in",
+        "btn_signup": "Sign up",
         "signup1": "Don't have account ? Please",
         "signup2": "register",
+        "login1": "Already registered",
+        "login2": "log in?",
         "lang": "Language",
         "lang_vi": "Vietnamese",
-        "lang_en": "English"
+        "lang_en": "English",
+        "std_id": "Student ID",
+        "class": "Class",
+        "department": "Department",
+        "name": "Name",
+        "placeholder_name": "Enter full name",
+        "placeholder_std_id": "Enter student ID",
+        "placeholder_class": "Enter class code",
+        "placeholder_depart": "Enter department name"
     }
 }

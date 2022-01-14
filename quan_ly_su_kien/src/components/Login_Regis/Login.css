@@ -90,3 +90,13 @@
 .form-lg-footer p{
     margin-top: 10px;
 }
+
+.container_signup_body{
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+}
+
+.logo_signup img{
+    width: 40% !important;
+}

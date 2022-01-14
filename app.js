@@ -5,6 +5,7 @@ const multer = require("multer");
 const path = require("path");
 // const cors = require("cors"); // dont need cors
 const bodyParser = require("body-parser");
+const { log } = require("console");
 
 //CORS
 // app.use(cors()); // dont need cors
@@ -27,7 +28,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root", // change this
   password: "MySQL", // change this
-  database: "quan_ly_su_kien",
+  database: "event_management",
 });
 
 connection.connect(function (err) {
@@ -296,7 +297,7 @@ app.post("/api/register", (req, res) => {
 
 //get student account
 app.get('/api/accountstudent', (req, res) => {
-  var sql = "SELECT * FROM account WHERE name LIKE'" + req.query.name + "'";
+  var sql = "SELECT * FROM account WHERE id =" + req.query.id + "";  
   connection.query(sql, function(err, results) {
     if (err) throw err;
     res.json({account: results});
@@ -309,12 +310,14 @@ app.post('/api/editAccount', (req, res) => {
   var sql = "UPDATE account SET "
           +   "email='"+req.body.email+"',"
           +   "name='"+req.body.name+"',"
+          +   "password='"+req.body.password+"',"
           +   "studentCode='"+req.body.studentCode+"',"
           +   "userclass='"+req.body.userclass+"',"
           +   "faculty='"+req.body.faculty+"',"
-          +   "password='"+req.body.password+"',"
           +   "role='"+req.body.role+"'"
           + "WHERE id='"+req.body.id+"'";
+
+  console.log(sql);
   connection.query(sql, function(err, results) {
     if (err) throw err;
     res.json({account: results});

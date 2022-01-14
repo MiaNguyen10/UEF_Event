@@ -11,7 +11,7 @@ body{
     padding: 30px;
     background-color: white;
     height: fit-content;
-    width: fit-content;
+    width: 70vmin;
     border-radius: 10px;
     transition: opacity 500ms;
     margin: auto;
@@ -87,16 +87,21 @@ body{
     font-size: 20px;
     font-weight: bold;
     padding-bottom: 10px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 95% 5%;
     justify-content: center;
 }
 
+.lb-header{
+    padding-left: 5%;
+}
+
 .ic-close{
-    position: absolute;
-    margin-right: -400px;
-    margin-top: 5px;
+    /* position: absolute;
+    margin-right: -40%; */
+    margin-right: 2px;
+    margin-top: 4px;
     color: rgb(179, 179, 179);
-    
 }
 
 .ReactModal__Overlay{
