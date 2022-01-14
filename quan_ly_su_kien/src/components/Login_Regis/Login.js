@@ -30,11 +30,6 @@ class Login extends React.Component{
     i18next.changeLanguage(lang);
   };
 
-  handleDropdown = (lang) => {
-    localStorage.setItem('lang', lang);
-    this.handleLanguage(lang);
-  };
-
   onChangeName = (e) => {
     this.setState({ name: e.target.value });
   };
