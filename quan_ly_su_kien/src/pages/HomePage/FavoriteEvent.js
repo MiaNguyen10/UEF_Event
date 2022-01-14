@@ -9,7 +9,8 @@ import { BsThreeDots } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 import { BsFillXCircleFill } from "react-icons/bs";
 import { Dropdown } from "react-bootstrap";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { Button } from "react-bootstrap";
 import Cookies from 'universal-cookie';
 import i18next from 'i18next';
 import { withTranslation } from 'react-i18next';
@@ -54,17 +55,21 @@ class FavoriteEvent extends Component {
     }
   }
 
-  //get data
-  componentDidMount() {
-    this.handleId();
+  
+  getData = () => {
     axios
       .get(`/api/favorite/get?id=${this.state.id}`)
       .then((res) => {
         const event = res.data;
         this.setState({event: event.event})
-        console.log("AAAAAAAAAAAAA")
       })
       .catch((error) => console.log(error));
+  }
+
+  //get data
+  componentDidMount() {
+    this.handleId();
+    this.getData()
     const lang = localStorage.getItem('lang');
     this.handleLanguage(lang);
   }
@@ -240,6 +245,11 @@ class FavoriteEvent extends Component {
       .catch((error) => console.log(error));
   };
 
+  deleteFromFavortite = (id_event) => {
+    fetch(`/api/favorite/delele?id_account=${this.state.id}&id_event=${id_event}`, {method: "DELETE"})
+    this.getData()
+  }
+
   handleLanguage = (lang) => {
     i18next.changeLanguage(lang)
   };
@@ -290,6 +300,7 @@ class FavoriteEvent extends Component {
                   <p><strong>{t('Home.type_event')}</strong> {item.typeOfEvent}</p>
                   <p><strong>{t('Home.venue')}</strong> {item.address}</p>
                   <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                  <Button onClick={() => this.deleteFromFavortite(item.id_event)}>Remove from favorite</Button>
                 </div>
               </div> 
             </div>
