@@ -250,3 +250,52 @@ ul {
         margin: 2% 10%;
     }
 }
+
+/* fix icon pop up */
+.swal2-popup{
+    width: fit-content !important;
+    height: fit-content;
+}
+.swal2-popup .swal2-title{
+    margin: 0  !important;
+    padding: 1.25em 0 0 0 !important;
+    font-size: 2.5em !important;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm{
+    font-size: 1.6em !important;
+}
+
+.swal2-popup .swal2-styled.swal2-cancel{
+    font-size: 1.6em !important;
+}
+
+.swal2-icon .swal2-icon-content{
+    font-size: 4.5em !important;
+}
+
+.swal2-icon{
+    width: 6em !important;
+    height: 6em !important;
+    margin-bottom: 0 !important;
+}
+
+.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{
+    top:3.2em !important;
+    right: 0.8em !important;
+}
+
+.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{
+    top: 3.5em !important;
+    left: -0.2em !important;
+}
+
+.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{
+    right: 1.5em !important;
+    top: 2.8em !important;
+}
+
+.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{
+    left: -1.5em !important;
+    top: 2.8em !important;
+}

@@ -239,7 +239,7 @@ class Home extends Component {
           }
         })
       } else{
-        Swal.fire(t('Popup.no_ended_event'), '', 'success')
+        Swal.fire(t('Popup.no_ended_event'), '', 'error')
       }
     })
   };
@@ -258,7 +258,7 @@ class Home extends Component {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          Swal.fire(t('Popup.deleted_event'), '', 'info')
+          Swal.fire(t('Popup.deleted_event'), '', 'success');
           axios
           .post("/api/delete", eventId)
           .then((res) => {
@@ -269,7 +269,7 @@ class Home extends Component {
           .catch((error) => console.log(error));
           
         } else{
-          Swal.fire(t('Popup.no_delete_event'), '', 'info')
+          Swal.fire(t('Popup.no_delete_event'), '', 'error');
         }
       })
   };
