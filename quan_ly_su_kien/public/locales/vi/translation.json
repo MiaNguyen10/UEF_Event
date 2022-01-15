@@ -15,7 +15,8 @@
       "class":"Lớp",
       "faculty":"Khoa",
       "heading_setting": "Thông tin người dùng ",
-      "btn_fav": "Yêu thích"
+      "btn_fav": "Yêu thích",
+      "btn_undo_fav":"Xóa yêu thích"
      
   },
   "Form": {

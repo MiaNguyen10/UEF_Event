@@ -15,7 +15,8 @@
         "class":"Class",
         "faculty":"Faculty",
         "heading_setting": "User Profile",
-        "btn_fav": "Add to favorite"
+        "btn_fav": "Add to favorite",
+        "btn_undo_fav":"Remove from favorite"
         },
     "Form": {
         "title_create": "Create new event",

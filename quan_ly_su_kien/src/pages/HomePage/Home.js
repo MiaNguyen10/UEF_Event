@@ -117,6 +117,7 @@ class Home extends Component {
       })
       .catch((error) => console.log(error));
     this.closePopup();
+    window.location.reload();
   };
 
   //open and close modal
@@ -315,7 +316,7 @@ class Home extends Component {
         <Popup
           modal
           trigger={
-            this.state.auth ==="admin" ?
+            this.state.auth !=="student" ?
             <button
               className="btn-create-event fa fa-plus"
               title={t("Home.create_event")}
@@ -349,7 +350,7 @@ class Home extends Component {
                       name="description"
                       className="form-control"
                       id="eventDescription"
-                      rows="4"
+                      rows="1"
                       onChange={this.handleInputChange}
                     />
                   </div>
@@ -359,7 +360,7 @@ class Home extends Component {
                       name="address"
                       className="form-control"
                       id="eventAddress"
-                      rows="2"
+                      rows="1"
                       onChange={this.handleInputChange}
                     />
                   </div>
@@ -388,14 +389,24 @@ class Home extends Component {
                   <div className="form-group">
                     <label>
                       {t('Form.lb_unit')}
-                      <select
-                        name="organizationalUnit"
-                        onChange={this.handleInputChange}
-                      >
-                        {OrganizationalUnit.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
+                      {this.state.auth === "admin" ? (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          {OrganizationalUnit.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>Chọn đơn vị tổ chức</option>
+                          <option value={this.state.auth}>{this.state.auth}</option>
+                        </select>
+                      )}
                     </label>
                   </div>
                   <div className="form-group">
@@ -438,7 +449,7 @@ class Home extends Component {
                   {/*display name */}
                   <div className="event-name">{item.name}</div>
                   
-                  {this.state.auth ==="admin" ?                   
+                  {(this.state.auth ==="admin" || this.state.auth === item.organizationalUnit ) ?                   
                     <Dropdown>
                       <Dropdown.Toggle variant="" className="dropdown-choose">
                         <BsThreeDots id="three-dots"></BsThreeDots>
@@ -470,7 +481,7 @@ class Home extends Component {
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
-                  : ''}
+                  : ''} 
                 </div>
 
                 {/* display description */}
@@ -569,14 +580,24 @@ class Home extends Component {
                 <div className="form-group">
                     <label>
                     {t('Form.lb_unit')}
-                      <select
-                        name="organizationalUnit"
-                        onChange={this.handleInputChange}
-                      >
-                        {OrganizationalUnit.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
+                    {this.state.auth === "admin" ? (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          {OrganizationalUnit.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>Chọn đơn vị tổ chức</option>
+                          <option value={this.state.auth}>{this.state.auth}</option>
+                        </select>
+                      )}
                     </label>
                   </div>
                   <div className="form-group">

@@ -55,6 +55,7 @@ class EventEnded extends Component {
 
   //get data
   componentDidMount() {
+    this.handleAuth();
     axios
       .get("/api/eventended")
       .then((res) => {
@@ -62,7 +63,7 @@ class EventEnded extends Component {
         this.setState({ event: event.event });
       })
       .catch((error) => console.log(error));
-    this.handleAuth();
+    
     const lang = localStorage.getItem('lang');
     this.handleLanguage(lang);
   }
@@ -264,7 +265,7 @@ class EventEnded extends Component {
               <div className="header-event">
                 <div className="event-name">{item.name}</div>
 
-                {this.state.auth ==="admin" ?  
+                {(this.state.auth ==="admin" || this.state.auth === item.organizationalUnit ) ?  
                   <Dropdown>
                     <Dropdown.Toggle variant="" className="dropdown-choose">
                       <BsThreeDots id="three-dots"></BsThreeDots>
@@ -396,14 +397,24 @@ class EventEnded extends Component {
                 <div className="form-group">
                     <label>
                     {t('Form.lb_unit')}
-                      <select
-                        name="organizationalUnit"
-                        onChange={this.handleInputChange}
-                      >
-                        {OrganizationalUnit.map((option) => (
-                          <option value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
+                    {this.state.auth === "admin" ? (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          {OrganizationalUnit.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <select
+                          name="organizationalUnit"
+                          onChange={this.handleInputChange}
+                        >
+                          <option>Chọn đơn vị tổ chức</option>
+                          <option value={this.state.auth}>{this.state.auth}</option>
+                        </select>
+                      )}
                     </label>
                   </div>
                   <div className="form-group">

@@ -104,7 +104,7 @@ class Setting extends Component {
       studentCode: this.state.studentCode,
       userclass: this.state.userclass,
       faculty: this.state.faculty,
-      role: 'student',
+      role: this.state.auth,
     };
     console.log(newUpdate);
 
@@ -123,7 +123,7 @@ class Setting extends Component {
                   studentCode: this.state.studentCode,
                   userclass: this.state.userclass,
                   faculty: this.state.faculty,
-                  role:'student',
+                  role:this.state.auth,
                 }
               : elm
           ),
@@ -163,19 +163,18 @@ class Setting extends Component {
                 </div>
 
                 <div className="profile-item">
-                  {t("Login.std_id")}:
-                </div>
-                <div className="profile-item">
-                  <strong>{item.studentCode}</strong> 
-                </div>
-
-                <div className="profile-item">
                   {t("Login.lb_pass")}:
                 </div>
                 <div className="profile-item">
                   <strong>*****</strong> 
                 </div>
-
+                <div className="profile-item">
+                  {t("Login.std_id")}:
+                </div>
+                <div className="profile-item">
+                  <strong>{item.studentCode}</strong> 
+                </div>
+                
                 <div className="profile-item">
                 {t("Login.class")} 
                 </div>

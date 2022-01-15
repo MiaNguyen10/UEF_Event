@@ -44,6 +44,7 @@ class ManageAccount extends Component {
   };
   //get data
   componentDidMount() {
+    this.handleAuth();
     axios
       .get("/api/account")
       .then((res) => {
@@ -51,7 +52,7 @@ class ManageAccount extends Component {
         this.setState({ account: account.account });
       })
       .catch((error) => console.log(error));
-    this.handleAuth();
+    
   }
 
   //handle data input
@@ -93,6 +94,7 @@ class ManageAccount extends Component {
           Swal.fire("Thêm tài khoản thất bại", data.result, "info");
         }
       });
+    window.location.reload();
     this.closePopup();
   };
 

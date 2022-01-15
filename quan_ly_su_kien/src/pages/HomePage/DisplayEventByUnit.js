@@ -25,11 +25,7 @@ const customModal = {
   },
 };
 
-let account = new Cookies().get("authToken");
-let userRole = "";
-if (account) {
-  userRole = account.role;
-}
+
 
 class Home extends Component {
 
@@ -65,6 +61,7 @@ class Home extends Component {
 
   //get data
   componentDidMount() {
+    this.handleAuth();
     axios
       .get("/api/event")
       .then((res) => {
@@ -72,7 +69,7 @@ class Home extends Component {
         this.setState({ event: event.event });
       })
       .catch((error) => console.log(error));
-    this.handleAuth();
+    
     const lang = localStorage.getItem('lang');
     this.handleLanguage(lang);
   }
@@ -339,7 +336,7 @@ class Home extends Component {
                       name="description"
                       className="form-control"
                       id="eventDescription"
-                      rows="4"
+                      rows="1"
                       onChange={this.handleInputChange}
                     />
                   </div>
@@ -349,7 +346,7 @@ class Home extends Component {
                       name="address"
                       className="form-control"
                       id="eventAddress"
-                      rows="2"
+                      rows="1"
                       onChange={this.handleInputChange}
                     />
                   </div>
@@ -393,7 +390,7 @@ class Home extends Component {
                           onChange={this.handleInputChange}
                         >
                           <option>Chọn đơn vị tổ chức</option>
-                          <option value={userRole}>{userRole}</option>
+                          <option value={this.state.auth}>{this.state.auth}</option>
                         </select>
                       )}
                     </label>

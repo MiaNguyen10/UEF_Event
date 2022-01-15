@@ -177,7 +177,7 @@ class FavoriteEvent extends Component {
                   <p><strong>{t('Home.type_event')}</strong> {item.typeOfEvent}</p>
                   <p><strong>{t('Home.venue')}</strong> {item.address}</p>
                   <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                  <Button onClick={() => this.deleteFromFavortite(item.id_event)}>Remove from favorite</Button>
+                  <Button onClick={() => this.deleteFromFavortite(item.id_event)}>{t('Home.btn_undo_fav')}</Button>
                 </div>
               </div> 
             </div>
