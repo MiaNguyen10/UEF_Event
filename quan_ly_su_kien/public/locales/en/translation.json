@@ -56,7 +56,9 @@
         "no": "No",
         "come_home1": "Press ",
         "come_home2": "here",
-        "come_home3": " to return home page"
+        "come_home3": " to return home page",
+        "ques_logout": "Do you want to log out?",
+        "logout_success": "to return log in page"
     },
     "Navbar":{
         "logo": "EVENT MANAGEMENT SYSTEM",
@@ -84,5 +86,6 @@
         "placeholder_std_id": "Enter student ID",
         "placeholder_class": "Enter class code",
         "placeholder_depart": "Enter department name"
+
     }
 }

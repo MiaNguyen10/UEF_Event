@@ -57,7 +57,9 @@
     "no": "Không",
     "come_home1": "Bấm ",
     "come_home2": "tại đây",
-    "come_home3": " để trở về trang chủ"
+    "come_home3": " để trở về trang chủ",
+    "ques_logout": "Bạn có muốn đăng xuất không?",
+    "logout_success": "để trở về trang đăng nhập"
   },
   "Navbar":{
     "logo": "HỆ THỐNG QUẢN LÝ SỰ KIỆN",
