@@ -10,10 +10,10 @@ import { BsThreeDots } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 import { BsFillXCircleFill } from "react-icons/bs";
 import { Button, Dropdown } from "react-bootstrap";
-import Swal from 'sweetalert2';
-import Cookies from 'universal-cookie';
-import i18next from 'i18next';
-import { withTranslation } from 'react-i18next';
+import Swal from "sweetalert2";
+import Cookies from "universal-cookie";
+import i18next from "i18next";
+import { withTranslation } from "react-i18next";
 
 const customModal = {
   content: {
@@ -21,11 +21,10 @@ const customModal = {
     inset: "0px",
     border: "none",
     background: "none",
-    "z-index": "1000"
+    "z-index": "1000",
   },
 };
 class Home extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -44,19 +43,19 @@ class Home extends Component {
       typeOfEvent: "",
       eventended: "",
       searchData: "",
-      auth:"",
-      userID: ""
+      auth: "",
+      userID: "",
     };
   }
 
   handleAuth = () => {
-    const cookies = new Cookies()
-    let account = cookies.get('authToken');    
-    if (account){
+    const cookies = new Cookies();
+    let account = cookies.get("authToken");
+    if (account) {
       this.state.auth = account.role;
-      this.setState({userID: account.id})
+      this.setState({ userID: account.id });
     }
-  }
+  };
 
   //get data
   componentDidMount() {
@@ -68,7 +67,7 @@ class Home extends Component {
       })
       .catch((error) => console.log(error));
     this.handleAuth();
-    const lang = localStorage.getItem('lang');
+    const lang = localStorage.getItem("lang");
     this.handleLanguage(lang);
   }
 
@@ -94,7 +93,7 @@ class Home extends Component {
   handleInsertSubmit = (event) => {
     event.preventDefault();
 
-    console.log(this.state)
+    console.log(this.state);
     //khai báo một item mới, với các giá trị là các giá trị được nhập từ form
     const newEvent = {
       id_event: "",
@@ -105,7 +104,7 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
       eventDate: this.state.eventDate,
-      eventTime: this.state.eventTime      
+      eventTime: this.state.eventTime,
     };
     console.log(newEvent);
     axios
@@ -148,11 +147,11 @@ class Home extends Component {
     });
   };
 
-  openPopup = () =>{
+  openPopup = () => {
     this.setState({
       popupIsOpen: true,
     });
-  }
+  };
 
   closePopup = () => {
     this.setState({
@@ -174,9 +173,8 @@ class Home extends Component {
       organizationalUnit: this.state.organizationalUnit,
       typeOfEvent: this.state.typeOfEvent,
       eventDate: this.state.eventDate,
-      eventTime: this.state.eventTime  
+      eventTime: this.state.eventTime,
     };
-    
 
     axios
       .post("/api/edit", newUpdate)
@@ -201,7 +199,7 @@ class Home extends Component {
         }));
       })
       .catch((error) => console.log(error));
-      window.location.reload();
+    window.location.reload();
   };
 
   //End event
@@ -212,37 +210,37 @@ class Home extends Component {
     };
     const { t } = this.props;
     Swal.fire({
-      title: t('Popup.end_event'),
+      title: t("Popup.end_event"),
       showCancelButton: true,
-      confirmButtonText: t('Popup.yes'),
-      cancelButtonText: t('Popup.no')
+      confirmButtonText: t("Popup.yes"),
+      cancelButtonText: t("Popup.no"),
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {        
+      if (result.isConfirmed) {
         axios
-        .post("/eventended", eventId)
-        .then((res) => {
-          this.setState((prevState) => ({
-            event: prevState.event.map((elm) =>
-              elm.id_event === item.id_event
-                ? {
-                    ...elm,
-                    eventended: 1,
-                  }
-                : elm
-            ),
-          }));
-        })
-        .catch((error) => console.log(error));
-        Swal.fire(t('Popup.ended_event'), '', 'success').then((res) =>{
-          if(res.isConfirmed){
+          .post("/eventended", eventId)
+          .then((res) => {
+            this.setState((prevState) => ({
+              event: prevState.event.map((elm) =>
+                elm.id_event === item.id_event
+                  ? {
+                      ...elm,
+                      eventended: 1,
+                    }
+                  : elm
+              ),
+            }));
+          })
+          .catch((error) => console.log(error));
+        Swal.fire(t("Popup.ended_event"), "", "success").then((res) => {
+          if (res.isConfirmed) {
             window.location.reload();
           }
-        })
-      } else{
-        Swal.fire(t('Popup.no_ended_event'), '', 'error')
+        });
+      } else {
+        Swal.fire(t("Popup.no_ended_event"), "", "error");
       }
-    })
+    });
   };
 
   //Delete event data
@@ -251,28 +249,29 @@ class Home extends Component {
       id_event: item.id_event,
     };
     const { t } = this.props;
-      Swal.fire({
-        title: t('Popup.delete_event'),
-        showCancelButton: true,
-        confirmButtonText: t('Popup.yes'),
-        cancelButtonText: t('Popup.no')
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire(t('Popup.deleted_event'), '', 'success');
-          axios
+    Swal.fire({
+      title: t("Popup.delete_event"),
+      showCancelButton: true,
+      confirmButtonText: t("Popup.yes"),
+      cancelButtonText: t("Popup.no"),
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire(t("Popup.deleted_event"), "", "success");
+        axios
           .post("/api/delete", eventId)
           .then((res) => {
             this.setState((prevState) => ({
-              event: prevState.event.filter((el) => el.id_event !== item.id_event),
+              event: prevState.event.filter(
+                (el) => el.id_event !== item.id_event
+              ),
             }));
           })
           .catch((error) => console.log(error));
-          
-        } else{
-          Swal.fire(t('Popup.no_delete_event'), '', 'error');
-        }
-      })
+      } else {
+        Swal.fire(t("Popup.no_delete_event"), "", "error");
+      }
+    });
   };
 
   //Search event by name
@@ -287,55 +286,63 @@ class Home extends Component {
   };
 
   addToFavorite = (id_event) => {
-    let submitData = {id_account: this.state.userID, id_event: id_event}
+    let submitData = { id_account: this.state.userID, id_event: id_event };
     fetch("/api/favorite/add", {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(submitData)
-    }).then(res => res.json()).then(data => {
-      // save login token to cookies
-      console.log(data)
-      if (data.result === "sucess") {
-        Swal.fire("Sucess", "Added to favorite", "info")
-      } else {
-        Swal.fire("Failed", data.result, "error")
-      }
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(submitData),
     })
-  }
-
-  handleLanguage = (lang) => {
-    i18next.changeLanguage(lang)
+      .then((res) => res.json())
+      .then((data) => {
+        // save login token to cookies
+        console.log(data);
+        if (data.result === "sucess") {
+          Swal.fire("Sucess", "Added to favorite", "info");
+        } else {
+          Swal.fire("Failed", data.result, "error");
+        }
+      });
   };
 
+  handleLanguage = (lang) => {
+    i18next.changeLanguage(lang);
+  };
   render() {
     const { t } = this.props;
     return (
-      
       <div className="homepage">
         {/* Insert new event */}
         <Popup
           modal
           trigger={
-            this.state.auth !=="student" ?
-            <button
-              className="btn-create-event fa fa-plus"
-              title={t("Home.create_event")}
-            ></button>
-            : ''}            
-          on='click'
+            this.state.auth !== "student" ? (
+              <button
+                className="btn-create-event fa fa-plus"
+                title={t("Home.create_event")}
+              ></button>
+            ) : (
+              ""
+            )
+          }
+          on="click"
           open={this.state.popupIsOpen}
           onOpen={this.openPopup}
         >
           <div className="card-container-create-event">
             <div className="card">
               <div className="card-header text-center form-header">
-                <div className="lb-header">{t('Form.title_create')}</div>
-                <div className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closePopup}/></div>
+                <div className="lb-header">{t("Form.title_create")}</div>
+                <div className="ic-close">
+                  <BsFillXCircleFill
+                    id="BsFillXCircleFill"
+                    onClick={this.closePopup}
+                  />
+                </div>
               </div>
               <div className="card-body">
                 <form onSubmit={this.handleInsertSubmit}>
                   <div className="form-group">
-                    <label for="eventName">{t('Form.lb_name_event')}</label>
+                    <label for="eventName">{t("Form.lb_name_event")}</label>
                     <input
                       name="name"
                       type="text"
@@ -345,7 +352,7 @@ class Home extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label for="eventDescription">{t('Form.lb_des')}</label>
+                    <label for="eventDescription">{t("Form.lb_des")}</label>
                     <textarea
                       name="description"
                       className="form-control"
@@ -355,7 +362,7 @@ class Home extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label for="eventAddress">{t('Form.lb_venue')}</label>
+                    <label for="eventAddress">{t("Form.lb_venue")}</label>
                     <textarea
                       name="address"
                       className="form-control"
@@ -365,7 +372,7 @@ class Home extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label for="eventImage">{t('Form.lb_img')}</label>
+                    <label for="eventImage">{t("Form.lb_img")}</label>
                     <input
                       name="image"
                       type="file"
@@ -378,17 +385,25 @@ class Home extends Component {
                   </div>
                   <div className="form-group date-time">
                     <div className="event-date">
-                      <label>{t('Form.lb_date')}</label>
-                      <input name="eventDate" type="date" onChange={this.handleInputChange} /> 
+                      <label>{t("Form.lb_date")}</label>
+                      <input
+                        name="eventDate"
+                        type="date"
+                        onChange={this.handleInputChange}
+                      />
                     </div>
                     <div className="event-time">
-                      <label>{t('Form.lb_time')}</label>
-                      <input name="eventTime" type="time" onChange={this.handleInputChange} />
-                    </div>         
+                      <label>{t("Form.lb_time")}</label>
+                      <input
+                        name="eventTime"
+                        type="time"
+                        onChange={this.handleInputChange}
+                      />
+                    </div>
                   </div>
                   <div className="form-group">
                     <label>
-                      {t('Form.lb_unit')}
+                      {t("Form.lb_unit")}
                       {this.state.auth === "admin" ? (
                         <select
                           name="organizationalUnit"
@@ -404,14 +419,16 @@ class Home extends Component {
                           onChange={this.handleInputChange}
                         >
                           <option>Chọn đơn vị tổ chức</option>
-                          <option value={this.state.auth}>{this.state.auth}</option>
+                          <option value={this.state.auth}>
+                            {this.state.auth}
+                          </option>
                         </select>
                       )}
                     </label>
                   </div>
                   <div className="form-group">
                     <label>
-                      {t('Form.lb_type')}
+                      {t("Form.lb_type")}
                       <select
                         name="typeOfEvent"
                         onChange={this.handleInputChange}
@@ -423,7 +440,7 @@ class Home extends Component {
                     </label>
                   </div>
                   <div className="card-footer text-right">
-                    <button>{t('Form.btn_post')}</button>
+                    <button>{t("Form.btn_post")}</button>
                   </div>
                 </form>
               </div>
@@ -437,62 +454,69 @@ class Home extends Component {
             <input
               name="searchData"
               onChange={this.handleInputChange}
-              placeholder={t('Home.search')}
+              placeholder={t("Home.search")}
             />
-            <BsSearch className="BsSearch" onClick={ () => this.handleSearch()} />
+            <BsSearch
+              className="BsSearch"
+              onClick={() => this.handleSearch()}
+            />
           </div>
 
-            {this.state.event.map((item) => (
-              <div className="event-des-item" key={item.id_event}>
-                <div className="header-event">
+          {this.state.event.map((item) => (
+            <div className="event-des-item" key={item.id_event}>
+              <div className="header-event">
+                {/*display name */}
+                <div className="event-name">{item.name}</div>
 
-                  {/*display name */}
-                  <div className="event-name">{item.name}</div>
-                  
-                  {(this.state.auth ==="admin" || this.state.auth === item.organizationalUnit ) ?                   
-                    <Dropdown>
-                      <Dropdown.Toggle variant="" className="dropdown-choose">
-                        <BsThreeDots id="three-dots"></BsThreeDots>
-                      </Dropdown.Toggle>
+                {this.state.auth === "admin" ||
+                this.state.auth === item.organizationalUnit ? (
+                  <Dropdown>
+                    <Dropdown.Toggle variant="" className="dropdown-choose">
+                      <BsThreeDots id="three-dots"></BsThreeDots>
+                    </Dropdown.Toggle>
 
-                      <Dropdown.Menu>
-                        {/* click to show edit form */}
-                        <Dropdown.Item onClick={() => this.openModal(item)}>
-                          <div id="drop-item">
-                            <button className="far fa-edit ic-in-3-dots" />
-                            <span>{t('Home.fix')}</span>
-                          </div>
-                        </Dropdown.Item>
+                    <Dropdown.Menu>
+                      {/* click to show edit form */}
+                      <Dropdown.Item onClick={() => this.openModal(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-edit ic-in-3-dots" />
+                          <span>{t("Home.fix")}</span>
+                        </div>
+                      </Dropdown.Item>
 
-                        {/* Click to delete event data */}
-                        <Dropdown.Item onClick={() => this.handleDelete(item)}>
-                          <div id="drop-item">
-                            <button className="far fa-trash-alt ic-in-3-dots" />
-                            <span>{t('Home.delete')}</span>
-                          </div>
-                        </Dropdown.Item>
+                      {/* Click to delete event data */}
+                      <Dropdown.Item onClick={() => this.handleDelete(item)}>
+                        <div id="drop-item">
+                          <button className="far fa-trash-alt ic-in-3-dots" />
+                          <span>{t("Home.delete")}</span>
+                        </div>
+                      </Dropdown.Item>
 
-                        {/* Click to end event */}
-                        <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
-                          <div id="drop-item">
-                            <button className="fas fa-hourglass-end ic-in-3-dots" />
-                            <span>{t('Home.end_event')}</span>
-                          </div>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  : ''} 
-                </div>
+                      {/* Click to end event */}
+                      <Dropdown.Item onClick={() => this.handleEndEvent(item)}>
+                        <div id="drop-item">
+                          <button className="fas fa-hourglass-end ic-in-3-dots" />
+                          <span>{t("Home.end_event")}</span>
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                ) : (
+                  ""
+                )}
+              </div>
 
-                {/* display description */}
+              {/* display description */}
               <ShowMoreText
-                /* Default options */
-                lines={3}
+                lines={2}
                 more="Show more"
                 less="Show less"
                 expanded={false}
+                width={1000}
+                truncatedEndingComponent={"... "}
+                
               >
-              <div className="description">{item.description}</div>
+                <div className="description">{item.description}</div>
               </ShowMoreText>
               <div className="img-unit-type">
                 {/* display image */}
@@ -503,29 +527,55 @@ class Home extends Component {
                   width={500}
                 />
                 {/* display widge */}
-                <div id="unit-type" >
-                  <p><strong>{t('Home.unit')}</strong> {item.organizationalUnit}</p>
-                  <p><strong>{t('Home.type_event')}</strong> {item.typeOfEvent}</p>
-                  <p><strong>{t('Home.venue')}</strong> {item.address}</p>
-                  <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                  <Button onClick={() => this.addToFavorite(item.id_event)}>{t('Home.btn_fav')}</Button>
+                <div id="unit-type">
+                  <p>
+                    <strong>{t("Home.unit")}</strong> {item.organizationalUnit}
+                  </p>
+                  <p>
+                    <strong>{t("Home.type_event")}</strong> {item.typeOfEvent}
+                  </p>
+                  <p>
+                    <strong>{t("Home.venue")}</strong> {item.address}
+                  </p>
+                  <p>
+                    <strong>{t("Home.time")}</strong>{" "}
+                    {new Date(Date.parse(item.eventDate)).toLocaleDateString(
+                      undefined
+                    )}{" "}
+                    lúc{" "}
+                    {new Date(Date.parse(item.eventDate)).toLocaleTimeString(
+                      [],
+                      { hour: "2-digit", minute: "2-digit" }
+                    )}
+                  </p>
+                  <Button onClick={() => this.addToFavorite(item.id_event)}>
+                    {t("Home.btn_fav")}
+                  </Button>
                 </div>
-              </div> 
+              </div>
             </div>
           ))}
         </div>
-              
-        
-        <Modal isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal} style={customModal}>
+
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          style={customModal}
+        >
           <div className="card">
             <div className="card-header text-center form-header">
-              <p>{t('Form.title_fix')}</p>
-              <p className="ic-close" ><BsFillXCircleFill id="BsFillXCircleFill" onClick={this.closeModal}/></p>
+              <p>{t("Form.title_fix")}</p>
+              <p className="ic-close">
+                <BsFillXCircleFill
+                  id="BsFillXCircleFill"
+                  onClick={this.closeModal}
+                />
+              </p>
             </div>
             <div className="card-body">
               <form onSubmit={this.handleEditSubmit}>
                 <div className="form-group">
-                  <label for="eventName">{t('Form.lb_name_event')}</label>
+                  <label for="eventName">{t("Form.lb_name_event")}</label>
                   <input
                     name="name"
                     type="text"
@@ -536,7 +586,7 @@ class Home extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventDescription">{t('Form.lb_des')}</label>
+                  <label for="eventDescription">{t("Form.lb_des")}</label>
                   <textarea
                     name="description"
                     className="form-control"
@@ -547,7 +597,7 @@ class Home extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventAddress">{t('Form.lb_venue')}</label>
+                  <label for="eventAddress">{t("Form.lb_venue")}</label>
                   <textarea
                     name="address"
                     className="form-control"
@@ -557,7 +607,7 @@ class Home extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label for="eventImage">{t('Form.lb_img')}</label>
+                  <label for="eventImage">{t("Form.lb_img")}</label>
                   <input
                     name="image"
                     type="file"
@@ -569,52 +619,62 @@ class Home extends Component {
                 </div>
                 <div className="form-group date-time">
                   <div className="event-date">
-                    <label>{t('Form.lb_date')}</label>
-                    <input name="eventDate" type="date" onChange={this.handleInputChange} /> 
+                    <label>{t("Form.lb_date")}</label>
+                    <input
+                      name="eventDate"
+                      type="date"
+                      onChange={this.handleInputChange}
+                    />
                   </div>
                   <div className="event-time">
-                    <label>{t('Form.lb_time')}</label>
-                    <input name="eventTime" type="time" onChange={this.handleInputChange} />
-                  </div>         
+                    <label>{t("Form.lb_time")}</label>
+                    <input
+                      name="eventTime"
+                      type="time"
+                      onChange={this.handleInputChange}
+                    />
+                  </div>
                 </div>
                 <div className="form-group">
-                    <label>
-                    {t('Form.lb_unit')}
+                  <label>
+                    {t("Form.lb_unit")}
                     {this.state.auth === "admin" ? (
-                        <select
-                          name="organizationalUnit"
-                          onChange={this.handleInputChange}
-                        >
-                          {OrganizationalUnit.map((option) => (
-                            <option value={option.value}>{option.label}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        <select
-                          name="organizationalUnit"
-                          onChange={this.handleInputChange}
-                        >
-                          <option>Chọn đơn vị tổ chức</option>
-                          <option value={this.state.auth}>{this.state.auth}</option>
-                        </select>
-                      )}
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label>
-                    {t('Form.lb_type')}
                       <select
-                        name="typeOfEvent"
+                        name="organizationalUnit"
                         onChange={this.handleInputChange}
                       >
-                        {TypeOfEvent.map((option) => (
+                        {OrganizationalUnit.map((option) => (
                           <option value={option.value}>{option.label}</option>
                         ))}
                       </select>
-                    </label>
-                  </div>
+                    ) : (
+                      <select
+                        name="organizationalUnit"
+                        onChange={this.handleInputChange}
+                      >
+                        <option>Chọn đơn vị tổ chức</option>
+                        <option value={this.state.auth}>
+                          {this.state.auth}
+                        </option>
+                      </select>
+                    )}
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label>
+                    {t("Form.lb_type")}
+                    <select
+                      name="typeOfEvent"
+                      onChange={this.handleInputChange}
+                    >
+                      {TypeOfEvent.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
                 <div className="card-footer text-right">
-                  <button>{t('Form.btn_fix')}</button>
+                  <button>{t("Form.btn_fix")}</button>
                 </div>
               </form>
             </div>
@@ -625,4 +685,4 @@ class Home extends Component {
   }
 }
 
-export default withTranslation() (Home);
+export default withTranslation()(Home);
