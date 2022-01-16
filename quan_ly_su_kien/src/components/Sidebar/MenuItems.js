@@ -29,12 +29,12 @@ import Cookies from 'universal-cookie';
   }
   
 export const MenuItems = [
-  {
-    title: username,
-    path: '',
-    icon: avar, //fix later
-    cName: 'nav-text nav-username'
-  },
+  // {
+  //   title: username,
+  //   path: '',
+  //   icon: avar, //fix later
+  //   cName: 'nav-text nav-username'
+  // },
   {
     title: txtEndedEvent,
     path: '/eventended',

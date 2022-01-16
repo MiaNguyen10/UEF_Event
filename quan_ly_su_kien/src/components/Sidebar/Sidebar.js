@@ -4,13 +4,17 @@ import "./Sidebar.css";
 import { BsList } from "react-icons/bs";
 import Cookies from "universal-cookie";
 import i18next from "i18next";
+import axios from "axios";
+import avar from "../../asset/img/user.png";
 
 class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      account: [],
       active: true,
       auth: "",
+      id: "",
       titleAdmin: "Quản lý quản trị viên",
       titleAdminOfFaculty: "Quản lý tài khoản",
     };
@@ -23,6 +27,7 @@ class Sidebar extends Component {
     let account = cookies.get("authToken");
     if (account) {
       this.state.auth = account.role;
+      this.state.id = account.id;
     }
     if (lang == "en") {
       this.state.titleAdmin = "Admin management";
@@ -32,6 +37,13 @@ class Sidebar extends Component {
 
   componentDidMount() {
     this.handleAuth();
+    axios
+      .get(`/api/accountstudent?id=${this.state.id}`)
+      .then((res) => {
+        const account = res.data;
+        this.setState({ account: account.account });
+      })
+      .catch((error) => console.log(error));
     this.updatePredicate();
     window.addEventListener("resize", this.updatePredicate);
   }
@@ -54,11 +66,19 @@ class Sidebar extends Component {
         {this.state.active && (
           <div className="side-menu">
             <ul>
+              {this.state.account.map((item) => (
+                <li key={item.id} className="nav-text nav-username">
+                  <a href="/">
+                    <img src={avar} alt="icon" />
+                    <span>{item.name}</span>
+                  </a>
+                </li>
+              ))}
               {MenuItems.map((item, index) => {
                 return (
                   <div>
-                    {(this.state.auth === "student" &&
-                    item.title !== this.state.titleAdmin) ? (
+                    {this.state.auth === "student" &&
+                    item.title !== this.state.titleAdmin ? (
                       <li key={index} className={item.cName}>
                         <a href={item.path}>
                           <img src={item.icon} alt="icon" />
@@ -80,8 +100,10 @@ class Sidebar extends Component {
                       ""
                     )}
 
-                    {(this.state.auth !== "student" && this.state.auth !== "admin" &&
-                    item.title !== this.state.titleAdmin  && item.title !== this.state.titleAdminOfFaculty)? (
+                    {this.state.auth !== "student" &&
+                    this.state.auth !== "admin" &&
+                    item.title !== this.state.titleAdmin &&
+                    item.title !== this.state.titleAdminOfFaculty ? (
                       <li key={index} className={item.cName}>
                         <a href={item.path}>
                           <img src={item.icon} alt="icon" />
