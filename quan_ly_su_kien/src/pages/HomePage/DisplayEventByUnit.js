@@ -9,7 +9,7 @@ import { TypeOfEvent } from "./TypeOfEvent";
 import { BsThreeDots } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 import { BsFillXCircleFill } from "react-icons/bs";
-import { Dropdown } from "react-bootstrap";
+import {Button, Dropdown } from "react-bootstrap";
 import Swal from 'sweetalert2';
 import Cookies from 'universal-cookie';
 import i18next from 'i18next';
@@ -48,6 +48,7 @@ class Home extends Component {
       eventended: "",
       searchData: "",
       auth: "",
+      userID: ""
     };
   }
 
@@ -56,6 +57,7 @@ class Home extends Component {
     let account = cookies.get("authToken");
     if (account) {
       this.state.auth = account.role;
+      this.setState({userID: account.id})
     }
   };
 
@@ -293,6 +295,23 @@ class Home extends Component {
     i18next.changeLanguage(lang)
   };
 
+  addToFavorite = (id_event) => {
+    let submitData = {id_account: this.state.userID, id_event: id_event}
+    fetch("/api/favorite/add", {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(submitData)
+    }).then(res => res.json()).then(data => {
+      // save login token to cookies
+      console.log(data)
+      if (data.result === "sucess") {
+        Swal.fire("Sucess", "Added to favorite", "info")
+      } else {
+        Swal.fire("Failed", data.result, "error")
+      }
+    })
+  }
+
   render() {
     const { t } = this.props;
     return (      
@@ -501,6 +520,7 @@ class Home extends Component {
                   <p><strong>{t('Home.type_event')}</strong> {item.typeOfEvent}</p>
                   <p><strong>{t('Home.venue')}</strong> {item.address}</p>
                   <p><strong>{t('Home.time')}</strong>  {new Date(Date.parse(item.eventDate)).toLocaleDateString(undefined)} lúc {new Date(Date.parse(item.eventDate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                  <Button onClick={() => this.addToFavorite(item.id_event)}>{t('Home.btn_fav')}</Button>
                 </div>
               </div>
             </div>
