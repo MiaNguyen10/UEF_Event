@@ -106,7 +106,6 @@ class Setting extends Component {
       faculty: this.state.faculty,
       role: this.state.auth,
     };
-    console.log(newUpdate);
 
     axios
       .post("/api/editAccount", newUpdate)
@@ -130,7 +129,9 @@ class Setting extends Component {
         }));
       })
       .catch((error) => console.log(error));
-    window.location.reload();
+      if(this.state.auth === "admin"){
+        window.location.reload();
+      }
   };
 
   handleLanguage = (lang) => {
