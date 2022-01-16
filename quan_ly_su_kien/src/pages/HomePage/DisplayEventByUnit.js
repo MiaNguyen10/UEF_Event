@@ -499,10 +499,12 @@ class Home extends Component {
                 {/* display description */}
               <ShowMoreText
                 /* Default options */
-                lines={3}
+                lines={2}
                 more="Show more"
                 less="Show less"
                 expanded={false}
+                width={1000}
+                truncatedEndingComponent={"... "}
               >
               <div className="description">{item.description}</div>
               </ShowMoreText>
